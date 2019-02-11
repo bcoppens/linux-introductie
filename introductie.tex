@@ -1,5 +1,7 @@
-\documentclass[a4paper]{memoir}
+\documentclass[a4paper,twoside,openany]{memoir}
 \usepackage[dutch]{babel}
+\usepackage{hyperref}
+\usepackage{fullpage}
 
 \epigraphfontsize{\small\itshape}
 \setlength\epigraphwidth{8cm}
@@ -10,7 +12,7 @@
 \epigraphfontsize{\small\itshape}
 
 \chapter{Inleiding tot Linux}
-\epigraph{``It’s a UNIX system, I know this!''}{--- \textup{Lex Murphy}, Jurassic Park}
+\epigraph{``It’s a Unix system, I know this!''}{--- \textup{Lex Murphy}, Jurassic Park}
 
 De komende drie weken gaan we een korte inleiding geven tot Linux. Maar wat is Linux? Strikt genomen is Linux
 niet meer dan een besturingssysteemkern (\emph{operating systen kernel} die er achter de schermen voor zorgt dat je applicaties kan starten, dat je
@@ -21,11 +23,153 @@ beschikbaar die vaak gebruikt worden onder Linux; de meest voorkomende zijn KDE 
 Die grafisch intu"itieve interfaces zijn echter niet waarover deze sessies zullen gaan, die wijzen zichzelf immers uit. Deze labo's gaan over
 de command line interface, die helaas (veel) minder intu"itief is, maar daarom niet minder belangrijk is om wat ervaring mee te hebben. Met enige kennis van de command
 line applicaties, en hoe je die kan combineren met elkaar, kan je je leven later (hopelijk) veel makkelijker maken (en dat niet alleen in de practica van \emph{computerarchitectuur},
-maar ook in andere vakken van de opleidingen computerwetenschappen en elektrotechniek, en misschien zelfs je thesis).
+maar ook in andere vakken van de opleidingen computerwetenschappen en elektrotechniek, en misschien zelfs je thesis). Een grote sterkte van de commandolijn op Linux (die voortvloeit uit een rijke traditie van commandolijn-interfaces die ontstaan is in de jaren '70 en '80 en ontwikkeld werden voor Unix-systemen), is dat deze het zeer eenvoudig maken om zeer complexe tekstoperaties en bestandssysteemoperaties te met elkaar te combineren. Aangezien de uitvoer veel programma's vaak gewoon tekst is, maakt het dan ook uitermate geschikt om de uitvoer van programma's te filteren, combineren, etc. Bij wijze van voorbeeld: je kan alle PDF-bestanden zoeken op je systeem, en die dan filteren op degenen die de tekst \emph{``Voorstel tot het bevriezen van $n$ postgraduaatsopleidingen''} bevatten, waarbij $n$ gelijk welk natuurlijk getal is; je kan de uitvoer van een simulator zo herstructureren dat je de interessante data rechtstreeks in een spreadsheet kan plakken, etc.
 
 \section{Organizatie van de practica}
 
+Deze practica gaan door in de eerste drie lesweken van 8u30 tot 9u40 in PC-klassen A en B in de Plateau. Je gaat hier
+op twee manieren met Linux leren werken:
+
+\begin{enumerate}
+\item Met enkele oefeningen op Dodona. Deze oefeningen zullen gradueel beschikbaar gemaakt worden op de Dodona-site die je
+kan vinden op \url{https://dodona.ugent.be/nl/courses/79/}.
+\item Door te oefenen op een Linux die jullie in VirtualBox zullen opzetten. Installeer hiervoor eerst VirtualBox
+(\url{https://www.virtualbox.org/}). Daarna download je onze image die te vinden is op 
+\url{https://users.elis.ugent.be/~bcoppens/kubuntu-computerarchitectuur.7z}. Gelieve dit reeds op voorhand te downloaden en
+installeren zodat we hier tijdens de labo's zelf niet te veel tijd aan verliezen. Indien je wil werken op een PC in de
+practicumzaal, zet dan best de (gedecomprimeerde) image al op een USB stick.
+
+Op dit Linux-systeem hebben we voor jullie al een gebruiker (\emph{student}) aangemaakt die als \textbf{wachtwoord} simpelweg
+\emph{student} heeft.
+\end{enumerate}
+
+De structuur van de practica zal er als volgt uitzien (voorlopig enigszinds onder voorbehoud):
+\begin{itemize}
+\item \emph{Week 1}: Inleiding tot de commandolijn, de meest simpele bestandssysteemoperaties, simpele tekstoperaties, en \emph{reguliere expressies}.
+\item \emph{Week 2}: Het combineren van verschillende operaties tot veel krachtigere en complexere pijplijnen aan de hand van \emph{pipes} en \emph{redirects}, geavanceerdere reguliere expressies, en hoe simpele C(++)-programma's te compileren vanaf de commandolijn.
+\item \emph{Week 3}: Meer geavanceerde toepassingen van de concepten van de eerste twee weken, Linux-systemen op het internet beheren met een \emph{remote shell}, en een korte introductie tot \emph{git}.
+\end{itemize}
+
+Het materiaal behorende tot weken 2 en 3 zal voor die lessen online komen. \textbf{Deze handleiding zal dus ook nog twee keer aangepast worden met het nu nog ontbrekende materiaal van weken 2 en 3!}
+
+\part{Week 1}
+\chapter{Inleiding tot de commandolijn}
+
+Start in je Linux virtuele machine een console-\emph{terminal} op door het programma \emph{Konsole} te starten. (Zoals zo vaak in de Linux-wereld zijn er duizend-en-\`e\`en verschillende terminals beschikbaar, waarvan Konsole er slechts een is.) Eerst gaat dit wat uitvoer produceren die je voorlopig mag negeren (er start namelijk een programma dat automatisch de meest recente opgaves op je systeem zal downloaden). Na even te wachten, zal je dan je \emph{prompt} te zien krijgen:
+
+\begin{verbatim}
+student@student-VirtualBox:~$ 
+\end{verbatim}
+
+Dit is waar je je commando's zal intypen. Wat wil die tekst nu zeggen? Dit wil zeggen dat in deze sessie je op het systeem genaamd \emph{student-VirtualBox} aan het werken bent (later zullen we ook nog op een ander systeem inloggen met een andere naam) als gebruiker \emph{student}. (De gebruikersnaam vind je voor de \texttt{@}, de naam van het systeem na de \texttt{@}). Wat er tussen de \texttt{:} en de \texttt{\$} staat, is de \emph{directory} waar je je op dit moment bevindt. Standaard zal een console-sessie vaak starten in de \emph{home-directory} van de ingelogde gebruiker; deze wordt vaak afgekort als \texttt{\~}.
+
+Om te weten waar deze afkorting voor staat, gaan we het eerste commando intypen, \verb!pwd! (\emph{Print Working Directory}):
+\begin{verbatim}
+student@student-VirtualBox:~$ pwd
+/home/student
+\end{verbatim}
+
+In de loop van deze practica zal je nog veel meer van deze commando's tegenkomen met enigszinds obscure namen, die bovendien vaak nog meer obscure manieren hebben om opties mee te geven. Dit probleem wordt een beetje gecompenseerd door de ingebouwde handleiding (\emph{manuals}, \emph{man-pages}). Je kan die opvragen met het commando \verb!man!. Stel je voor dat je je afvraagt wat de opties zijn van het \verb!ls!-commando dat we zometeen gaan zien. Dan type je:
+\begin{verbatim}
+student@student-VirtualBox:~$ man ls
+\end{verbatim}
+waarna je in een zeer simpele textviewer terecht komt met de handleiding van het \verb!ls!-commando. Helemaal bovenaan staan heel summiere uitleg van wat het programma doet, een summier overzicht van de mogelijke opties, gevolgd door een heel uitgebereide beschrijving van al die opties, eventueel gevolgd door voorbeelden en aandachtspunten. Hoe gebruik je die viewer nu?
+\begin{itemize}
+\item \emph{Scrollen} door de tekst kan je met de pijltjes omhoog en omlaag, en door PageUp en PageDown.
+\item \emph{Zoeken} door de tekst, kan je door forward slash (`/') te typen, gevolgd door je zoekterm (bijvoorbeeld in het geval van \verb!ls!, als je wil weten hoe de uitvoer gesorteerd kan worden, kan je `sort' typen), en dan op \emph{enter} duwen. Alle hits op die zoekterm zullen oplichten in de tekst, en de viewer springt automatisch naar de eerste hit. Je kan bovendien eenvoudig naar de volgende/vorige hit in de tekst gaan met respectievelijk de toetsen `n' (\emph{next}) en `p' (\emph{previous}).
+\item {Afsluiten} van de viewer kan je doen door de `q'-toets (\emph{quit}).
+\end{itemize}
+
+\chapter{Simpele bestandssysteemoperaties}
+
+We gaan een aantal heel simpele bestandssysteemoperaties bekijken. Vergeet niet dat je meer details hierover (zoals extra opties) kan opzoeken in de relevante man-pages.
+
+\section{\texttt{ls} --- List Files/Directory Contents}
+
+Het \verb!ls!-commando laat toe om de inhoud van een directory te bekijken, en om details van bestanden weer te geven. Als je geen specifieke bestanden of directories (directories kan je eigenlijk beschouwen als bestanden) meegeeft als argument, dan zal het informatie uitprinten over de huidige directory. Standaard zal het \emph{\`enkel} de lijst bestanden (en dus ook directories) uitprinten:
+
+\begin{verbatim}
+student@student-VirtualBox:~$ ls
+computerarchitectuur_practica Desktop Documents Downloads Music Pictures Public
+Templates Videos
+\end{verbatim}
+
+Dit wil dus zeggen dat in je home-directory 9 bestanden (in dit geval dus allen directories) bevat.
+
+Standaard zijn alle verwijzingen naar bestanden \emph{relatief ten opzichte van de huidige directory}. Dus als je weet dat je in de home-directory zit, en dat die directory een (sub)directory \verb!computerarchitectuur_practica! bevat, kan je de bestanden in die (sub)directory als volgt printen: \verb!ls computerarchitectuur_practica!.
+
+Directories en bestanden daarin worden van elkaar gescheiden door een forward slash (/). Dus, nu je weet dat in die directory een subdirectory \verb!pract01! zit, kan je die inhoud als volgt laten zien door het commando  \verb!ls computerarchitectuur_practica/pract01! te typen.
+
+Je kan ook werken met \emph{absolute padverwijzingen}. In Windows is dit typisch iets wat begint met \verb!C:\!. In Unix-gebaseerde systemen zoals Linux (maar ook OSX), beginnen die echter steeds met een initie"ele forward slash. Alle bestanden zijn dus te vinden via verwijzingen die starten vanaf de \emph{root-directory}, dus ook al je schijven, USB-sticks, etc., zitten in eenzelfde directorystructuur. We hebben reeds zo'n pad gezien hierboven voor de home-directory: \verb!/home/student!. Dit wil zeggen dat we starten vanaf de root-directory \verb!/!, die een subdirectory \verb!home! bevat, die dan op zijn beurt een subdirectory \verb!student! bevat.
+
+\textbf{Belangrijke tip!} Je gaat het misschien net als ik ook al beu zijn om elke keer opnieuw \verb!computerarchitectuur_practica! voluit te typen. Dat is saai, traag, en foutgevoelig. De \emph{shell} (het programma waarmee je interageert in de terminal en die je \verb!student@student-VirtualBox:~$! print), heeft gelukkig een feature die dit probleem zo goed als volledig oplost: \emph{tab-completion}. Je typt gewoon het begin van een bestand/directory, en drukt de tab-toets in. De shell zal dan zo ver mogelijk aanvullen als hij kan, gegeven de bestanden in de directory. Dus bij \verb!computerarchitectuur_practica! weet je nu dat dit het \'enige bestand is in de home-directory dat begint met de letter \verb!c!. Dus kan je gewoon typen: \verb!ls c!\emph{tab}, waarna automatisch alles wordt aangevuld. Die directory heeft nu 8 practica-subdirectories. Dus kan je \verb!computerarchitectuur_practica/p!\emph{tab} typen, waarna dit wordt aangevuld tot \verb!computerarchitectuur_practica/pract0!. Aangezien er echter 8 verschillende subdirectories zijn, kan de shell dit uiteraard niet aanvullen tot op het einde. In dit geval is het handig om 2 keer op tab te duwen:
+\verb!computerarchitectuur_practica/pract0!\emph{tab} \emph{tab}: dan laat de shell alle bestanden zien die beginnen met \verb!pract0!, zodat je makkelijk dat karakter zelf kan typen (en dan eventueel weer verder aan te laten vullen door weer op \emph{tab} te duwen).
+
+Probeer eens op de volgende 3 manieren de inhoud van \verb!computerarchitectuur_practica! te laten zien: met een relatief pad, met een absoluut pad, en met een pad relatief ten opzichte van de shortcut voor de homedirectory \verb!~!. Maak hierbij gebruik van tab-completion.
+
+Je kan ook meer informatie laten printen door \verb!ls!. De meest handige manier is \verb!ls -lh!, wat onder andere de grootte print van het bestand. Probeer dit eens uit met \verb!ls -lh /bin/!. Gebruik de man-page om te achterhalen wat de \verb!l! en \verb!h! opties precies betekenen. (Voor de rest is het allicht ook interessant om weten dat je kan sorteren op allerhande soorten informatie, als je meer hierover wil weten kan je dat opzoeken in de man-page.)
+
+\section{\texttt{cd} --- Change Directory}
+
+We weten nu dat er enerzijds een concept is van een huidige directory, en anderzijds weten we dankzij \verb!ls! welke directories er waar zijn. Met \verb!cd! kunnen we een andere directory de huidige directory maken. Bijvoorbeeld, als we naar de \verb!computerarchitectuur_practica!-directory gaan, en dan het \verb!ls!-commando uitvoeren, zal de inhoud van de \verb!computerarchitectuur_practica!-directory getoond worden:
+
+\begin{verbatim}
+student@student-VirtualBox:~$ cd computerarchitectuur_practica
+student@student-VirtualBox:~/computerarchitectuur_practica$ ls
+pract01 pract02 pract03 pract04 pract05 pract06 pract07
+pract08 README
+\end{verbatim}
+
+Je kan hier ook meteen zien dat de prompt hier mooi aangeeft dat de huidige directory veranderd is.
+
+Om terug te gaan naar de bovenliggende directory, kan je gebruik maken van \verb!..!, dit geeft aan dat je de verwijst naar de bovenliggende directory. Dus bijvoorbeeld:
+\begin{verbatim}
+student@student-VirtualBox:~/computerarchitectuur_practica$ cd ../..
+student@student-VirtualBox:/home$ cd ../..
+\end{verbatim}
+
+Hier gaan we dus in de bovenliggende directory van de bovenliggende directory, wat in dit geval \verb!/home! is.
+
+\section{\texttt{mkdir} --- Make Directory}
+
+We kunnen directories aanmaken met het \verb!mkdir! commando: \verb!mkdir nieuwedirectory!. De verwijzing naar de nieuwe directory kan zowel relatief als absoluut zijn, maar standaard gaat het tool er van uit dat slechts te meest diepe directory moet worden aangemaakt, en alle bovenliggende directories reeds bestaan. Zoek op in de man-page hoe je \verb!mkdir! die directories ook kan laten aanmaken voor je.
+
+\section{\texttt{cp} --- CoPy Files}
+
+Met het \verb!cp!-commando kan je bestanden kopi"eren. Er zijn twee mogelijkheden:
+
+\begin{itemize}
+\item Het doel is een bestandsnaam: \verb!cp bestand1 bestand2! zal \verb!bestand1! kopi"eren naar een bestand met de naam \verb!bestand2!.
+\item Het doel is een directory: \verb!cp bestand1 directory! zal een kopie van \verb!bestand1! aanmaken in \verb!directory!; het nieuwe bestand zal (in die directory) dezelfde naam hebben als het originele bestand. In dit geval kan je ook meerdere bestanden in 1 keer kopieren: \verb!cp bestand1 bestand2 bestand3 directory!.
+\end{itemize}
+
+Probeer eens een bestand uit de \verb!/bin!-directory te kopi"eren naar een directory die je zonet hebt aangemaakt, en verifieer dat de kopie even groot is als het origineel.
+
+\section{\texttt{mv} --- MoVe Files}
+
+Het \verb!mv!-commando werkt net als het \verb!cp!-commando, maar het verplaatst de bestanden in plaats van ze te kopi"eren. Volledig gelijkaardig met \verb!cp! kan het doel een bestandsnaam of een directory zijn.
+
+\section{\texttt{rm} --- ReMove Files}
+
+Tot slot willen we ook bestanden kunnen verwijderen. Dit kan met het \verb!rm!-commando.
+
+\section{\texttt{cat} --- Een slechte textviewer}
+Het \verb!cat!-commando gaat de bestanden die het meekrijgt als argument gewoon achter elkaar naar scherm printen. Probeer eens een bestand uit de \verb!computerarchitectuur_practica! directory op scherm te printen.
+
+\section{\texttt{less} --- Een simpele textviewer}
+Het \verb!cat!-commando is niet zo handig om tekst in te bekijken. Het zou veel handiger zijn als we de textviewer die gebruikt wordt voor de man-pages niet zouden kunnen hergebruiken. Gelukkig kunnen we die textviewer ook gewoon hergebruiken: dit is het \verb!less!-commando. Probeer met \verb!less! eens hetzelfde bestand te openen als je zonet deed met \verb!cat!.
+
+\section{\texttt{touch} --- Een leeg bestand aanmaken}
 
 
+\chapter{Simpele tekstoperaties}
+
+\section{\texttt{cut} --- Herordenen van kolommen}
+
+
+\chapter{Reguliere expressies}
+
+\part{Weken 2 en 3}
+Wordt vervolgt \verb!:)!
 
 \end{document}
