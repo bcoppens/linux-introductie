@@ -96,6 +96,36 @@ Het materiaal behorende tot weken 2 en 3 zal voor die lessen online komen.
 nog ontbrekende materiaal van weken 2 en 3!}
 
 \part{Week 1}
+\chapter{Het bestandssysteem in Linux}
+Voor we beginnen met het echte werk, is het nuttig om enkele basisconcepten
+te kennen van het bestandssysteem, en hoe je kan verwijzen naar bestanden.
+
+Standaard zijn alle verwijzingen naar bestanden \emph{relatief ten opzichte van
+de huidige directory}. Dus als je weet dat je directory zit die een
+(sub)directory \verb!computerarchitectuur_practica! bevat, kan
+je met de verwijzijng \verb!computerarchitectuur_practica! direct naar deze
+subdirectory verwijzen.
+
+Directories en bestanden daarin worden van elkaar gescheiden door een forward
+slash (/). Dus, \verb!computerarchitectuur_practica/README! verwijst naar
+het \verb!README!-bestand in de \verb!computerarchitectuur_practica! directory.
+
+Merk op dat voor Linux een directory eigenlijk een speciaal bestand is. Dus
+als je vraagt om alle bestanden in een directory op te lijsten, zal je dus
+niet alleen de `gewone' bestanden zien, maar ook alle (sub)directories.
+
+Je kan ook werken met \emph{absolute paden}. In Windows is dit typisch iets wat
+begint met \verb!C:\!, \verb!D:\!, etc.. In Unix-gebaseerde systemen zoals
+Linux (maar ook OS X),
+beginnen deze echter steeds met een initiële forward slash. Alle bestanden zijn
+dus te vinden via verwijzingen die starten vanaf de zogeheten
+\emph{root-directory}. Al je schijven, USB-sticks, etc., zitten in eenzelfde
+directorystructuur. Een voorbeeld van zo'n pad is de
+home-directory van de gebruiker: \verb!/home/student!. Dit wil zeggen dat we starten vanaf de
+root-directory \verb!/!, die een subdirectory \verb!home! bevat, die dan op zijn
+beurt een subdirectory \verb!student! bevat.
+
+
 \chapter{Inleiding tot de command line}
 
 Start in je Linux virtuele machine een \emph{terminal} op door het programma
@@ -172,8 +202,8 @@ man-pages.
 
 Het \verb!ls!-commando laat toe om de inhoud van een directory te bekijken, en
 om meer details over de  bestanden weer te geven. Als je geen specifieke
-bestanden of directories (directories kan je eigenlijk beschouwen als bestanden)
-meegeeft als argument, dan zal het informatie uitprinten over de huidige
+bestanden of directories meegeeft als argument, dan zal het informatie
+uitprinten over de huidige
 directory. Standaard zal het \emph{énkel} de lijst van bestanden (en dus ook
 directories) in de huidige directory uitprinten:
 
@@ -186,25 +216,14 @@ Templates Videos
 Dit wil dus zeggen dat je home-directory 9 bestanden (in dit geval alleen
 directories) bevat.
 
-Standaard zijn alle verwijzingen naar bestanden \emph{relatief ten opzichte van
-de huidige directory}. Dus als je weet dat je in de home-directory zit, en dat
-die directory een (sub)directory \verb!computerarchitectuur_practica! bevat, kan
-je de bestanden in die (sub)directory als volgt printen: \verb!ls computerarchitectuur_practica!.
-
-Directories en bestanden daarin worden van elkaar gescheiden door een forward
-slash (/). Dus, nu je weet dat in die directory een subdirectory \verb!pract01!
-zit, kan je die inhoud laten zien door het commando  \verb!ls computerarchitectuur_practica/pract01!
+Je de bestanden in die (sub)directory als volgt printen: \verb!ls computerarchitectuur_practica!
+(merk dus op dat we hier nu gebruiken van een relatief pad). Je kan even
+goed ook verwijzen naar een subdirectory: Nu je weet dat in die directory
+een subdirectory \verb!pract01!
+zit, kan je die inhoud laten zien door het commando
+\verb!ls computerarchitectuur_practica/pract01!
 te typen.
 
-Je kan ook werken met \emph{absolute paden}. In Windows is dit typisch iets wat
-begint met \verb!C:\!. In Unix-gebaseerde systemen zoals Linux (maar ook OS X),
-beginnen deze echter steeds met een initiële forward slash. Alle bestanden zijn
-dus te vinden via verwijzingen die starten vanaf de zogeheten
-\emph{root-directory}. Al je schijven, USB-sticks, etc., zitten in eenzelfde
-directorystructuur. We hebben reeds zo'n pad gezien hierboven voor de
-home-directory: \verb!/home/student!. Dit wil zeggen dat we starten vanaf de
-root-directory \verb!/!, die een subdirectory \verb!home! bevat, die dan op zijn
-beurt een subdirectory \verb!student! bevat.
 
 \textbf{Belangrijke tip!} Je gaat het misschien net als ik ook al beu zijn om
 elke keer opnieuw \verb!computerarchitectuur_practica! voluit te typen. Dat is
