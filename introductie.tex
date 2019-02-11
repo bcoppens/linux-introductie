@@ -161,6 +161,23 @@ Het \verb!cat!-commando is niet zo handig om tekst in te bekijken. Het zou veel 
 
 \section{\texttt{touch} --- Een leeg bestand aanmaken}
 
+Met het \verb!touch!-commando kan je een leeg bestand aanmaken. (Dit commando heeft eigenlijk een ander doel, zoals je kan lezen in de man-page. Maar als je het als argument een bestandsnaam geeft die nog niet bestaat, zal het dat bestand aanmaken.)
+
+Maak in je homedirectory eens een leeg bestand \verb!A! aan. Net zoals bij de vorige commando's, kan je ook meerdere argumenten aan dit commando meegeven, elk van die bestanden zal dan worden aangemaakt.
+
+\textbf{Belangrijk!} De verschillende argumenten van een commando worden door een spatie van elkaar gescheiden. Maar als nu een van de argumenten een bestandsnaam is die een spatie bevat, wat dan? Dan kan je dat argument tussen een koppel enkele quote-tekens (\verb!'!) zetten: alles wat daartussen staat, wordt beschouwdt als hetzelfde argument, inclusief spaties. Als we bijvoorbeeld 3 bestanden willen aanmaken, waarvan \'e\'en bestand spaties bevat, kan je dit als volgt doen.
+
+\begin{verbatim}
+student@student-VirtualBox:~$ touch bestand1 'bestandsnaam 2 met spaties' bestand3
+\end{verbatim}
+
+Probeer dit zelf eens, en kijk ook hoe dit er uit ziet met zowel \verb!ls! als \verb!ls -lh!. Probeer zo'n bestand ook eens te kopi"eren. Merk bovendien ook op dat het geen kwaad kan om ook quote-tekens te zetten rond argumenten zonder spatie:
+
+\begin{verbatim}
+student@student-VirtualBox:~$ touch 'bestand4' 'bestand5'
+\end{verbatim}
+
+zal 2 extra bestanden aanmaken, waarbij de quotes geen deel uitmaken van de bestandsnaam. Je kan in principe ook dubbele quotes (\verb!"zoals dit"!) gebruiken, maar die hebben een subtiel andere betekenis dan de enkele quote die ik hierboven demonstreerde. Het verschil zal je zien in sessie 3; gebruik tot dan voor de veiligheid gewoon de enkele quotes.
 
 \chapter{Simpele tekstoperaties}
 
