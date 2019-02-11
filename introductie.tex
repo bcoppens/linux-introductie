@@ -14,46 +14,87 @@
 \chapter{Inleiding tot Linux}
 \epigraph{``It’s a Unix system, I know this!''}{--- \textup{Lex Murphy}, Jurassic Park}
 
-De komende drie weken gaan we een korte inleiding geven tot Linux. Maar wat is Linux? Strikt genomen is Linux
-niet meer dan een besturingssysteemkern (\emph{operating systen kernel} die er achter de schermen voor zorgt dat je applicaties kan starten, dat je
-er iets gebeurt als je op je toetsenbord typt, etc. Het zijn echter de applicaties die er op draaien die een interface voorzien waar je als gebruiker mee interageert.
-Standaard zal je merken dat die interface ook gewoon grafisch is, net zoals je gewend bent bij Windows of OSX. Er zijn zelfs meerdere verschillende grafische interfaces
-beschikbaar die vaak gebruikt worden onder Linux; de meest voorkomende zijn KDE en Gnome.
+De komende drie weken gaan we een korte inleiding geven tot Linux. Maar wat is
+Linux? Strikt genomen is Linux niet meer dan een \emph{operating system kernel}:
+deze zorgt er achter de schermen voor dat je verschillende applicaties kan
+starten en tegelijkertijd laten draaien, dat de invoer die je via een
+toetsenbord ingeeft bij de applicaties toekomt, dat deze applicaties' iets op
+het scherm kunnen printen als uitvoer, etc. Een gebruiker interageert echter
+niet direct met de (Linux-)kernel, maar eerder met applicaties die als interface
+dienen. Meestal voorzien deze applicaties een grafische interface: je bent dit
+wel gewend uit Windows en OS X, en deze interfaces bestaan ook onder Linux,
+zoals KDE en Gnome. Grafische, intuïtieve, interfaces zijn echter pas redelijk
+laat in gebruik genomen. Voorafgaand de opkomst van de grafische interface aan
+was er een andere interface die de computerwereld domineerde: de
+\emph{command-line} interface.
 
-Die grafisch intu"itieve interfaces zijn echter niet waarover deze sessies zullen gaan, die wijzen zichzelf immers uit. Deze labo's gaan over
-de command line interface, die helaas (veel) minder intu"itief is, maar daarom niet minder belangrijk is om wat ervaring mee te hebben. Met enige kennis van de command
-line applicaties, en hoe je die kan combineren met elkaar, kan je je leven later (hopelijk) veel makkelijker maken (en dat niet alleen in de practica van \emph{computerarchitectuur},
-maar ook in andere vakken van de opleidingen computerwetenschappen en elektrotechniek, en misschien zelfs je thesis). Een grote sterkte van de commandolijn op Linux (die voortvloeit uit een rijke traditie van commandolijn-interfaces die ontstaan is in de jaren '70 en '80 en ontwikkeld werden voor Unix-systemen), is dat deze het zeer eenvoudig maken om zeer complexe tekstoperaties en bestandssysteemoperaties te met elkaar te combineren. Aangezien de uitvoer veel programma's vaak gewoon tekst is, maakt het dan ook uitermate geschikt om de uitvoer van programma's te filteren, combineren, etc. Bij wijze van voorbeeld: je kan alle PDF-bestanden zoeken op je systeem, en die dan filteren op degenen die de tekst \emph{``Voorstel tot het bevriezen van $n$ postgraduaatsopleidingen''} bevatten, waarbij $n$ gelijk welk natuurlijk getal is; je kan de uitvoer van een simulator zo herstructureren dat je de interessante data rechtstreeks in een spreadsheet kan plakken, etc.
+Deze inleidende sessies gaan over de command-line interface (of
+\emph{commandolijninterface}. Deze is  helaas (veel) minder intuïtief, maar
+daarom niet minder belangrijk is om wat ervaring mee te hebben. Met enige kennis
+van de command-line applicaties, en hoe je die kan combineren met elkaar, kan je
+je leven later (hopelijk) veel makkelijker maken (en dat niet alleen in de
+eigenlijke practica van \emph{computerarchitectuur}, maar ook in andere vakken
+van de opleidingen computerwetenschappen en elektrotechniek, en misschien zelfs
+je thesis). Een grote sterkte van de command line op Linux (die voortvloeit uit
+een rijke traditie van command line interfaces die ontstaan is in de jaren '70
+en '80 en ontwikkeld werden voor Unix-systemen), is dat deze het zeer eenvoudig
+maken om zeer complexe tekstoperaties en bestandssysteemoperaties met elkaar te
+combineren. De uitvoer van veel programma's is simpelweg tekst, wat het
+uitermate handig maakt om de uitvoer van programma's te filteren, combineren,
+etc. Bij wijze van voorbeeld: je kan alle PDF-bestanden zoeken op je systeem, en
+die dan filteren op degenen die de tekst \emph{``Voorstel tot het bevriezen van
+$n$ postgraduaatsopleidingen''} bevatten, waarbij $n$ gelijk welk natuurlijk
+getal is; je kan de uitvoer van een simulator zo herstructureren dat je de
+interessante data rechtstreeks in een spreadsheet kan plakken, etc.
 
-\section{Organizatie van de practica}
+\section{Organisatie van de sessies}
 
-Deze practica gaan door in de eerste drie lesweken van 8u30 tot 9u40 in PC-klassen A en B in de Plateau. Je gaat hier
-op twee manieren met Linux leren werken:
+Deze inleidende sessies gaan door tijdens de eerste drie lesweken, elke dinsdag
+van 8u30 tot 9u40, in PC-klassen A en B in de Plateau. Je gaat hier op twee
+manieren met Linux leren werken:
 
 \begin{enumerate}
-\item Met enkele oefeningen op Dodona. Deze oefeningen zullen gradueel beschikbaar gemaakt worden op de Dodona-site die je
-kan vinden op \url{https://dodona.ugent.be/nl/courses/79/}.
-\item Door te oefenen op een Linux die jullie in VirtualBox zullen opzetten. Installeer hiervoor eerst VirtualBox
-(\url{https://www.virtualbox.org/}). Daarna download je onze image die te vinden is op 
-\url{https://users.elis.ugent.be/~bcoppens/kubuntu-computerarchitectuur.7z}. Gelieve dit reeds op voorhand te downloaden en
-installeren zodat we hier tijdens de labo's zelf niet te veel tijd aan verliezen. Indien je wil werken op een PC in de
-practicumzaal, zet dan best de (gedecomprimeerde) image al op een USB stick.
 
-Op dit Linux-systeem hebben we voor jullie al een gebruiker (\emph{student}) aangemaakt die als \textbf{wachtwoord} simpelweg
-\emph{student} heeft.
+  \item Met enkele oefeningen op Dodona. Deze oefeningen zullen gradueel
+    beschikbaar gemaakt worden op de Dodona-site die je kan vinden op
+    \url{https://dodona.ugent.be/nl/courses/79/}.
+
+  \item Door te oefenen op een virtueel Linux-systeem dat jullie in VirtualBox
+    zullen opzetten. Installeer hiervoor eerst VirtualBox
+    (\url{https://www.virtualbox.org/}), end download onze image op
+    \url{https://users.elis.ugent.be/~bcoppens/kubuntu-computerarchitectuur.7z}.
+    \textbf{Gelieve deze stappen reeds op voorhand te voltooien zodat we hier
+    tijdens de labo's zelf niet te veel tijd aan verliezen.} Indien je wil
+    werken op een PC in de practicumzaal, zet dan best de (gedecomprimeerde)
+    image al op een USB stick. Op dit Linux-systeem hebben we voor jullie al
+    een gebruiker \emph{student} aangemaakt wiens \textbf{wachtwoord} ook
+    simpelweg \emph{student} is.
+
 \end{enumerate}
 
-De structuur van de practica zal er als volgt uitzien (voorlopig enigszinds onder voorbehoud):
+De structuur van de sessies zal er als volgt uitzien (voorlopige planning, onder voorbehoud):
+
 \begin{itemize}
-\item \emph{Week 1}: Inleiding tot de commandolijn, de meest simpele bestandssysteemoperaties, simpele tekstoperaties, en \emph{reguliere expressies}.
-\item \emph{Week 2}: Het combineren van verschillende operaties tot veel krachtigere en complexere pijplijnen aan de hand van \emph{pipes} en \emph{redirects}, geavanceerdere reguliere expressies, en hoe simpele C(++)-programma's te compileren vanaf de commandolijn.
-\item \emph{Week 3}: Meer geavanceerde toepassingen van de concepten van de eerste twee weken, Linux-systemen op het internet beheren met een \emph{remote shell}, en een korte introductie tot \emph{git}.
+
+  \item \emph{Week 1}: Inleiding tot de command line, de meest simpele
+    bestandssysteemoperaties, eenvoudige tekstoperaties, en \emph{reguliere
+    expressies}.
+
+  \item \emph{Week 2}: Het combineren van verschillende operaties tot veel
+    krachtigere en complexere pijplijnen aan de hand van \emph{pipes} en
+    \emph{redirects}, geavanceerdere reguliere expressies, en hoe simpele
+    C(++)-programma's te compileren vanaf de command line.
+
+  \item \emph{Week 3}: Meer geavanceerde toepassingen van de concepten van de
+    eerste twee weken, Linux-systemen op het internet beheren met een
+    \emph{remote shell}, en een korte introductie tot \emph{git}.
+
 \end{itemize}
 
 Het materiaal behorende tot weken 2 en 3 zal voor die lessen online komen. \textbf{Deze handleiding zal dus ook nog twee keer aangepast worden met het nu nog ontbrekende materiaal van weken 2 en 3!}
 
 \part{Week 1}
-\chapter{Inleiding tot de commandolijn}
+\chapter{Inleiding tot de command line}
 
 Start in je Linux virtuele machine een console-\emph{terminal} op door het programma \emph{Konsole} te starten. (Zoals zo vaak in de Linux-wereld zijn er duizend-en-\`e\`en verschillende terminals beschikbaar, waarvan Konsole er slechts een is.) Eerst gaat dit wat uitvoer produceren die je voorlopig mag negeren (er start namelijk een programma dat automatisch de meest recente opgaves op je systeem zal downloaden). Na even te wachten, zal je dan je \emph{prompt} te zien krijgen:
 
@@ -69,7 +110,7 @@ student@student-VirtualBox:~$ pwd
 /home/student
 \end{verbatim}
 
-In de loop van deze practica zal je nog veel meer van deze commando's tegenkomen met enigszinds obscure namen, die bovendien vaak nog meer obscure manieren hebben om opties mee te geven. Dit probleem wordt een beetje gecompenseerd door de ingebouwde handleiding (\emph{manuals}, \emph{man-pages}). Je kan die opvragen met het commando \verb!man!. Stel je voor dat je je afvraagt wat de opties zijn van het \verb!ls!-commando dat we zometeen gaan zien. Dan type je:
+In de loop van deze sessies zal je nog veel meer van deze commando's tegenkomen met enigszinds obscure namen, die bovendien vaak nog meer obscure manieren hebben om opties mee te geven. Dit probleem wordt een beetje gecompenseerd door de ingebouwde handleiding (\emph{manuals}, \emph{man-pages}). Je kan die opvragen met het commando \verb!man!. Stel je voor dat je je afvraagt wat de opties zijn van het \verb!ls!-commando dat we zometeen gaan zien. Dan type je:
 \begin{verbatim}
 student@student-VirtualBox:~$ man ls
 \end{verbatim}
