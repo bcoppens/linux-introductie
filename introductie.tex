@@ -327,40 +327,79 @@ Tot slot willen we ook bestanden kunnen verwijderen. Dit kan met het
 \verb!rm!-commando.
 
 \section{\texttt{cat} --- Een slechte textviewer}
-Het \verb!cat!-commando gaat de bestanden die het meekrijgt als argument gewoon achter elkaar naar scherm printen. Probeer eens een bestand uit de \verb!computerarchitectuur_practica! directory op scherm te printen.
+
+Het \verb!cat!-commando gaat de inhoud van bestanden die het meekrijgt als
+argument gewoon achter elkaar naar scherm printen. Probeer eens een bestand uit
+de \verb!computerarchitectuur_practica! directory op scherm te printen.
 
 \section{\texttt{less} --- Een simpele textviewer}
-Het \verb!cat!-commando is niet zo handig om tekst in te bekijken. Het zou veel handiger zijn als we de textviewer die gebruikt wordt voor de man-pages niet zouden kunnen hergebruiken. Gelukkig kunnen we die textviewer ook gewoon hergebruiken: dit is het \verb!less!-commando. Probeer met \verb!less! eens hetzelfde bestand te openen als je zonet deed met \verb!cat!.
+
+Het \verb!cat!-commando is niet zo handig om tekst mee te bekijken. Het zou veel
+handiger zijn als we de textviewer die gebruikt wordt voor de man-pages zouden
+kunnen hergebruiken. Gelukkig is dit mogelijk: dit is het \verb!less!-commando.
+Probeer met \verb!less! eens hetzelfde bestand te bekijken als je zonet deed met
+\verb!cat!.
 
 \section{\texttt{touch} --- Een leeg bestand aanmaken}
 
-Met het \verb!touch!-commando kan je een leeg bestand aanmaken. (Dit commando heeft eigenlijk een ander doel, zoals je kan lezen in de man-page. Maar als je het als argument een bestandsnaam geeft die nog niet bestaat, zal het dat bestand aanmaken.)
+Met het \verb!touch!-commando kan je een leeg bestand aanmaken. (Dit commando
+heeft eigenlijk een ander doel, zoals je kan lezen in de man-page. Maar als je
+het als argument een bestandsnaam geeft die nog niet bestaat, zal het dat
+bestand aanmaken.)
 
-Maak in je homedirectory eens een leeg bestand \verb!A! aan. Net zoals bij de vorige commando's, kan je ook meerdere argumenten aan dit commando meegeven, elk van die bestanden zal dan worden aangemaakt.
+Maak in je homedirectory eens een leeg bestand \verb!A! aan. Net zoals bij de
+vorige commando's, kan je ook meerdere argumenten aan dit commando meegeven. Elk
+van die bestanden zal dan worden aangemaakt.
 
-\textbf{Belangrijk!} De verschillende argumenten van een commando worden door een spatie van elkaar gescheiden. Maar als nu een van de argumenten een bestandsnaam is die een spatie bevat, wat dan? Dan kan je dat argument tussen een koppel enkele quote-tekens (\verb!'!) zetten: alles wat daartussen staat, wordt beschouwdt als hetzelfde argument, inclusief spaties. Als we bijvoorbeeld 3 bestanden willen aanmaken, waarvan \'e\'en bestand spaties bevat, kan je dit als volgt doen.
+\textbf{Belangrijk!} De verschillende argumenten van een commando worden door
+een spatie van elkaar gescheiden. Maar als nu een van de argumenten een
+bestandsnaam is die een spatie bevat, wat dan? Dan kan je dat argument tussen
+een koppel enkele quote-tekens (\verb!'!) zetten: alles wat daartussen staat,
+wordt beschouwd als hetzelfde argument, inclusief spaties. Als we bijvoorbeeld 3
+bestanden willen aanmaken, waarvan één bestand wiens naam spaties bevat, kan je
+dit als volgt doen:
 
 \begin{verbatim}
 student@student-VirtualBox:~$ touch bestand1 'bestandsnaam 2 met spaties' bestand3
 \end{verbatim}
 
-Probeer dit zelf eens, en kijk ook hoe dit er uit ziet met zowel \verb!ls! als \verb!ls -lh!. Probeer zo'n bestand ook eens te kopi"eren. Merk bovendien ook op dat het geen kwaad kan om ook quote-tekens te zetten rond argumenten zonder spatie:
+Probeer dit zelf eens, en kijk ook hoe dit er uit ziet met zowel \verb!ls! als
+\verb!ls -lh!. Probeer zo'n bestand ook eens te kopiëren. Merk bovendien ook op
+dat het geen kwaad kan om ook quote-tekens te zetten rond argumenten zonder
+spatie:
 
 \begin{verbatim}
 student@student-VirtualBox:~$ touch 'bestand4' 'bestand5'
 \end{verbatim}
 
-zal 2 extra bestanden aanmaken, waarbij de quotes geen deel uitmaken van de bestandsnaam. Je kan in principe ook dubbele quotes (\verb!"zoals dit"!) gebruiken, maar die hebben een subtiel andere betekenis dan de enkele quote die ik hierboven demonstreerde. Het verschil zal je zien in sessie 3; gebruik tot dan voor de veiligheid gewoon de enkele quotes.
+Dit zal 2 extra bestanden aanmaken, waarbij de quotes geen deel uitmaken van de
+bestandsnaam. Je kan in principe ook dubbele quotes (\verb!"zoals dit"!)
+gebruiken, maar die hebben een subtiel andere betekenis dan de enkele quote die
+ik hierboven demonstreerde. Het verschil zal je zien in sessie 3; gebruik tot
+dan voor de veiligheid gewoon de enkele quotes.
 
 \chapter{Simpele tekstoperaties}
 
-Nu gaan we eens iets doen met de tekstbestandjes. In deze sessie gaan we het eenvoudig houden, en gaan we gewoon de inhoud van bestanden wat doorzoeken en herordenen.
+Nu gaan we ook echt iets doen met deze tekstbestanden. In deze sessie houden we
+het eenvoudig: we gaan simpelweg de inhoud van bestanden doorzoeken en
+herordenen.
 
 \section{\texttt{cut} --- Herordenen van kolommen}
 
-Met het \verb!cut!-commando kan je tekstbestanden onderverdelen in kolommen, en dan een deelverzameling van die kolommen uitprinten op het scherm (in de volgorde die jij wil). De kolommen (\emph{fields}) die je wil printen, geef je aan met het argument dat volgt op \verb!-f!. Het \verb!cut!-commando verdeelt een lijn onder in verschillende kolommen afhankelijk van een \emph{delimiter}. Zoals je in de man-page al kan zien, is deze delimiter standaard een tab-karakter, wat in de praktijk nogal onhandig is; die kan je makkelijk aanpassen met \verb!-d!.
+Met het \verb!cut!-commando kan je tekstbestanden onderverdelen in kolommen, en
+dan een deelverzameling van die kolommen uitprinten op het scherm (in de
+volgorde die jij wil). De kolommen (\emph{fields}) die je wil printen, geef je
+aan met het argument dat volgt op \verb!-f!. Het \verb!cut!-commando verdeelt
+een lijn onder in verschillende kolommen afhankelijk van een \emph{delimiter}.
+Zoals je in de man-page al kan zien, is deze delimiter standaard een
+tab-karakter, wat in de praktijk nogal onhandig is; die kan je makkelijk
+aanpassen met \verb!-d!.
 
-Om een simpel voorbeeld te geven, het bestand \verb!/etc/passwd! bevat informatie over de gebruikers op het systeem. De verschillende velden zijn van elkaar gescheiden door een \verb!:!-karakter. Als je dan bijvoorbeeld per gebruiker de volledige naam (het vijfde veld) en de home-directory van die gebruiker (het zesde veld) wil uitprinten, kan je dit doen als volgt:
+Om een simpel voorbeeld te geven, het bestand \verb!/etc/passwd! bevat
+informatie over de gebruikers op het systeem. De verschillende velden zijn van
+elkaar gescheiden door een \verb!:!-karakter. Als je dan bijvoorbeeld per
+gebruiker de volledige naam (het vijfde veld) en de home-directory van die
+gebruiker (het zesde veld) wil uitprinten, kan je dit doen als volgt:
 
 \begin{verbatim}
 student@student-VirtualBox:~$ cut -d : -f 5,6 /etc/passwd
@@ -370,24 +409,91 @@ Probeer eens een spatie als delimiter te gebruiken?
 
 \chapter{Reguliere expressies}
 
-Reguliere expressies zijn uitdrukkingen die je toestaan om simpele zoekpatronen (dit zijn dan de expressies) te beschrijven die meer zijn dan enkel letterlijke stukken tekst. Achter dit concept zit een heel interessante theoretische achtergrond, die volledig buiten de scope van dit document valt. Wat belangrijk is, is wat je er mee kan en hoe je ze opbouwt.
+Reguliere expressies zijn uitdrukkingen die je toestaan om simpele zoekpatronen
+(dit zijn dan de expressies) te beschrijven die meer zijn dan enkel letterlijke
+stukken tekst. Achter dit concept zit een heel interessante theoretische
+achtergrond, die volledig buiten de scope van dit document valt. Wat belangrijk
+is, is wat je er mee kan en hoe je ze opbouwt.
 
-Je doorzoekt een of meerdere tekstbestand met een reguliere expressie als volgt: \verb!egrep '!\emph{patroon}\verb!' bestand(en)!. Dit gaat alle lijnen uitprinten in de gegeven bestanden die voldoen aan de gegeven reguliere expressie/zoekpatroon. Zo'n patroon zet je opnieuw best tussen quotes, niet alleen omdat een patroon spaties kan bevatten, maar ook omdat bepaalde zoekpatronen speciale karakters zijn in de shell, en door die in quotes te zetten verliezen ze hun speciale betekenis.
+Je doorzoekt een of meerdere tekstbestanden met een reguliere expressie als
+volgt: \verb!egrep '!\emph{patroon}\verb!' bestand(en)!. Dit gaat alle lijnen
+uitprinten in de gegeven bestanden die voldoen aan de gegeven reguliere
+expressie/zoekpatroon. Zo'n patroon zet je opnieuw best tussen quotes, niet
+alleen omdat een patroon spaties kan bevatten, maar ook omdat bepaalde
+zoekpatronen speciale karakters zijn in de shell, en door die in quotes te
+zetten verliezen ze hun speciale betekenis.
 
 Een regulier expressie bouw je op uit kleinere sub-expressies. De belangrijkste sub-expressies en manieren om ze op te bouwen zijn:
 
 \begin{itemize}
-\item \emph{Letterlijke karakter:} Dit geef je gewoon letterlijk in.  Bijvoorbeeld: \verb!egrep 'a' bestand.txt! zoekt geeft alle lijnen die het karakter \emph{a} bevatten in het bestand \verb!bestand.txt!
-\item \emph{Aan elkaar plakken van expressies (concatenation)}: door expressies achter elkaar te plakken, ga je zoeken op de regels die die opeenvolging van expressies bevatten. Zoals je weet van het vorige puntje, is een enkel karakter een expressie; je kan die dan zoals je zou verwachten achter elkaar typen om volledige zinnen te zoeken. Bijvoorbeeld, \verb!egrep 'Linux is tof' bestand.txt! zoekt op de tekst \emph{Linux is tof} (dat is dus de opeenvolging van de tekens \emph{L, i, n, etc.} in het bestand \verb!bestand.txt!.
-\item \emph{Eender welk karakter:} Als je het \verb!.!-karakter in een reguliere expressie op een bepaalde plaats zet, zal gelijk welk karakter daar mogen voorkomen. Bijvoorbeeld: \verb!egrep 'm.h' bestand.txt! zal alle regels uitprinten die tekst bevatten die de vorm heeft van `m, gevolgd door gelijk welk karakter, gevolgd door h'.
-\item \emph{Een bereik (range) van karakters:} soms is \verb!.! te ruim, en wil je enkel regels die op een bepaalde positie een beperkt bereik van karakters toestaan. Dit kan je doen door al die karakters tussen vierkante haakjes te zetten. Bijvoorbeeld: \verb!Bar[td]! is een patroon dat zowel \emph{Bart} als \emph{Bard} zal matchen. Als het bereik groot is, maar op elkaar volgt in de ASCII-tabel, kan je dit afkorten door een streepje: het patroon \verb![a-d]! zal \emph{a,b,c,d} matchen.
-\item \emph{Een keuzemogelijkheid:} als je lijnen wil printen die een van meerdere zoekpatronen matcht, kan je die scheiden van elkaar met een vertikaal streepje, ook wel het \emph{pipe symbol} genoemd: \verb!|!. Bijvoorbeeld, \verb!Aap|Noot|Mies! zal alle lijnen printen die minstens eenmaal \emph{Aap}, \emph{Noot}, of \emph{Mies} bevatten.
-\item \emph{Herhaling, 0 of meer keer:} Als je het voorgaande element 0 of meer keer wil herhalen, dan zet je hier een asterisk na: \verb!ka*t! zal zowel matchen op \emph{kt}, \emph{kat}, \emph{kaat}, etc. Dit werkt uiteraard ook op andere types referenties, \verb![0-9]*! zal matchen op gelijk welke opeenvolging van cijfers (en ook 0 cijfers).
-\item \emph{Herhaling, 1 of meer keer:}, hiervoor gebruiken we een plus-teken. Dus \verb![0-9]*! zal matchen op elk getal, dat minstens uit \'e\'en cijfer bestaat.
-\item \emph{Herhaling, bereik:} dit doe je met accolades en het aantal keer dat het herhaald wordt ertussen. Bijvoorbeeld, als je exact een Googol wil matchen, wat een 1 is gevolgd door 100 0'en, dan kan je dit doen als volgt: \verb!10{100}!. (Dus om precies te zijn: het element voor de accolades is een 0, en dat moet 100 keer worden herhaald.) Je kan ook een heel bereik opgeven (tussen twee getallen, ten hoogste een bepaald getal), de exacte syntax hiervan kan je in de man-page van egrep vinden.
-\item \emph{Groeperen:} De bovenstaande operaties slaan steeds op het vorige \emph{element} in de expressie. Aangezien individuele karakters ook al expressies zijn, wil dit zeggen dat de expressie \verb!Noot{2}! \'enkel zal matchen op \emph{Noott} (dus een dubbele \emph{t}), maar ni\'et op \emph{NootNoot}. Om die operaties op een samenstelling van expressies te zetten, zet je die samenstelling tussen ronde haakjes. Wat tussen ronde haakjes staat, zal dan worden aanzien als een enkele expressie. Dus om \emph{NootNoot} te matchen, kan je dus de expressie \verb!(Noot){2}! gebruiken.
-\item \emph{Begin van een regel:} Dit geef je aan met het teken \verb!^!. Dus \verb!^A! gaat enkel op regels matchen die beginnen met een \emph{A}.
-\item \emph{Einde van een regel:} Dit geef je aan met het teken \verb!$!. Dus \verb!A$! gaat enkel op regels matchen die eindigen op een \emph{A}.
+
+  \item \emph{Letterlijk karakter:} Dit geef je gewoon letterlijk in.
+    Bijvoorbeeld: \verb!egrep 'a' bestand.txt! zoekt geeft alle lijnen die het
+    karakter \emph{a} bevatten in het bestand \verb!bestand.txt!
+
+  \item \emph{Aan elkaar plakken van expressies (concatenation)}: door
+    expressies achter elkaar te plakken, ga je zoeken op de regels die die
+    opeenvolging van expressies bevatten. Zoals je weet van het vorige puntje,
+    is een enkel karakter een expressie; je kan die dan zoals je zou verwachten
+    achter elkaar typen om volledige zinnen te zoeken. Bijvoorbeeld,
+    \verb!egrep 'Linux is tof' bestand.txt! zoekt op de tekst \emph{Linux is
+    tof} (dat is dus de opeenvolging van de tekens \emph{L, i, n, etc.} in het
+    bestand \verb!bestand.txt!.
+
+  \item \emph{Eender welk karakter:} Als je het \verb!.!-karakter in een
+    reguliere expressie op een bepaalde plaats zet, zal gelijk welk karakter
+    daar mogen voorkomen. Bijvoorbeeld: \verb!egrep 'm.h' bestand.txt! zal alle
+    regels uitprinten die tekst bevatten die de vorm heeft van `m, gevolgd door
+    gelijk welk karakter, gevolgd door h'.
+
+  \item \emph{Een bereik (range) van karakters:} soms is \verb!.! te ruim, en
+    wil je enkel regels die op een bepaalde positie een beperkt bereik van
+    karakters toestaan. Dit kan je doen door al die karakters tussen vierkante
+    haakjes te zetten. Bijvoorbeeld: \verb!Bar[td]! is een patroon dat zowel
+    \emph{Bart} als \emph{Bard} zal matchen. Als het bereik groot is, maar op
+    elkaar volgt in de ASCII-tabel, kan je dit afkorten door een streepje: het
+    patroon \verb![a-d]! zal \emph{a,b,c,d} matchen.
+
+  \item \emph{Een keuzemogelijkheid:} als je lijnen wil printen die een van
+    meerdere zoekpatronen matcht, kan je die scheiden van elkaar met een
+    vertikaal streepje, ook wel het \emph{pipe symbol} genoemd: \verb!|!.
+    Bijvoorbeeld, \verb!Aap|Noot|Mies! zal alle lijnen printen die minstens
+    eenmaal \emph{Aap}, \emph{Noot}, of \emph{Mies} bevatten.
+
+  \item \emph{Herhaling, 0 of meer keer:} Als je het voorgaande element 0 of
+    meer keer wil herhalen, dan zet je hier een asterisk na: \verb!ka*t! zal
+    zowel matchen op \emph{kt}, \emph{kat}, \emph{kaat}, etc. Dit werkt
+    uiteraard ook op andere types referenties, \verb![0-9]*! zal matchen op
+    gelijk welke opeenvolging van cijfers (en ook 0 cijfers).
+
+  \item \emph{Herhaling, 1 of meer keer:}, hiervoor gebruiken we een plus-teken.
+    Dus \verb![0-9]*! zal matchen op elk getal, dat minstens uit \'e\'en cijfer
+    bestaat.
+
+  \item \emph{Herhaling, bereik:} dit doe je met accolades en het aantal keer
+    dat het herhaald wordt ertussen. Bijvoorbeeld, als je exact een Googol wil
+    matchen, wat een 1 is gevolgd door 100 0'en, dan kan je dit doen als volgt:
+    \verb!10{100}!. (Dus om precies te zijn: het element voor de accolades is
+    een 0, en dat moet 100 keer worden herhaald.) Je kan ook een heel bereik
+    opgeven (tussen twee getallen, ten hoogste een bepaald getal), de exacte
+    syntax hiervan kan je in de man-page van egrep vinden.
+
+  \item \emph{Groeperen:} De bovenstaande operaties slaan steeds op het vorige
+    \emph{element} in de expressie. Aangezien individuele karakters ook al
+    expressies zijn, wil dit zeggen dat de expressie \verb!Noot{2}! \'enkel zal
+    matchen op \emph{Noott} (dus een dubbele \emph{t}), maar ni\'et op
+    \emph{NootNoot}. Om die operaties op een samenstelling van expressies te
+    zetten, zet je die samenstelling tussen ronde haakjes. Wat tussen ronde
+    haakjes staat, zal dan worden aanzien als een enkele expressie. Dus om
+    \emph{NootNoot} te matchen, kan je dus de expressie \verb!(Noot){2}!
+    gebruiken.
+
+  \item \emph{Begin van een regel:} Dit geef je aan met het teken \verb!^!. Dus
+    \verb!^A! gaat enkel op regels matchen die beginnen met een \emph{A}.
+
+  \item \emph{Einde van een regel:} Dit geef je aan met het teken \verb!$!. Dus
+    \verb!A$! gaat enkel op regels matchen die eindigen op een \emph{A}.
+
 \end{itemize}
 
 Een voorbeeldje:
@@ -396,7 +502,11 @@ Een voorbeeldje:
 student@student-VirtualBox:~$ egrep '(nologin|false)$' /etc/passwd
 \end{verbatim}
 
-zal alle regels in \verb!/etc/passwd! uitprinten die eindigen op ofwel \verb!nologin! ofwel op \verb!false!. Bovendien zal de omgeving die wij gebruiken, \verb!egrep! standaard zo instellen dat de specifieke delen die gematcht worden, gekleurd worden, zodat je duidelijk kan zien waar de matchende expressies voorkomen in elke lijn.
+zal alle regels in \verb!/etc/passwd! uitprinten die eindigen op ofwel
+\verb!nologin! ofwel op \verb!false!. Bovendien zal de omgeving die wij
+gebruiken, \verb!egrep! standaard zo instellen dat de specifieke delen die
+gematcht worden, gekleurd worden, zodat je duidelijk kan zien waar de matchende
+expressies voorkomen in elke lijn.
 
 Standaard gaat \verb!egrep! hoofdlettergevoelig zoeken. Dit wil zeggen dat \verb!egrep 'e'! niet hetzelfde is als \verb!egrep 'E'!: het eerste zal enkel lijnen weergeven die een kleine letter \emph{e} bevatten, het tweede enkel lijnen met een hoofdletter \emph{E}. Je kan die hoofdlettergevoeligheid uitzetten met de \verb!-i! optie: \verb!egrep -i 'e'! zal zowel de hoofdletter als kleine letter \emph{e} matchen.
 
