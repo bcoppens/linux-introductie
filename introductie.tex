@@ -517,29 +517,54 @@ Tot slot kan je \verb!egrep! ook gebruiken om de zoekpatronen te \emph{invertere
 \part{Week 2}
 
 \chapter{Redirects}
-We hebben vorige week gezien hoe we tekstoperaties konden doen op bestanden. Op zich waren die weliswaar reeds nuttig afzonderlijk; maar deze week gaan we kijken hoe we die veel nuttiger kunnen maken: we gaan de uitvoer van programma's opvangen en daar allerhande dingen mee doen.
 
-Wellicht is het je vorige week bij de Dodona-oefening over \verb!strings! ook opgevallen: dat waren heel veel lijnen die over het scherm raasden, dat is niet heel nuttig. We zouden graag iets doen met die uitvoer. We gaan beginnen met de uitvoer te \emph{redirecten} naar een bestand. In de meest simpele manier om dit te doen, geef je dit aan met een groter-dan teken te plaatsen na het commando, gevolgd door een bestandsnaam waar de uitvoer naar geschreven moet worden. Bijvoorbeeld:
+Vorige week hebben we gezien hoe we tekstoperaties konden doen op bestanden.
+Deze waren reeds nuttig afzonderlijk, maar deze week gaan we zien hoe ze veel
+nuttiger te maken: we gaan de uitvoer van programma's opvangen en daar
+allerhande dingen mee doen.
+
+Zoals het je vorige week misschien is opgevallen, kunnen sommige commando's veel
+uitvoer op het scherm genereren. Dit is niet overzichtelijk bepaald
+overzichtelijk, en moeilijk te doorzoeken. Om op gemakkelijkere wijze iets met
+deze uitvoer te kunnen doen, gaan we beginnen met de uitvoer te
+\emph{redirecten} naar een bestand. De meest simpele manier om dit te doen, is
+door een groter-dan teken te plaatsen na het commando, gevolgd door een
+bestandsnaam waar de uitvoer naar geschreven moet worden. Bijvoorbeeld:
 
 \begin{verbatim}
 student@student-VirtualBox:~$ egrep '(nologin|false)$' /etc/passwd > bestand.txt
 \end{verbatim}
 
-maakt het bestand \verb!bestand.txt! aan in de huidige directory (in dit geval: de home-directory), met daarin de uitvoer van het \verb!egrep!-commando.
+maakt het bestand \verb!bestand.txt! aan in de huidige directory (in dit geval:
+de home-directory), met daarin de uitvoer van het \verb!egrep!-commando.
 
-Probeer zelf eens de uitvoer van een van je commando's van vorige week naar een bestand te schrijven.
+Probeer zelf eens de uitvoer van een van je commando's van vorige week naar een
+bestand te schrijven.
 
-Natuurlijk rijst dan de vraag: wat gebeurt er als je de uitvoer redirect naar een bestand dat reeds bestaat? Dit bestand wordt dan \emph{overschreven}. Wil je dat de uitvoer van een programma achteraan een reeds bestaand bestand wordt toegevoegd (\emph{appended}), dan gebruik je een dubbele groter-dan:
+Natuurlijk rijst dan de vraag: wat gebeurt er als je de uitvoer redirect naar
+een bestand dat reeds bestaat? Dit bestand wordt dan \emph{overschreven}. Wil je
+dat de uitvoer van een programma achteraan een reeds bestaand bestand wordt
+toegevoegd (\emph{appended}), dan gebruik je een dubbele groter-dan:
 
 \begin{verbatim}
 student@student-VirtualBox:~$ egrep '(nologin|false)$' /etc/passwd >> bestand.txt
 \end{verbatim}
 
-zal de uitvoer van het \verb!egrep!-commando \emph{achteraan toevoegen} aan \verb!bestand.txt!.
+zal de uitvoer van het \verb!egrep!-commando \emph{achteraan toevoegen} aan
+\verb!bestand.txt!.
 
-Zoals je misschien echter weet, kunnen programma's uitvoer wegschrijven via verschillende \emph{output soorten (output)stream}, die onafhankelijk zijn van elkaar. Het gaat hier over de \emph{standard output} (in Python is dit waar je standaard via \verb!print()! impliciet naar schrijft, of expliciet naar schrijft via \verb!sys.stdout!; in Java is dit \verb!System.out!), en \emph{standard error} (in Python is dit \verb!sys.stderr!, in Java is dit \verb!System.err!).
+Zoals je misschien weet, kunnen programma's uitvoer wegschrijven via
+verschillende soorten \emph{(output)streams}, die onafhankelijk zijn van elkaar.
+Het gaat hier over \emph{standard output} (in Python is dit waar je standaard
+impliciet naar schrijft via \verb!print()!, of expliciet naar schrijft via
+\verb!sys.stdout!; in Java is dit \verb!System.out!), en \emph{standard error}
+(in Python is dit \verb!sys.stderr!, in Java is dit \verb!System.err!). De
+eerste stream dient om normale uitvoer naar te schrijven, de tweede dient om
+alle informatie over fouten naar toe te schrijven.
 
-Het redirecten van uitvoer met een (enkele of dubbele) groter-dan zoals hierboven slaat \'enkel op standard output. Fouten zullen dus niet geredirect worden:
+Het redirecten van uitvoer met een (enkele of dubbele) groter-dan zoals
+hierboven slaat énkel op standard output. Fouten zullen dus niet geredirect
+worden naar een bestand, maar nog altijd op het scherm verschijnen:
 
 \begin{verbatim}
 student@student-VirtualBox:~$ ls /dit/bestand/bestaat/niet > bestand.txt
@@ -548,7 +573,9 @@ student@student-VirtualBox:~$ cat bestand.txt
 student@student-VirtualBox:~$
 \end{verbatim}
 
-Wil je \'enkel de standard error redirecten, dan doe je dit met de syntax \verb!2>!. Wil je samen standard output en standard error redirecten naar eenzelfde bestand, dan doe je dit met de syntax \verb!&>!:
+Wil je énkel standard error redirecten, dan doe je dit met de syntax \verb!2>!.
+Als je zowel standard output als standard error wil redirecten naar eenzelfde
+bestand, dan doe je dit met de syntax \verb!&>!:
 
 \begin{verbatim}
 student@student-VirtualBox:~$ ls /etc/passwd /dit/bestand/bestaat/niet 2> error.txt
