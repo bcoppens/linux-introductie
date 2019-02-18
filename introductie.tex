@@ -566,10 +566,21 @@ ls: cannot access '/dit/bestand/bestaat/niet': No such file or directory
 /etc/passwd
 \end{verbatim}
 
-\chapter{Complexe pijplijnen met pipes}
+\chapter{Pijplijnen van commando's}
 Heel veel van de Linux-tools voor tekstoperaties die we eerder gezien hebben, zoals \verb!egrep!, kunnen die operaties niet enkel toepassen op bestanden, maar ook op \emph{hun input stream}. Door geen bestanden als argument mee te geven, gaat zo een tool automatisch de tekstoperaties uitvoeren op de standard input (en zoals altijd de uitvoer naar standard output sturen). (In het geval dat je eens een programma opstart zonder bestandsargumenten, dan kan je de inputstream afsluiten door op \emph{Ctrl+d} in te drukken. Probeer dit zelf eens met \verb!egrep 'Hallo'!, en dan eens zowel niet-matchende tekst als \emph{Hallo} in te geven.
 
-Nu je weet dat zulke tools ook een stream als invoer kunnen gebruiken, is de logische volgende stap natuurlijk om de invoer en uitvoer van meerdere tools aan elkaar te hangen. Zou bijvoorbeeld .
+Nu je weet dat zulke tools ook een stream als invoer kunnen gebruiken, is de logische volgende stap natuurlijk om de invoer en uitvoer van meerdere tools aan elkaar te hangen (er een pijplijn maken). Zo kan je bijvoorbeeld de uitvoer van een \verb!egrep!-operatie doorsturen als input van een \verb!cut!-operatie. Dit doen we door middel van de vertikale streep (\verb!|!, ook wel \emph{pipe} genoemd) tussen de operaties te zetten. Bijvoorbeeld:
+\begin{verbatim}
+student@student-VirtualBox:~$ egrep 'student' /etc/passwd | cut -d : -f 6
+/home/student
+\end{verbatim}
+
+houdt enkel de lijnen van \verb!/etc/passwd! over die \emph{student} bevatten, en gaat enkel die lijnen onderverdelen in kolommen (met : als delimiter), en print daarvan de 6e kolom. Je kan je pijplijnen zo lang maken als je zelf wil. Uiteindelijk kan je dan het eindresultaat naar een bestand wegschrijven om later te editeren of bekijken. Een andere handige tip is om het \verb!less!-commando de laatste stap van je pijplijn te maken: dan kan je makkelijk scrollen en zoeken in het resultaat.
+
+Probeer eerst zelf eens als opwarmertje om in de woordenboek die je kan vinden op \verb!/usr/share/dict/words! te doorzoeken op alle woorden die eindigen op het suffix \emph{ily}, en pipe die naar het \verb!less!-commando.
+
+Op Dodona vind je nog een reeks opgaven die gaan over pijplijnen met simpele tekstoperaties. Probeer deze op te lossen.
+
 \chapter{Geavanceerde reguliere expressies}
 
 NOOT: OOK IN PYTHON
