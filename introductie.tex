@@ -594,35 +594,88 @@ ls: cannot access '/dit/bestand/bestaat/niet': No such file or directory
 \end{verbatim}
 
 \chapter{Pijplijnen van commando's}
-Heel veel van de Linux-tools voor tekstoperaties die we eerder gezien hebben, zoals \verb!egrep!, kunnen die operaties niet enkel toepassen op bestanden, maar ook op \emph{hun input stream}. Door geen bestanden als argument mee te geven, gaat zo een tool automatisch de tekstoperaties uitvoeren op de standard input (en zoals altijd de uitvoer naar standard output sturen). (In het geval dat je eens een programma opstart zonder bestandsargumenten, dan kan je de inputstream afsluiten door op \emph{Ctrl+d} in te drukken. Probeer dit zelf eens met \verb!egrep 'Hallo'!, en dan eens zowel niet-matchende tekst als \emph{Hallo} in te geven.
 
-Nu je weet dat zulke tools ook een stream als invoer kunnen gebruiken, is de logische volgende stap natuurlijk om de invoer en uitvoer van meerdere tools aan elkaar te hangen (er een pijplijn maken). Zo kan je bijvoorbeeld de uitvoer van een \verb!egrep!-operatie doorsturen als input van een \verb!cut!-operatie. Dit doen we door middel van de vertikale streep (\verb!|!, ook wel \emph{pipe} genoemd) tussen de operaties te zetten. Bijvoorbeeld:
-\begin{verbatim}
-student@student-VirtualBox:~$ egrep 'student' /etc/passwd | cut -d : -f 6
-/home/student
-\end{verbatim}
+Veel van de Linux-tools voor tekstoperaties die we eerder gezien hebben, zoals
+\verb!egrep!, kunnen die operaties niet enkel toepassen op bestanden, maar ook
+op een \emph{input stream}. Door geen bestanden als argument mee te geven, gaat
+zo een tool automatisch de tekstoperaties uitvoeren op de invoer uit
+\emph{standard input} (en zoals altijd de uitvoer naar standard output sturen).
+In het geval dat je eens een programma opstart zonder bestandsargumenten, kan je
+zelf de inputstream afsluiten door \emph{Ctrl+d} in te drukken. Probeer dit zelf
+eens met \verb!egrep 'Hallo'!, en dan eens zowel niet-matchende tekst als
+\emph{Hallo} in te geven.
 
-houdt enkel de lijnen van \verb!/etc/passwd! over die \emph{student} bevatten, en gaat enkel die lijnen onderverdelen in kolommen (met : als delimiter), en print daarvan de 6e kolom. Je kan je pijplijnen zo lang maken als je zelf wil. Uiteindelijk kan je dan het eindresultaat naar een bestand wegschrijven om later te editeren of bekijken. Een andere handige tip is om het \verb!less!-commando de laatste stap van je pijplijn te maken: dan kan je makkelijk scrollen en zoeken in het resultaat.
+Nu je weet dat zulke tools ook een stream als invoer kunnen gebruiken, is de
+logische volgende stap natuurlijk om de invoer en uitvoer van meerdere tools aan
+elkaar te hangen, en er een \emph{pijplijn} van te maken. Zo kan je bijvoorbeeld
+de uitvoer van een \verb!egrep!-operatie doorsturen als invoer van een
+\verb!cut!-operatie. Dit doen we door middel van de vertikale streep (\verb!|!,
+ook wel \emph{pipe} genoemd) tussen de operaties te zetten. Bijvoorbeeld:
+\begin{verbatim} student@student-VirtualBox:~$ egrep 'student' /etc/passwd | cut
+-d : -f 6 /home/student \end{verbatim}
 
-Probeer eerst zelf eens als opwarmertje om in de woordenboek die je kan vinden op \verb!/usr/share/dict/words! te doorzoeken op alle woorden die eindigen op het suffix \emph{ily}, en pipe die naar het \verb!less!-commando.
+houdt enkel de lijnen van \verb!/etc/passwd! over die \emph{student} bevatten,
+en gaat enkel die lijnen onderverdelen in kolommen (met : als delimiter), en
+print daarvan de 6e kolom. Je kan je pijplijnen zo lang maken als je zelf wil.
+Uiteindelijk kan je dan het eindresultaat naar een bestand wegschrijven om later
+te editeren of bekijken. Een andere handige tip is om het \verb!less!-commando
+de laatste stap van je pijplijn te maken: dan kan je makkelijk scrollen en
+zoeken in het resultaat.
 
-Op Dodona vind je nog een reeks opgaven die gaan over pijplijnen met simpele tekstoperaties. Probeer deze op te lossen.
+Probeer eerst zelf eens als opwarmertje om in het woordenboek dat je kan vinden
+op \verb!/usr/share/dict/words! te zoeken op alle woorden die eindigen op het
+suffix \emph{ily}, en pipe deze verolgens naar het \verb!less!-commando.
+
+Op Dodona vind je nog een reeks opgaven over pijplijnen met simpele
+tekstoperaties. Probeer deze op te lossen.
 
 \chapter{Geavanceerde reguliere expressies}
 
-Bovenop de concepten van reguliere expressies die we vorige week gezien hebben, zijn er nog twee gerelateerde concepten die nuttig zijn in de praktijk: backreferences en het gebruiken van reguliere expressies om tekst aan te passen.
+Bovenop de concepten van reguliere expressies die we vorige week gezien hebben,
+zijn er nog twee gerelateerde concepten die nuttig zijn in de praktijk:
+backreferences en het gebruiken van reguliere expressies om tekst automatisch
+aan te passen.
 
 \section{Backreferences}
-Bij backreferences ga je in je expressie expliciet vragen dat bepaalde delen van een match op een andere plaats ook voorkomen, door naar die delen te verwijzen in de expressie. We hebben reeds gezien dat we een groep kunnen aanmaken in een reguliere expressie met behulp van ronde haakjes; je kan later in je expressie verwijzen naar wat tussen die haakjes stond met behulp van de syntax  $\\n$ (waarbij $n$ aangeeft naar welke groep verwezen wordt, en vanaf 1 gestart wordt met tellen). Dus bijvoorbeeld, de expressie \verb!(ba)\1! zal zoeken naar de lijnen die \emph{baba} bevatten. Natuurlijk is dit niet zo nuttig als je enkel volledige strings matcht. Dit wordt echter veel handiger als je naar groepen verwijst die gebruik maken van patronen. Bijvoorbeeld, \verb!egrep '(b.)\1' /usr/share/dict/words! zoekt naar alle woorden die een \emph{directe herhaling} bevatten van de karaktersequentie \emph{b, gevolgd door gelijk welk teken}. Dus dit zal matchen op \emph{im\textbf{bibi}ng}, maar ni\'et op \emph{imbibe} (het teken is immers niet hetzelfde).
 
-\textbf{Nuttig om weten} is dat in veel programmeertalen ook ondersteuning is voor allerhande operaties met reguliere expressies uit te voeren. Zo heeft Python bijvoorbeeld de \verb!re!-module die je hiervoor kan gebruiken: \url{https://docs.python.org/3/library/re.html}.
+Bij backreferences ga je in je expressie expliciet vragen dat bepaalde delen van
+een match op een andere plaats ook voorkomen, door naar die delen te verwijzen
+in de expressie. We hebben reeds gezien dat we een groep kunnen aanmaken in een
+reguliere expressie met behulp van ronde haakjes; je kan later in je expressie
+verwijzen naar wat tussen die haakjes stond met behulp van de syntax  $\\n$
+(waarbij $n$ aangeeft naar welke groep verwezen wordt, en er vanaf 1 gestart
+wordt met tellen). Dus bijvoorbeeld, de expressie \verb!(ba)\1! zal zoeken naar
+de lijnen die \emph{baba} bevatten. Natuurlijk is dit niet zo nuttig als je
+enkel volledige strings matcht. Dit wordt echter veel handiger als je naar
+groepen verwijst die gebruik maken van patronen. Bijvoorbeeld, \verb!egrep '(b.)\1' /usr/share/dict/words! zoekt naar alle woorden die een \emph{directe
+herhaling} bevatten van de karaktersequentie \emph{b, gevolgd door gelijk welk
+teken}. Dit zal dus matchen op \emph{im\textbf{bibi}ng}, maar niét op
+\emph{imbibe} (het gematchte teken is immers niet hetzelfde).
 
+\textbf{Nuttig om weten} is dat veel programmeertalen (of hun
+standaardbibliotheken) ondersteuning bieden om allerhande operaties met
+reguliere expressies uit te voeren. Zo heeft Python bijvoorbeeld de
+\verb!re!-module die je hiervoor kan gebruiken:
+\url{https://docs.python.org/3/library/re.html}.
 
-Op Dodona vind je een aantal oefeningen op het gebruik van zo'n backreferences, los die op.
+Op Dodona vind je een aantal oefeningen op het gebruik van zo'n backreferences,
+los deze op.
 
-student@student-VirtualBox:~\section{Stream editing met reguliere expressies}
+\section{Stream editing met reguliere expressies}
 
-Soms willen we bepaalde sequenties in een tekst verwijderen of veranderen. Hierbij kunnen we gebruik maken van het \verb!sed!-commando. Dit is een vrij krachtig commando, waarvan wij \emph{enkel} de functionaliteit gaan gebruiken om stukken tekst te matchen en veranderen met reguliere expressies. Dit werkt als volgt: \verb!sed -e 's/!\emph{zoekpatroon}\verb!/!\emph{vervangpatroon}\verb!/g'!. (Met optioneel een laatste argument dat een bestand is; indien dit niet gegeven wordt, zal het lezen van zijn input stream.) De \verb!-e! geeft aan dat we een sed-expressie meegeven. In die expressie geeft de \verb!s! aan dat we een \emph{substitutie} gaan doen, van het patroon tussen het de eerste en tweede slash, door het patroon tussen de tweede en derde slash. De \verb!g! achteraan geeft aan dat dit patroon per lijn \emph{globaal} vervangen mag worden. Indien je dit ni\'et meegeeft, gaat per lijn slechts de eerste match vervangen worden. Meestal wil je echter alle voorkomens van een patroon vervangen. Bijvoorbeeld:
+Soms willen we bepaalde sequenties in een tekst verwijderen of veranderen.
+Hierbij kunnen we gebruik maken van het \verb!sed!-commando. Dit is een vrij
+krachtig commando, waarvan we \emph{enkel} de functionaliteit gaan gebruiken om
+stukken tekst te matchen en veranderen met reguliere expressies. Dit werkt als
+volgt: \verb!sed -e 's/!\emph{zoekpatroon}\verb!/!\emph{vervangpatroon}\verb!/g'!. (Met optioneel
+een laatste argument dat een bestand is; indien dit niet gegeven wordt, zal het
+lezen van zijn input stream.) De \verb!-e! geeft aan dat we een sed-expressie
+meegeven. In die expressie geeft de \verb!s! aan dat we een \emph{substitutie}
+gaan doen, van het patroon tussen het de eerste en tweede slash, door het
+patroon tussen de tweede en derde slash. De \verb!g! achteraan geeft aan dat dit
+patroon per lijn \emph{globaal} vervangen mag worden. Indien je dit niét
+meegeeft, gaat per lijn slechts de eerste match vervangen worden. Meestal wil je
+echter alle voorkomens van een patroon vervangen. Bijvoorbeeld:
 
 \begin{verbatim}
 student@student-VirtualBox:~$ sed -e 's/:/ /g' /etc/passwd
@@ -635,17 +688,31 @@ daemon x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
 ...
 \end{verbatim}
 
-Ook hier wordt het nog interessanter eens je complexere expressies in je zoekpatronen gebruikt. Bovendien kan je in je substitutie ook verwijzen naar groepen in je zoekexpressie, om zo dingen van plaats te veranderen. \textbf{Opgelet}: de syntax voor reguliere expressies is in \verb!sed! helaas iets omslachtiger dan \verb!egrep!. De operators \verb!+!, \verb!?!, \verb!{}!, en \verb!()! moeten voorafgegaan worden door een backslash (\verb!\!). Bijvoorbeeld, in het bestand \verb!/etc/passwd! staan enkele lijnen waarbij de gebruikersnaam (het veld voor de eerste \verb!:!) een streepje bevat. Willen we nu eens dat bestand editeren zodat wat voor en na het streepje staat gewisseld wordt van plaats (zodat \verb!systemd-network! wordt omgezet in \verb!network-systemd!, en alle andere lijnen ongewijzigd blijven), kan dit als volgt:
+Ook hier wordt het nog interessanter eens je complexere expressies in je
+zoekpatronen gebruikt. Bovendien kan je in je substitutie ook verwijzen naar
+groepen in je zoekexpressie, om zo dingen van plaats te veranderen.
+\textbf{Opgelet}: de syntax voor reguliere expressies is in \verb!sed! helaas
+iets omslachtiger dan \verb!egrep!. De operators \verb!+!, \verb!?!, \verb!{}!,
+en \verb!()! moeten voorafgegaan worden door een backslash (\verb!\!).
+Bijvoorbeeld, in het bestand \verb!/etc/passwd! staan enkele lijnen waarbij de
+gebruikersnaam (het veld voor de eerste \verb!:!) een streepje bevat. Willen we
+nu eens dat bestand editeren zodat hetgeen voor en na het streepje staat van
+plaats gewisseld wordt (zodat \verb!systemd-network! wordt omgezet in
+\verb!network-systemd!, en alle andere lijnen ongewijzigd blijven), kan dit als
+volgt:
 
 \begin{verbatim}
 sed -e 's/^systemd-\([^:]\+\):/\1-systemd:/g' /etc/passwd
 \end{verbatim}
 
-Merk hierbij op dat (net zoals bij \verb!egrep!) een \verb!^! aan het begin van een karakterbereik aangeeft dat dit karakterbereik ge"inverteerd moet worden: \verb![^:]! is dus gelijk welk teken dat g\'e\'en \verb!:! is.
+Merk hierbij op dat (net zoals bij \verb!egrep!) een \verb!^! aan het begin van
+een karakterbereik aangeeft dat dit karakterbereik ge"inverteerd moet worden:
+\verb![^:]! is dus gelijk welk teken dat géén \verb!:! is.
 
 Probeer te begrijpen hoe deze vervang-expressie werkt.
 
-Ook hier staan wat oefeningen op Dodona over (al dan niet in combinatie met \verb!egrep!).
+Ook hierover staan er weer wat oefeningen op Dodona (al dan niet in combinatie
+met \verb!egrep!).
 
 \chapter{Een simpele tekstverwerker op de command line}
 
