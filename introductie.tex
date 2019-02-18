@@ -611,8 +611,9 @@ elkaar te hangen, en er een \emph{pijplijn} van te maken. Zo kan je bijvoorbeeld
 de uitvoer van een \verb!egrep!-operatie doorsturen als invoer van een
 \verb!cut!-operatie. Dit doen we door middel van de vertikale streep (\verb!|!,
 ook wel \emph{pipe} genoemd) tussen de operaties te zetten. Bijvoorbeeld:
-\begin{verbatim} student@student-VirtualBox:~$ egrep 'student' /etc/passwd | cut
--d : -f 6 /home/student \end{verbatim}
+\begin{verbatim}
+student@student-VirtualBox:~$ egrep 'student' /etc/passwd | cut -d : -f 6 /home/student
+\end{verbatim}
 
 houdt enkel de lijnen van \verb!/etc/passwd! over die \emph{student} bevatten,
 en gaat enkel die lijnen onderverdelen in kolommen (met : als delimiter), en
