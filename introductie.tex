@@ -809,7 +809,29 @@ Voor C++-programma's is dit allemaal identiek, maar dan met \verb!g++! op beide
 plaatsen, in plaats van \verb!gcc!.
 
 \chapter{Make-files}
-Wat je voor het compileren van echter vaak in Linux-achtige systemen gaat zien dat mensen de commando's niet elke keer alle compilatiestappen manueel opnieuw gaan uitvoeren. Enerzijds wil je namelijk een scriptje dat voor jou alle compilatiestappen uitvoert, en anderzijds wil je niet elke keer \emph{alle} bestanden hercompileren als je slechts \'e\'en bronbestand aangepast hebt. Hiervoor worden makefiles gebruikt. Dit zijn bestanden die de naam \verb!Makefile! hebben. Deze bevatten regels die een link hebben tussen een \emph{doelbestand}, de verschillende acties die nodig zijn om dat doelbestand te genereren, en de bronbestanden die nodig zijn hiervoor. Lijnen die meteen beginnen met de naam van een bestand, gevolgd door een \verb!:!, geven aan dat deze regels een doelbestand defini"eren. Na de \verb!:! komt dan een lijst van bestanden (dit kunnen zowel bronbestanden als intermediaire bestanden zijn) die nodig zijn om dit doelbestand te genereren. Alle lijnen die volgen op zo'n doelbestand-regel, en bovendien \textbf{beginnen met een tab-karakter}, geven de acties aan die nodig zijn. Finaal wil je dan die makefile gebruiken met het \verb!make!-commando om de regels te triggeren om je doelbestand te genereren. Het \verb!make!-commando gaat dan automatisch de afhankelijkheden berekenen, kijken voor welke doelbestanden (een van) de bronbestanden meer recent gewijzigd is dan het doelbestand zelf, en zal dan slechts enkel die regels uitvoeren. Een voorbeeld van een makefile die hoort bij de C-bestanden van vorig hoofdstuk, zou er als volgt kunnen uitzien:
+
+Voor het compileren van programma's op Linux-achtige systemen wil de doorsnee
+gebruiker niet alle stappen elke keer alle stappen manueel opnieuw uitvoeren.
+Enerzijds wil je namelijk een scriptje dat voor jou alle compilatiestappen
+uitvoert, en anderzijds wil je niet elke keer \emph{alle} bronbestanden
+hercompileren als je slechts er slechts één van aangepast hebt. Om deze
+problemen op te lossen, werden \emph{Makefiles} uitgevonden. Deze bestanden
+hebben doorgaans als bestandsnaam \verb!Makefile!, en bevatten een reeks regels.
+Elk zo'n regel beschrijft een \emph{doelbestand}, de verschillende acties die
+nodig zijn om dat doelbestand te genereren, en de bronbestanden die nodig zijn
+hiervoor. Lijnen die meteen beginnen met de naam van een bestand, gevolgd door
+een \verb!:!, geven aan dat deze regels een doelbestand defini"eren. Na de
+\verb!:! komt dan een lijst van bestanden (dit kunnen zowel bronbestanden als
+intermediaire bestanden zijn) die nodig zijn om dit doelbestand te genereren.
+Alle lijnen die volgen op zo'n doelbestand-regel, en bovendien \textbf{beginnen
+met een tab-karakter}, geven de acties aan die nodig zijn voor het genereren.
+Finaal wil je dan die makefile gebruiken met het \verb!make!-commando om de
+regels te triggeren om je doelbestand te genereren. Het \verb!make!-commando
+gaat dan automatisch de afhankelijkheden berekenen, kijken voor welke
+doelbestanden (een van) de bronbestanden meer recent gewijzigd is dan het
+doelbestand zelf, en zal dan slechts enkel die regels uitvoeren. Een voorbeeld
+van een makefile die hoort bij de C-bestanden van vorig hoofdstuk, zou er als
+volgt kunnen uitzien:
 
 \begin{verbatim}
 student@student-VirtualBox:~$ cat Makefile
@@ -820,7 +842,9 @@ main.o: main.c
 print.o: print.c
         gcc -c print.c
 \end{verbatim}
-waarbij het inspringen \emph{gebeurt met een tab-karakter}. Als we even alle reeds bestaande objectbestand en uitvoerbare bestanden weghalen, kunnen we nu opnieuw beginnen als volgt:
+waarbij het inspringen \emph{gebeurt met een tab-karakter}. Als we even alle
+reeds bestaande objectbestand en uitvoerbare bestanden weghalen, kunnen we nu
+opnieuw beginnen als volgt:
 
 \begin{verbatim}
 student@student-VirtualBox:~$ make hallo
@@ -829,7 +853,8 @@ gcc -c print.c
 gcc -o hallo main.o print.o
 \end{verbatim}
 
-Indien we nu \verb!print.c! zouden aanpassen, gaat \verb!make! niet meer \verb!print.o! hergenereren:
+Indien we nu \verb!main.c! zouden aanpassen, gaat \verb!make! niet meer
+\verb!print.o! hergenereren:
 
 \begin{verbatim}
 student@student-VirtualBox:~$ make hallo 
@@ -837,13 +862,25 @@ gcc -c main.c
 gcc -o hallo main.o print.o
 \end{verbatim}
 
-Indien we \emph{niets} veranderen, gaat  \verb!make! ook doorhebben dat er niets moet veranderd worden om \verb!hallo! up to date te houden:
+Indien we \emph{niets} veranderen, gaat  \verb!make! ook doorhebben dat er niets
+moet veranderd worden om \verb!hallo! up to date te houden:
 \begin{verbatim}
 student@student-VirtualBox:~$ make hallo 
 make: 'hallo' is up to date.
 \end{verbatim}
 
-Het is echter nogal saai om in een makefile altijd expliciet voor elk C-bestand te moeten schrijven hoe je het compileert. Die gaan namelijk allicht allemaal op dezelfde manier gecompileerd moeten worden. Gelukkig ondersteunt \verb!make! ook regels die kunnen matchen op een patroon in een bestandsnaam, en dan acties uit te voeren die gebaseerd zijn op die patronen. Dit zou ons te ver leiden, de ge"interesseerden kunnen hierover meer lezen in de manual op \url{https://www.gnu.org/software/make/manual/html_node/Pattern-Rules.html}. Het volstaat om te weten dat voor C-files al zo'n regels impliciet actief zijn als je ze niet zelf defini"eert, en dat je de compilatievlaggen (zoals het optimalisatieniveau) kan instellen door in je makefile een \verb!CFLAGS!-variabele toe te wijzen. Een meer flexibele versie van onze bovenstaande makefile ziet er dan ook als volgt uit:
+Het is echter nogal saai om in een makefile altijd expliciet voor elk C-bestand
+te moeten schrijven hoe je het compileert. Die gaan namelijk allicht allemaal op
+dezelfde manier gecompileerd moeten worden. Gelukkig ondersteunt \verb!make! ook
+regels die kunnen matchen op een patroon in een bestandsnaam, en dan acties uit
+te voeren die gebaseerd zijn op die patronen. Dit zou ons te ver leiden, de
+ge"interesseerden kunnen hierover meer lezen in de manual op
+\url{https://www.gnu.org/software/make/manual/html_node/Pattern-Rules.html}. Het
+volstaat om te weten dat er voor C-files al zo'n regels impliciet actief zijn
+als je ze niet zelf defini"eert, en dat je de compilatievlaggen (zoals het
+optimalisatieniveau) kan instellen door in je makefile een
+\verb!CFLAGS!-variabele toe te wijzen. Een meer flexibele versie van onze
+bovenstaande makefile ziet er dan ook als volgt uit:
 
 \begin{verbatim}
 student@student-VirtualBox:~$ cat Makefile 
@@ -857,12 +894,29 @@ cc -O2   -c -o print.o print.c
 gcc -o hallo main.o print.o
 \end{verbatim}
 
-Tot slot is het ook handig om weten dat voor echt grote projecten, met complexe afhankelijkheden, makefiles zelf schrijven op een platformonafhankelijke en configureerbare manier sterk afgeraden wordt. Tegenwoordig gebruikt men vaak tools die, gebaseerd op een high-level beschrijving en handig configureerbare instellingen voor jou zelf (complexe) makefiles genereren. Een tool die vaak gebruikt wordt hiervoor is CMake, dat je kan vinden op \url{https://cmake.org/}/
+Tot slot is het ook handig om weten dat voor echt grote projecten, met complexe
+afhankelijkheden, makefiles zelf schrijven op een platformonafhankelijke en
+configureerbare manier sterk afgeraden wordt. Tegenwoordig gebruikt men vaak
+tools die, gebaseerd op een high-level beschrijving en handig configureerbare
+instellingen voor jou zelf (complexe) makefiles genereren. Een tool die vaak
+gebruikt wordt hiervoor is \emph{CMake}, dat je kan vinden op
+\url{https://cmake.org/}/
 
 \chapter{Administratietaken op Linux}
-Veel Linux-distributies komen met een grote verscheidenheid aan pakketten die je makkelijk kan installeren. Debian-gebaseerde systemen (waarvan het systeem op de VM er een is), maken hiervoor gebruik van het \verb!apt!-commando. Met die tool kan je door de verschillende installeerbare pakketten zoeken, ze installeren, etc. (Debian-gebaseerde systemen bieden voor die taken ook de commando's \verb!apt-get! en \verb!apt-cache! aan, die je misschien soms ook in on-line manuals zal tegenkomen. Die kan je hier nu even negeren.)
 
-Zoeken naar pakketten doe je met \verb!apt search! \emph{keywords}. Stel dat je weet dat er een pakket is met een tool die allerhande bewerkingen met het klembord (\emph{clipboard}) toestaat. Dan kan je naar dit pakket zoeken als volgt:
+Veel Linux-distributies komen met een grote verscheidenheid aan
+softwarepakketten die je makkelijk kan installeren. Debian-gebaseerde systemen
+(zoals het systeem op de VM) maken hiervoor gebruik van het \verb!apt!-commando.
+Met die tool kan je door de verschillende installeerbare pakketten zoeken, ze
+installeren, etc. Debian-gebaseerde systemen bieden voor die taken ook de
+(onderliggende, ietwat diepgaandere) commando's \verb!apt-get! en
+\verb!apt-cache! aan, die je misschien soms ook in on-line manuals zal
+tegenkomen. Wij zullen het hier echter op \verb!apt! houden.
+
+Zoeken naar pakketten doe je met \verb!apt search! \emph{keywords}. Stel dat je
+weet dat er een pakket is met een tool die allerhande bewerkingen met het
+klembord (\emph{clipboard}) toestaat. Dan kan je naar dit pakket zoeken als
+volgt:
 \begin{verbatim}
 student@student-VirtualBox:~$ apt search clipboard tool
 Sorting... Done
@@ -877,7 +931,8 @@ xsel/testing,now 1.2.0+git9bfc13d.20180109-1 amd64 [installed,automatic]
   command-line tool to access X clipboard and selection buffers
 \end{verbatim}
 
-Wil je een uitgebreidere beschrijving van een pakket waarvan je de naam weet, kan je die verkrijgen met \verb!apt show! \emph{pakketnaam}:
+Wil je een uitgebreidere beschrijving van een pakket waarvan je de naam weet,
+kan je die verkrijgen met \verb!apt show! \emph{pakketnaam}:
 
 \begin{verbatim}
 student@student-VirtualBox:~$ apt show xsel
@@ -891,7 +946,17 @@ Description: command-line tool to access X clipboard and selection buffers
 
 Paketten installeren doe je met \verb!apt install! \emph{pakketnaam}.
 
-\textbf{Opgelet}: pakketten moet je installeren als de administrator, niet als gewone gebruiker. Totnogtoe hebben we alles als de gewone \verb!student!-gebruiker kunnen doen. Nu volstaat dit niet. Om taken uit te voeren als adminstrator (die gebruiker heet onder Linux-systemen de \verb!root!-gebruiker), kan je dit doen met het \verb!sudo!-commando. Dit commando kan je gebruiken om andere commando's uit te voeren onder het account van een andere gebruiker (standaard is dit als \verb!root!), mits je account daar de juiste privileges voor hebt. Je moet dan, voor de veiligheid, eerst nog eens het wachtwoord van jezelf ingeven:
+\textbf{Opgelet}: pakketten moet je installeren als de administrator, niet als
+gewone gebruiker. Totnogtoe hebben we alles als de gewone
+\verb!student!-gebruiker kunnen doen. Nu volstaat dit niet, en zullen we deze
+taken moeten uitvoeren als administrator. Die gebruiker heet onder
+Linux-systemen de \verb!root!-gebruiker (vroeger ook wel
+\textbf{s}uper\textbf{u}ser). Om een commando als \verb!root! uit te voeren
+gebruik je het \verb!sudo!-commando. Dit commando kan je gebruiken om andere
+commando's uit te voeren onder het account van een andere gebruiker (standaard
+is dit als \verb!root!), mits je eigenlijke account daar de juiste privileges
+voor hebt. Je moet dan, voor de veiligheid, eerst nog eens het wachtwoord van
+jezelf ingeven:
 
 \begin{verbatim}
 student@student-VirtualBox:~$ sudo apt install xsel
@@ -899,9 +964,14 @@ student@student-VirtualBox:~$ sudo apt install xsel
 ....
 \end{verbatim}
 
-Wil je de lijst paketten bijwerken met de meest actuele versies, moet je dit doen met \verb!apt update! (als \verb!root!-gebruiker).
+Wil je de lijst paketten bijwerken met de meest actuele versies, dan moet je dit
+doen met \verb!apt update! (als \verb!root!-gebruiker).
 
-Indien je ooit een \verb!bash!-shell zou willen opstarten als \verb!root!-gebruiker, dan doe je dit met \verb!sudo su! (maar let dan \emph{h\'e\'el} goed op met wat je doet, want voor je het weet heb je je systeem om zeep geholpen \verb!:)!).
+Indien je ooit een \verb!bash!-shell zou willen opstarten als
+\verb!root!-gebruiker, dan doe je dit met \verb!sudo su! (maar let dan
+\emph{h\'e\'el} goed op met wat je doet, want voor je het weet heb je je systeem
+om zeep geholpen \verb!:)!).
+
 \part{Week 3}
 
 To be continued \verb!:)!
