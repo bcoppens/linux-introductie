@@ -467,7 +467,7 @@ Een regulier expressie bouw je op uit kleinere sub-expressies. De belangrijkste 
     gelijk welke opeenvolging van cijfers (en ook 0 cijfers).
 
   \item \emph{Herhaling, 1 of meer keer:}, hiervoor gebruiken we een plus-teken.
-    Dus \verb![0-9]*! zal matchen op elk getal, dat minstens uit \'e\'en cijfer
+    Dus \verb![0-9]+! zal matchen op elk getal, dat minstens uit \'e\'en cijfer
     bestaat.
 
   \item \emph{Herhaling, bereik:} dit doe je met accolades en het aantal keer
@@ -514,7 +514,78 @@ Tot slot kan je \verb!egrep! ook gebruiken om de zoekpatronen te \emph{invertere
 
 \textbf{Oefeningen} Op Dodona kan je hierover enkele extra oefeningen vinden! Ik zou aanraden om deze zeker te maken.
 
-\part{Weken 2 en 3}
-Wordt vervolgt \verb!:)!
+\part{Week 2}
+
+\chapter{Redirects}
+We hebben vorige week gezien hoe we tekstoperaties konden doen op bestanden. Op zich waren die weliswaar reeds nuttig afzonderlijk; maar deze week gaan we kijken hoe we die veel nuttiger kunnen maken: we gaan de uitvoer van programma's opvangen en daar allerhande dingen mee doen.
+
+Wellicht is het je vorige week bij de Dodona-oefening over \verb!strings! ook opgevallen: dat waren heel veel lijnen die over het scherm raasden, dat is niet heel nuttig. We zouden graag iets doen met die uitvoer. We gaan beginnen met de uitvoer te \emph{redirecten} naar een bestand. In de meest simpele manier om dit te doen, geef je dit aan met een groter-dan teken te plaatsen na het commando, gevolgd door een bestandsnaam waar de uitvoer naar geschreven moet worden. Bijvoorbeeld:
+
+\begin{verbatim}
+student@student-VirtualBox:~$ egrep '(nologin|false)$' /etc/passwd > bestand.txt
+\end{verbatim}
+
+maakt het bestand \verb!bestand.txt! aan in de huidige directory (in dit geval: de home-directory), met daarin de uitvoer van het \verb!egrep!-commando.
+
+Probeer zelf eens de uitvoer van een van je commando's van vorige week naar een bestand te schrijven.
+
+Natuurlijk rijst dan de vraag: wat gebeurt er als je de uitvoer redirect naar een bestand dat reeds bestaat? Dit bestand wordt dan \emph{overschreven}. Wil je dat de uitvoer van een programma achteraan een reeds bestaand bestand wordt toegevoegd (\emph{appended}), dan gebruik je een dubbele groter-dan:
+
+\begin{verbatim}
+student@student-VirtualBox:~$ egrep '(nologin|false)$' /etc/passwd >> bestand.txt
+\end{verbatim}
+
+zal de uitvoer van het \verb!egrep!-commando \emph{achteraan toevoegen} aan \verb!bestand.txt!.
+
+Zoals je misschien echter weet, kunnen programma's uitvoer wegschrijven via verschillende \emph{output soorten (output)stream}, die onafhankelijk zijn van elkaar. Het gaat hier over de \emph{standard output} (in Python is dit waar je standaard via \verb!print()! impliciet naar schrijft, of expliciet naar schrijft via \verb!sys.stdout!; in Java is dit \verb!System.out!), en \emph{standard error} (in Python is dit \verb!sys.stderr!, in Java is dit \verb!System.err!).
+
+Het redirecten van uitvoer met een (enkele of dubbele) groter-dan zoals hierboven slaat \'enkel op standard output. Fouten zullen dus niet geredirect worden:
+
+\begin{verbatim}
+student@student-VirtualBox:~$ ls /dit/bestand/bestaat/niet > bestand.txt
+ls: cannot access '/dit/bestand/bestaat/niet': No such file or directory
+student@student-VirtualBox:~$ cat bestand.txt
+student@student-VirtualBox:~$
+\end{verbatim}
+
+Wil je \'enkel de standard error redirecten, dan doe je dit met de syntax \verb!2>!. Wil je samen standard output en standard error redirecten naar eenzelfde bestand, dan doe je dit met de syntax \verb!&>!:
+
+\begin{verbatim}
+student@student-VirtualBox:~$ ls /etc/passwd /dit/bestand/bestaat/niet 2> error.txt
+/etc/passwd
+student@student-VirtualBox:~$ cat error.txt
+ls: cannot access '/dit/bestand/bestaat/niet': No such file or directory
+student@student-VirtualBox:~$ ls /etc/passwd /dit/bestand/bestaat/niet 2> error.txt > bestand.txt
+student@student-VirtualBox:~$ cat bestand.txt
+/etc/passwd
+student@student-VirtualBox:~$ cat error.txt
+ls: cannot access '/dit/bestand/bestaat/niet': No such file or directory
+student@student-VirtualBox:~$ ls /etc/passwd /dit/bestand/bestaat/niet &> alles.txt
+student@student-VirtualBox:~$ cat alles.txt
+ls: cannot access '/dit/bestand/bestaat/niet': No such file or directory
+/etc/passwd
+\end{verbatim}
+
+\chapter{Complexe pijplijnen met pipes}
+Heel veel van de Linux-tools voor tekstoperaties die we eerder gezien hebben, zoals \verb!egrep!, kunnen die operaties niet enkel toepassen op bestanden, maar ook op \emph{hun input stream}. Door geen bestanden als argument mee te geven, gaat zo een tool automatisch de tekstoperaties uitvoeren op de standard input (en zoals altijd de uitvoer naar standard output sturen). (In het geval dat je eens een programma opstart zonder bestandsargumenten, dan kan je de inputstream afsluiten door op \emph{Ctrl+d} in te drukken. Probeer dit zelf eens met \verb!egrep 'Hallo'!, en dan eens zowel niet-matchende tekst als \emph{Hallo} in te geven.
+
+Nu je weet dat zulke tools ook een stream als invoer kunnen gebruiken, is de logische volgende stap natuurlijk om de invoer en uitvoer van meerdere tools aan elkaar te hangen. Zou bijvoorbeeld .
+\chapter{Geavanceerde reguliere expressies}
+
+NOOT: OOK IN PYTHON
+
+\chapter{Andere operaties}
+find, xargs
+
+\chapter{Compileren op de command line}
+
+\part{Week 3}
+
+To be continued \verb!:)!
+
+\chapter{Remote shell}
+
+% https://gaia.ugent.be/helios/account.cgi
+% ksh -> bash
 
 \end{document}
