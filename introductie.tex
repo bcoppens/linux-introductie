@@ -638,13 +638,16 @@ daemon x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
 Ook hier wordt het nog interessanter eens je complexere expressies in je zoekpatronen gebruikt. Bovendien kan je in je substitutie ook verwijzen naar groepen in je zoekexpressie, om zo dingen van plaats te veranderen. \textbf{Opgelet}: de syntax voor reguliere expressies is in \verb!sed! helaas iets omslachtiger dan \verb!egrep!. De operators \verb!+!, \verb!?!, \verb!{}!, en \verb!()! moeten voorafgegaan worden door een backslash (\verb!\!). Bijvoorbeeld, in het bestand \verb!/etc/passwd! staan enkele lijnen waarbij de gebruikersnaam (het veld voor de eerste \verb!:!) een streepje bevat. Willen we nu eens dat bestand editeren zodat wat voor en na het streepje staat gewisseld wordt van plaats (zodat \verb!systemd-network! wordt omgezet in \verb!network-systemd!, en alle andere lijnen ongewijzigd blijven), kan dit als volgt:
 
 \begin{verbatim}
-sed -e 's/^systemd-\([^:]\+\):/\1-systemd/g' /etc/passwd
+sed -e 's/^systemd-\([^:]\+\):/\1-systemd:/g' /etc/passwd
 \end{verbatim}
+
 Merk hierbij op dat (net zoals bij \verb!egrep!) een \verb!^! aan het begin van een karakterbereik aangeeft dat dit karakterbereik ge"inverteerd moet worden: \verb![^:]! is dus gelijk welk teken dat g\'e\'en \verb!:! is.
+
+Probeer te begrijpen hoe deze vervang-expressie werkt.
 
 Ook hier staan wat oefeningen op Dodona over (al dan niet in combinatie met \verb!egrep!).
 
-\chapter{Andere nuttige operaties met pipes}
+\chapter{Bestandsyssteemoperaties combineren met pipes}
 find, xargs
 
 \chapter{Compileren op de command line}
