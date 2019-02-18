@@ -714,17 +714,37 @@ Probeer te begrijpen hoe deze vervang-expressie werkt.
 Ook hierover staan er weer wat oefeningen op Dodona (al dan niet in combinatie
 met \verb!egrep!).
 
-\chapter{Een simpele tekstverwerker op de command line}
+\chapter{Nano: Een simpele tekstverwerker op de command line}
 
-Normaalgezien gaan jullie je bestanden editeren in een grafische tekstverwerker, en hier dan acties op uitvoeren op de command line. In sommige omstandigheden kan het echter handig zijn om een bestand te editeren vanop de command line. Hiervoor bestaan verschillende soorten tekstverwerkers. Deze week gaan we kennis maken met een heel eenvoudige tekstverwerker: \verb!nano!. Je start deze editor op met als \verb!nano bestand.txt!. Je kan hier gewoon tekst in typen. Onderaan het scherm staan de acties die je kan doen, en hoe je ze moet oproepen. Hierbij geeft een hoedje (\^) aan dat je de Ctrl-toets moet ingeduwd houden. Als er onderaan dus staat: \verb!^O Write Out!, wil dit dus zeggen dat om het bestand weg te schrijven, je Ctrl+o moet typen. Gelijkaardig moet je Ctrl+x intypen om de editor te verlaten.
+Normaal gezien gaan jullie je bestanden editeren in een grafische
+tekstverwerker, en er vervolgens acties op uitvoeren op de command line. In
+sommige omstandigheden kan het echter handig zijn om een bestand te editeren
+vanop de command line. Hiervoor bestaan verschillende soorten tekstverwerkers.
+Deze week gaan we kennis maken met een heel eenvoudige tekstverwerker:
+\verb!nano!. Je start deze editor op met \verb!nano bestand.txt!. Je kan hier
+gewoon tekst in typen. Onderaan het scherm staan de acties die je kan doen, en
+hoe je ze moet oproepen. Hierbij geeft een hoedje (\^) aan dat je de
+\emph{Ctrl-toets} moet ingeduwd houden. Als er onderaan dus staat: \verb!^O Write Out!,
+wil dit dus zeggen dat om het bestand weg te schrijven, je \emph{Ctrl+o} moet
+typen. Gelijkaardig moet je \emph{Ctrl+x} intypen om de editor te verlaten.
 
 Speel even met \verb!nano! om een klein bestandje te schrijven.
 
 
 \chapter{Compileren op de command line}
-Hier gaan we beknopt leren hoe we C en C++-bestanden gaan compileren vanop de command line. We maken hiervoor gebruik van compilers van de GNU Compiler Collection: de C compiler \verb!gcc! en de C++ compiler \verb!g++!. 
 
-Ruw gesproken bestaat wat je vaak zou beschouwen als \emph{compileren} eigenlijk uit twee stappen: het omzetten/compileren van \emph{individuele} bronbestanden in binaire bestanden (ook wel \emph{objectbestanden} of \emph{object files} genoemd), en het \emph{linken} van al deze objectbestanden in een enkel uitvoerbaar bestand. Dus we gaan even twee C-bestanden maken: \verb!print.c! en \verb!main.c!, elk met een inhoud als volgt
+\emph{Compileren} is het omzetten/vertalen van bronbestanden (geschreven in
+bijvoorbeeld C) naar uitvoerbare bestanden, die zogeheten \emph{binaire code}
+bevatten. Hier gaan we beknopt leren hoe C en C++-bestanden te compileren vanop
+de command line. We maken hiervoor gebruik van compilers van de GNU Compiler
+Collection: de C compiler \verb!gcc! en de C++ compiler \verb!g++! 
+
+Ruw gesproken bestaat wat je vaak zou beschouwen als compileren eigenlijk
+uit twee stappen: het omzetten van \emph{individuele} bronbestanden
+in binaire bestanden (ook wel \emph{objectbestanden} of \emph{object files}
+genoemd), en het \emph{linken} van al deze objectbestanden in één enkel
+uitvoerbaar bestand. We beginne met twee C-bestanden te maken: \verb!print.c! en
+\verb!main.c!. Deze hebben de volgende inhoud:
 
 \begin{verbatim}
 student@student-VirtualBox:~$ cat print.c
@@ -736,7 +756,13 @@ void print();
 int main() { print(); }
 \end{verbatim}
 
-Willen we deze twee bestanden compileren en linken tot een uitvoerbaar bestand, dan gaan we als volgt te werk. Om een bestand te compileren, gebruiken we de optie \verb!-c! van de respectievelijke compiler (in dit geval \verb!gcc!), en geven we als argument(en) de bestanden die we willen compileren naar een objectbestand. De compiler zal deze bestanden automatisch dezelfde naam geven als de invoerbestanden, maar met het suffix \verb!.o! (verwijzend naar het feit dat het een objectbestand is). Dus:
+Willen we deze twee bestanden compileren en linken tot een uitvoerbaar bestand,
+dan gaan we als volgt te werk. Om een bestand te compileren, gebruiken we de
+optie \verb!-c! van de respectievelijke compiler (in dit geval \verb!gcc!), en
+gebruiken we als argument(en) de bestanden die we willen compileren naar een
+objectbestand. De compiler zal deze bestanden automatisch dezelfde naam geven
+als de invoerbestanden, maar met het suffix \verb!.o! (verwijzend naar het feit
+dat het een objectbestand is). Dus:
 
 \begin{verbatim}
 student@student-VirtualBox:~$ gcc -c main.c print.c 
@@ -745,7 +771,20 @@ student@student-VirtualBox:~$ ls -lh main.o print.o
 -rw-r--r-- 1 student student 1.5K Feb 18 15:56 print.o
 \end{verbatim}
 
-Willen we deze twee bestanden nu tot een uitvoerbaar bestand linken, volstaat het om de gebruikte compiler op te roepen, ditkeer met de objectbestanden als argumenten. Nu hoeven we niet meer aan te geven dat ze gecompileerd moeten worden. De compiler kan nu echter niet meer raden wat de naam moet zijn van het finale bestand. Dit moeten we manueel doen met de optie \verb!-o!. Tot slot, als je een zelf gecompileerd uitvoerbaar bestand wil oproepen, kan je dit niet zomaar intypen. Je moet een padverwijzing gebruiken die ofwel een absolute verwijzing is, ofwel begint met een \emph{expliciete verwijzing} vanaf de huidige directory (\verb!./!) (voor de ge"interesseerden: dit heeft te maken met de \verb!PATH! omgevingsvariabele, je kan dit gerust eens opzoeken hoe dat werkt, maar dat valt buiten de scope van deze korte introductie). Dus willen we het uitvoerbaar bestand \verb!hallo! noemen (op Linux gebruik je normaalgezien geen \verb!.exe!-suffix), dan kan dit als volgt:
+Willen we deze twee bestanden nu tot een uitvoerbaar bestand combineren/linken,
+volstaat het om de gebruikte compiler op te roepen, maar deze keer met
+objectbestanden als argumenten. Dan moeten we niet meer aangeven dat deze
+bestanden gecompileerd moeten worden. De compiler vereist nu wel een naam voor
+het finale, gelinkte bestand. Deze naam stellen we manueel in met de optie
+\verb!-o!. Tot slot, als je een uitvoerbaar bestand dat je zelf gecompileerd
+hebt wil laten uitvoeren, kan je dit niet zomaar intypen. Je moet een
+padverwijzing gebruiken die ofwel een absolute verwijzing is, ofwel begint met
+een \emph{expliciete verwijzing} vanaf de huidige directory (\verb!./!) (voor de
+ge"interesseerden: dit heeft te maken met de \verb!PATH! omgevingsvariabele, je
+kan dit gerust eens opzoeken hoe dat werkt, maar dat valt buiten de scope van
+deze korte introductie). Als we het uitvoerbaar bestand \verb!hallo! willen
+noemen (op Linux gebruik je normaal gezien geen \verb!.exe!-suffix), en dan
+uitvoeren, dan kan dit als volgt:
 
 \begin{verbatim}
 student@student-VirtualBox:~$ gcc -o hallo main.o print.o
@@ -753,13 +792,20 @@ student@student-VirtualBox:~$ ./hallo
 Hallo iedereen!
 \end{verbatim}
 
-Wil je optimalisaties gebruiken, dan ga je bij het compileren de optimalisatievlaggen moeten meegeven met \verb!-O!$n$, waarbij $n$ het verwachte optimalisatieniveau is, want anders genereert je compiler heel ineffici"ente code. De bestaande niveaus gaan van \verb!-O0! (geen optimalisaties, maar het compileren gaat snel), naar \verb!-O3! (heel effici"ente code, maar het compileren zal trager zijn bij grote codebases). Vaak wordt \verb!-O2! als tussenweg gekozen:
+Wil je optimalisaties gebruiken, dan ga je bij het compileren de
+optimalisatievlaggen moeten meegeven met \verb!-O!$n$, waarbij $n$ het verwachte
+optimalisatieniveau is, want anders genereert je compiler heel ineffici"ente
+code. De bestaande niveaus gaan van \verb!-O0! (geen optimalisaties, maar het
+compileren gaat snel), naar \verb!-O3! (heel effici"ente code, maar het
+compileren zal trager zijn bij grote codebases). Vaak wordt \verb!-O2! als
+tussenweg gekozen:
 \begin{verbatim}
 student@student-VirtualBox:~$ gcc -O2 -c main.c print.c 
 student@student-VirtualBox:~$ gcc -o hallo main.o print.o
 \end{verbatim}
 
-Voor C++-programma's is dit allemaal identiek, maar dan met \verb!g++! op beide plaatsen, in plaats van \verb!gcc!.
+Voor C++-programma's is dit allemaal identiek, maar dan met \verb!g++! op beide
+plaatsen, in plaats van \verb!gcc!.
 
 \chapter{Make-files}
 Wat je voor het compileren van echter vaak in Linux-achtige systemen gaat zien dat mensen de commando's niet 
