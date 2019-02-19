@@ -654,6 +654,14 @@ herhaling} bevatten van de karaktersequentie \emph{b, gevolgd door gelijk welk
 teken}. Dit zal dus matchen op \emph{im\textbf{bibi}ng}, maar niét op
 \emph{imbibe} (het gematchte teken is immers niet hetzelfde).
 
+Een ander voorbeeld: het patroon \verb!^([0-9]).*\1$! geeft aan dat het lijnen matcht die beginnen
+met een bepaald cijfer, gevolgd door een sequentie van gelijk welk teken, en dat eindigt in hetzelfde cijfer
+als het begon. Dus: \textbf{9}hallo\textbf{9} matcht wel, \textbf{9}hallo\textbf{0} matcht \emph{niet}.
+Een voorbeeld met twee groepen: \verb!([aeiouy]).\1([^aeiouy])\2! is een patroon dat matcht op woorden
+die ergens twee een klinker bevat, gevolgd door gelijk welk teken, gevolgd door \emph{dezelfde} klinker, gevolgd
+door twee keer \emph{dezelfde} medeklinker. Dus \emph{useless} matcht, want groep 1 bevat hier de \emph{e} (die dus voorkomt zowel voor als na de \emph{l}), en groep
+2 bevat hier de bevat hier de \emph{s}.
+
 \textbf{Nuttig om weten} is dat veel programmeertalen (of hun
 standaardbibliotheken) ondersteuning bieden om allerhande operaties met
 reguliere expressies uit te voeren. Zo heeft Python bijvoorbeeld de
