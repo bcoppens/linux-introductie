@@ -95,6 +95,10 @@ Het materiaal behorende tot weken 2 en 3 zal voor die lessen online komen.
 \textbf{Deze handleiding zal dus ook nog twee keer aangepast worden met het nu
 nog ontbrekende materiaal van weken 2 en 3!}
 
+\section{Acknowledgements}
+Deze tekst werd in hoofdzaak geschreven door Bart Coppens en Bert Abrath. Verder
+kregen we een zeer nuttige opmerking van Simon Bil.
+
 \part{Week 1}
 \chapter{Het bestandssysteem in Linux}
 Voor we beginnen met het echte werk, is het nuttig om enkele basisconcepten
@@ -677,10 +681,11 @@ Soms willen we bepaalde sequenties in een tekst verwijderen of veranderen.
 Hierbij kunnen we gebruik maken van het \verb!sed!-commando. Dit is een vrij
 krachtig commando, waarvan we \emph{enkel} de functionaliteit gaan gebruiken om
 stukken tekst te matchen en veranderen met reguliere expressies. Dit werkt als
-volgt: \verb!sed -e 's/!\emph{zoekpatroon}\verb!/!\emph{vervangpatroon}\verb!/g'!. (Met optioneel
+volgt: \verb!sed -E -e 's/!\emph{zoekpatroon}\verb!/!\emph{vervangpatroon}\verb!/g'!. (Met optioneel
 een laatste argument dat een bestand is; indien dit niet gegeven wordt, zal het
 lezen van zijn input stream.) De \verb!-e! geeft aan dat we een sed-expressie
-meegeven. In die expressie geeft de \verb!s! aan dat we een \emph{substitutie}
+meegeven. De \verb!-E! optie geeft aan dat we graag leesbare reguliere expressies willen.
+In die expressie geeft de \verb!s! aan dat we een \emph{substitutie}
 gaan doen, van het patroon tussen het de eerste en tweede slash, door het
 patroon tussen de tweede en derde slash. De \verb!g! achteraan geeft aan dat dit
 patroon per lijn \emph{globaal} vervangen mag worden. Indien je dit niét
@@ -688,11 +693,11 @@ meegeeft, gaat per lijn slechts de eerste match vervangen worden. Meestal wil je
 echter alle voorkomens van een patroon vervangen. Bijvoorbeeld:
 
 \begin{verbatim}
-student@student-VirtualBox:~$ sed -e 's/:/ /g' /etc/passwd
+student@student-VirtualBox:~$ sed -E -e 's/:/ /g' /etc/passwd
 root x 0 0 root /root /bin/bash
 daemon x 1 1 daemon /usr/sbin /usr/sbin/nologin
 ....
-student@student-VirtualBox:~$ sed -e 's/:/ /' /etc/passwd
+student@student-VirtualBox:~$ sed -E -e 's/:/ /' /etc/passwd
 root x:0:0:root:/root:/bin/bash
 daemon x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
 ...
@@ -701,9 +706,8 @@ daemon x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
 Ook hier wordt het nog interessanter eens je complexere expressies in je
 zoekpatronen gebruikt. Bovendien kan je in je substitutie ook verwijzen naar
 groepen in je zoekexpressie, om zo dingen van plaats te veranderen.
-\textbf{Opgelet}: de syntax voor reguliere expressies is in \verb!sed! helaas
-iets omslachtiger dan \verb!egrep!. De operators \verb!+!, \verb!?!, \verb!{}!,
-en \verb!()! moeten voorafgegaan worden door een backslash (\verb!\!).
+De syntax voor reguliere expressies is in \verb!sed! gelijkaardig aan die \verb!egrep!
+indien je de \verb!-E! optie meegeeft aan \verb!sed!.
 Bijvoorbeeld, in het bestand \verb!/etc/passwd! staan enkele lijnen waarbij de
 gebruikersnaam (het veld voor de eerste \verb!:!) een streepje bevat. Willen we
 nu eens dat bestand editeren zodat hetgeen voor en na het streepje staat van
@@ -712,7 +716,7 @@ plaats gewisseld wordt (zodat \verb!systemd-network! wordt omgezet in
 volgt:
 
 \begin{verbatim}
-sed -e 's/^systemd-\([^:]\+\):/\1-systemd:/g' /etc/passwd
+sed -E -e 's/^systemd-([^:]+):/\1-systemd:/g' /etc/passwd
 \end{verbatim}
 
 Merk hierbij op dat (net zoals bij \verb!egrep!) een \verb!^! aan het begin van
