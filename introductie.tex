@@ -1125,9 +1125,29 @@ Om een terminal (zoals een remote terminal of een terminal-in-een-terminal) af t
 
 Het gebruik van ssh kan trouwens ook handig zijn als je thuis bijvoorbeeld een Raspberry Pi zou liggen hebben die Linux draait: deze kan je dan ook proberen bedienen en configureren via ssh, in plaats van via een toetsenbord en scherm.
 
-\chapter{Bestandsyssteemoperaties combineren met pipes}
-% Soms kan het ook handig zijn dat we een operatie willen toepassen op een aantal verschillende bestanden. We kunnen zoals hierboven altijd manueel dit bestand opgeven als argument aan het eerste commando. Soms weet je echter op voorhand niet welke bestanden dit allemaal zijn. Bijvoorbeeld wil je alle bestanden die eindigen op \verb!.backup! verwijderen met het \verb!rm!-commando. Dit kan je in twee stappen doen: een tool die je bestanden zoekt en print naar zijn standard output, en een tool die leest van zijn standard input, en elk van de bestanden daarop een actie kan uitvoeren.
-% 
+\chapter{Bestanden zoeken en verwerken}
+Soms kan het ook handig zijn dat we een operatie willen toepassen op een aantal verschillende bestanden. We kunnen zoals hierboven altijd manueel dit bestand opgeven als argument aan het eerste commando. Soms weet je echter op voorhand niet welke bestanden dit allemaal zijn. Bijvoorbeeld wil je alle bestanden die eindigen op \verb!.backup! verwijderen met het \verb!rm!-commando.
+
+De eerste stap is een commando dat bestanden oplijst en filtert. Dit kan je doen met het \verb!find!-commando: in zijn meest simpele vorm gaat dit recursief alle bestanden en subdirectories afprinten die te vinden zijn in het argument. Probeer eens te kijken wat het verschil is tussen \verb!ls /dev/! en \verb!find /dev/!.
+
+Het \verb!find!-commando ondersteunt veel opties. De eerste die we gaan gebruiken is die om enkel bestanden uit te printen die een bepaald patroon matchen: \verb!-iregex! \emph{patroon} (de \verb!i! staat hier voor het feit dat het een case-insensitive zoekopdracht is). Het patroon moet hierbij matchen op \emph{het hele pad}. Bijvoorbeeld \verb!find . -iregex '.*[0-9]\.pdf'! zal alle bestanden uitprinten die eindigen op een cijfer gevolgd door \verb!.pdf!. Merk hierbij dus wel op dat, 1) het pad dat je doorzoekt \emph{vóór} het zoekargument staat, en 2) omdat de expressie het hele pad moet matchen, je moet beginnen met \verb!.*!. (Er bestaat ook een iéts simpeler manier om te zoeken, waar je géén reguliere expressies gebruikt: \verb!-name!, maar \verb!-iregex! is krachtiger en zo kan je je kennis over reguliere expressies ook hier toepassen.)
+
+\verb!find! heeft een héél uitgebreide repertoire aan manieren waarop je de bestanden kan filteren. Om er slechts enkele te noemen: je kan enkel uitvoerbare bestanden oplijsten, enkel bestanden oplijsten die recenter gewijzigd zijn dan een opgegeven tijd, enkel bestanden die groter of kleiner zijn dan een bepaalde grootte, etc. Die filters kan je bovendien ook met elkaar combineren. Meer info hierover kan je vinden in de man-page van \verb!find! onder de sectie \emph{TESTS}; de man-page heeft ook een uitgebreide lijst voorbeelden onderaan staan.
+
+Bovendien ondersteunt \verb!find! ook een hele hoop \emph{acties} die kunnen uitgevoerd worden bij elk bestand dat voldoet aan de zoekfilter. Standaard gebruikt \verb!find! de actie die al de bestanden gewoon uitprint naar het scherm (dit is de \verb!-print! actie). Willen we een bepaald commando oproepen voor elk bestand dat we gevonden hebben, gebruiken we het argument \verb!-execdir! als volgt: \verb!-execdir ... {} ... \;'!, waarbij het commando start met het eerste wat volgt op de \verb!-execdir!, en waarbij de \verb!{}! vervangen wordt door de bestandsnaam. Het commando eindigt op de plaats van de \verb!\;!. (Technisch gezien moet het commando eindigen op een \verb!;!, maar de shell interpreteert een \verb!;! standaard als het einde van een commando, en niet als een argument. Daarom moet je het escapen met een \verb!\!.) Het commando wordt opgestart in de directory waar het gevonden bestand zich bevindt.
+
+Bijvoorbeeld:
+\begin{verbatim}
+$ find /bin/ -iregex '.*less'
+/bin/zless
+/bin/bzless
+/bin/less
+$ find /bin/ -iregex '.*less' -execdir diff {} /bin/bash \;
+Binary files ./zless and /bin/bash differ
+Binary files ./bzless and /bin/bash differ
+Binary files ./less and /bin/bash differ
+\end{verbatim}
+Bij het de eerste invocatie van \verb!find! gaan we zoeken naar alle bestanden die ergens te vinden zijn in \verb!/bin/! die eindigen op \verb!less!, en deze gewoon printen naar het scherm (in mijn geval zijn dit dus 3 bestanden). Bij de tweede invocatie, gaan we elk van deze gevonden bestanden vergelijken met het (binaire) bestand \verb!/bin/bash!, en meer specifiek gaan we elk van deze bestanden opgeven als éérste argument van het \verb!diff!-commando. Dus er zal worden uitgevoerd \verb!diff !\emph{gevonden bestand}\verb! /bin/bash!, voor élk van de gevonden bestanden.
 
 \chapter{Variabelen en controlestructuren}
 
