@@ -1266,6 +1266,8 @@ Hier kan je de verschillende stappen zien:
 Kijk als voorbeeld bijvoorbeeld eens naar hoe groot de schijven zijn die in
 Helios zitten.
 
+Een aantal commando's die wellicht eens leuk zijn om mee te experimenteren op Helios zijn: \verb!ps! om een tekstueel overzicht te geven van alle draaiende processen (waarbij \verb!ps aux! er voor zorgt dat meer informatie over meer processen wordt uitgeprint), \verb!free! om informatie over het beschikbare gebeugen print, en \verb!htop! dat een visuele overzicht maakt van niet alleen de lopende processen (die je dan kan sorteren op allerhande manieren), visueel laat zien hoeveel geheugen beschikbaar is en gebruikt wordt, maar ook laat zien hoeveel CPU's er in een machine zitten en hoe zwaar deze bezet worden. Probeer eens al deze commando's uit op Helios. (Kijk eens of je ook de gebruikersnamen van medestudenten kan herkennen als zij toevallig op dat moment ook ingelogd zijn!)
+
 Om een terminal (zoals een remote terminal of een terminal-in-een-terminal) af
 te sluiten, kan je ofwel gewoon \verb!exit! typen, ofwel de invoer van de shell
 afsluiten door \emph{Ctrl+D} te typen (wat net hetzelfde is als toen we de
@@ -1524,13 +1526,23 @@ Als je meer wil leren over hoe diff te gebruiken, is er een interactieve
 tutorial die je kan starten met het \verb!vimtutor!-commando.
 
 \chapter{Versiecontrole met git}
+Tot slot is het zeer interessant om wat kennis te hebben van \emph{(gedistribueerde) versiecontrole} (\emph{(distributed) version control}), en daarbij gebruik te kunnen maken van \verb!git!.
 
+Als je aan een project aan het werken bent (en dat kan dan vaak een codeproject zijn, maar dat kan ook het schrijven van een paper, boek, introductie tot Linux, etc. zijn), is het vaak nuttig om vorige versies van je (bron)bestanden bij te houden. Liefst zelfs op z'o een manier dat je makkelijk kan teruggaan naar een set van bestanden die allemaal met elkaar compatibel zijn en die samen werken. (Dus dat je niet moet zoeken naar een tijdstip waarop alle aanpassingen die je aan functiesignaturen in je headerbestanden van een C-project hebt gemaakt, ook allemaal doorgevoerd zijn naar je C-bestanden.) Dit is zelfs nog belangrijker als je met meerdere mensen samen aan één project werkt. Dan heb je graag dat mensen thuis onafhankelijk aan features kunnen werken, daar werkende versies bijhouden, en dan achteraf deze verschillende onafhankelijke aanpassingen kan samenvoegen. Dit is het toepassingsgebied van gedistribueerde versiecontrole. (Lees: als je dat nu doet door elke avond ZIP-files naar alle groepsleden door te sturen, stop daar mee en leer \verb!git!.)
 
+\verb!git! is een tool die er voor zorgt dat je (sets) bestanden kan bijhouden in een \emph{repository}, en op bepaalde punten actief zal zeggen dat een bepaalde set bestanden een nieuwe set aanpassingen heeft die moet worden bewaard (in een \emph{commit}). Je kan lokaal aanpassingen maken, geschiedenis bekijken van bestanden, en oudere versies terughalen en vergelijken met elkaar (bijvoorbeeld als een feature plots stopt met werken, kan je proberen achterhalen welke aanpassingen je gemaakt hebt tussen de werkende en de kapotte versie). Bovendien is \verb!git! een \emph{gedistribueerd} systeem, wat wil zeggen dat meerdere mensen (of servers, computers, etc.) elk hun eigen lokale kopie van je repository kunnen hebben, en daar ook lokaal (of via het web) dezelfde acties kunnen op uitvoeren, onafhankelijk van wat jij aan het doen bent. Bovendien zijn er dan bedrijven die de service aanbieden dat je er (met een account) je repository kan naar doorsturen, zodat jij en je groepsgenoten (of collega's) samen je verschillende versies kan delen (en samenvoegen) via die services. De meest bekende hiervan is \emph{GitHub}, te vinden op \url{https://github.com/}, waar je zowel publieke als private repositories kan aanmaken (maar bij private kan je slechts met een beperkt aantal mensen samenwerken op de gratis versie). GitHub heeft ook een \emph{GitHub Enterprise} versie voor bedrijven; de UGent betaalt hier ook voor en je kan deze versie vinden op \url{https://github.ugent.be/}. Hierbij kan je dan onbeperkt (en voor jullie gratis) private repositories aanmaken met onbeperkt veel anderen, zolang deze mensen tot de UGent behoren.
+
+Als je meer wil leren hierover, raad ik aan om enkele tutorials te volgen: eentje over \verb!git! zelf (zoals bijvoorbeeld voor de pure basics, \url{https://guides.github.com/introduction/git-handbook/}), en eenje over de functionaliteit van de web-interface van GitHub (zoals op \url{https://guides.github.com/activities/hello-world/}). Wil je meer de details ook kennen, raad ik ook aan om naar de eerste hoofdstukken van het \emph{Pro Git} boek te lezen, dat gratis te lezen/downloaden is op \url{https://git-scm.com/book/en/v2}.
+
+Als je eens een voorbeeld wil zien van hoe zo'n repository er uitziet, kan ik verwijzen naar enkele voorbeelden:
+\begin{itemize}
+\item Een van de repositories van een project bij ons kan je vinden op \url{https://github.com/aspire-fp7/framework}, waar je kan zien dat je niet alleen de broncode kan bekijken online, maar dat je meteen ook wat korte documentatie kan laten zien in het web-overzicht.
+\item Een voorbeeld van de geschiedenis online bekijken op een repository die op de UGent-GitHub staat: deze repository (en dus de bijhorende geschiedenis) is dus enkel zichtbaar voor mensen met een UGent-account: \url{https://github.ugent.be/bcoppens/revisualise-cko/commits/master}
+\item Een serieuze (academisch) open source project: \url{https://github.com/panda-re/panda}
+\item Dat je niet enkel code hoeft te bewaren via \verb!git! kan ik allicht best laten zien door te linken naar de repository die hoort bij deze cursustekst: \url{https://github.com/bcoppens/linux-introductie/commits/master}.
+\end{itemize}
 
 \chapter{Parting words}
-
-TODO TODO: ps?
-
-portability naar andere shells, cheat sheets, ...?
+In deze cursus hebben we echter redelijk veel concepten op een vrij korte termijn gezien. Dat jullie niet alles gaan onthouden is niet erg, zolang jullie later, als je nog eens ergens met de Linux command line iets moet doen, je je nog vaag herinnert wat er allemaal mogelijk is, en vooral geen schrik hebt om nog eens op te zoeken (al dan niet in deze cursus, of een van de vele sheat cheets die je online kan vinden, of waar dan ook) wat er mogelijk was. En dat als je later eens ergens een tool hebt die een hoop uitvoer naar een terminal spuwt, maar waar je eigenlijk slechts ge"interesseerd bent in een deeltje, dat je dan herinnert dat er zoiets was als \verb!egrep!. En dat je reguliere expressies (inclusief meer geavanceerde features zoals capture groups, lookahead/look behind, etc.) ook kan gebruiken in Python \verb!:)!.
 
 \end{document}
