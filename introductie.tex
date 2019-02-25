@@ -1346,12 +1346,31 @@ bestanden opgeven als éérste argument van het \verb!diff!-commando. Het
 uitgevoerde commando wordt dan \verb!diff !\emph{gevonden bestand}\verb! /bin/bash!,
 voor élk van de gevonden bestanden.
 
-\textbf{Side-note: het gebruik van geschiedenis}. Je terminal houdt standaard een geschiedenis bij van de meest recente commando's die je invoert. Je kan die printen met het \verb!history! commando, maar je kan er ook door wandelen met de pijltjes omhoog/omlaag en zo vorige commando's opnieuw uit te voeren (al dan niet nadat je het wat aangepast hebt). Je kan er ook in zoeken door \emph{Ctrl+R} te typen, en dan een deel van het commando te typen waar je naar op zoek bent. Als je bijvoorbeeld ergens een lange, moeilijke \verb!egrep!-invocatie opnieuw wil draaien, kan je \emph{Ctrl+R}\verb!egrep! typen, waarna je naar de meest recente invocatie van \verb!egrep! komt. Als je nogmaals \emph{Ctrl+R} induwt, ga je naar de invocatie daarvoor, etc. Door op \emph{Escape} te duwen kan je het commando eerst aanpassen alvorens uit te voeren; je kan ook meteen op \emph{Enter} duwen om dit commando meteen terug uit te voeren.
+\textbf{Side-note: het gebruik van geschiedenis}. Je terminal houdt standaard
+een geschiedenis bij van de meest recent gebruikte commando's. Je kan deze
+printen met het \verb!history! commando, maar je kan er ook door wandelen met
+de pijltjes omhoog/omlaag en zo vorige commando's opnieuw uit te voeren (al dan
+niet nadat je het wat aangepast hebt). Je kan er ook in zoeken door
+\emph{Ctrl+R} te typen, en dan een deel van het commando te typen waar je naar
+op zoek bent. Als je bijvoorbeeld ergens een lange, moeilijke
+\verb!egrep!-invocatie opnieuw wil draaien, kan je \emph{Ctrl+R}\verb!egrep!
+typen, waarna je naar de meest recente invocatie van \verb!egrep! komt. Als je
+nogmaals \emph{Ctrl+R} induwt, ga je naar de invocatie daarvoor, etc. Door op
+\emph{Escape} te duwen kan je het commando eerst aanpassen alvorens uit te
+voeren; je kan ook meteen op \emph{Enter} duwen om dit commando meteen terug
+uit te voeren.
 
 \chapter{Scripting}
-Met de shell kan je ook taken automatiseren, en dus met andere woorden (kleine) programma's schrijven. Dit wordt ook wel \emph{shell scripting} genoemd. Om programma's te schrijven hebben we wel enkele extra concepten nodig: variabelen en controlestructuren. 
 
-Een variabele ken je een waarde toe met de syntax \verb!VARIABELE='waarde'!. (Variabelen gaan we meestal in allemaal hoofdletters schrijven voor de duidelijkheid.) Je kan de waarde van een variabele elders gebruiken door er als volgt naar te verwijzen: \verb!${VARIABELE}!. Bijvoorbeeld:
+Met de shell kan je ook taken automatiseren, en dus met andere woorden (kleine)
+programma's schrijven. Dit wordt ook wel \emph{shell scripting} genoemd. Om
+programma's te schrijven hebben we wel enkele extra concepten nodig: variabelen
+en controlestructuren.
+
+Een variabele ken je een waarde toe met de syntax \verb!VARIABELE='waarde'!.
+(Variabelen gaan we meestal in allemaal hoofdletters schrijven voor de
+duidelijkheid.) Je kan de waarde van een variabele elders gebruiken door er als
+volgt naar te verwijzen: \verb!${VARIABELE}!. Bijvoorbeeld:
 
 \begin{verbatim}
 $ BESTAND='/bin/bash'
@@ -1359,14 +1378,24 @@ $ ls -lh ${BESTAND}
 -rwxr-xr-x 1 root root 1.2M Jan 14 16:27 /bin/bash
 \end{verbatim}
 
-We kunnen de waarde van een variabele naar het scherm printen met behulp van het \verb!echo!-commando. Dit commando gaat al zijn argumenten printen naar het scherm; dus ook enige variabelen die het als argument meekrijgt:
+We kunnen de waarde van een variabele naar het scherm printen met behulp van
+het \verb!echo!-commando. Dit commando gaat al zijn argumenten printen naar het
+scherm; dus ook enige variabelen die het als argument meekrijgt:
 \begin{verbatim}
 $ BESTAND='/bin/bash'
 $ echo Het bestand is ${BESTAND}
 Het bestand is /bin/bash
 \end{verbatim}
 
-Soms ga je willen dat een variabele deel uitmaakt van een groter, langer argument (al dan niet met spaties). Totnogtoe hebben we lange argumenten (met bijvoorbeeld spaties in) aangegeven door het tussen enkele quotes te zetten. We kunnen iets gelijkaardigs willen, maar dan met variabelen. Dit kan echter niet zomaar: als je in de shell iets tussen enkele quotes zet, gaan variabelen niet vervangen worden door hun waarde. Als je wil dat de variabele effectief vervangen wordt, dan zet je dit argument tussen dubbele quotes (\verb!"!). Je kan het verschil makkelijk zien in het volgende voorbeeld:
+Soms ga je willen dat een variabele deel uitmaakt van een groter, langer
+argument (al dan niet met spaties). Totnogtoe hebben we lange argumenten (met
+bijvoorbeeld spaties in) aangegeven door het tussen enkele quotes te zetten. We
+kunnen iets gelijkaardigs nodig hebben, maar dan met variabelen. Dit kan echter
+niet zomaar: als je in de shell iets tussen enkele quotes zet, wordt deze tekst
+letterlijk gebruikt, en wordt er niet aan substitutie gedaan. Als je wil dat de
+variabele effectief vervangen wordt, dan zet je dit argument tussen dubbele
+quotes (\verb!"!). Je kan het verschil makkelijk zien in het volgende
+voorbeeld:
 
 \begin{verbatim}
 $ BESTAND='/bin/bash'
@@ -1376,11 +1405,31 @@ $ echo "Deze hele string is een enkel argument, en het bestand is ${BESTAND}"
 Deze hele string is een enkel argument, en het bestand is /bin/bash
 \end{verbatim}
 
-In de shell zijn al standaard een aantal variabelen gedefinieerd. Degene die je allicht het `meest' zal gebruikt zien (wat nog altijd heel zelden zal zijn), zijn de \verb!${USER}!-variabele die de naam van de huidige gebruiker bevat, en de \verb!${PWD}!-variabele die de huidige directory bevat. Dit zijn beide omgevingsvariabelen (\emph{environment variables}): deze gaan ook uitgelezen worden door (sommige) programma's, die er acties aan zullen kunnen koppelen. Standaard worden niet echter slechts een beperkte set van deze variabelen doorgegeven. Als je expliciet wil aangeven dat processen die je start in je shell deze variabelen kunnen uitlezen, dan kan dit op twee manieren: ofwel exporteer je deze globaal met de syntax \verb!export VARIABELE! (en dan zal deze beschikbaar blijven in alle commando's die je erna start), of exporteer je een variabele enkel voor de uitvoering van een bepaald commando met de syntax \verb!VARIABELE='waarde' commando!. In de praktijk zal je dit allemaal slechts zeer zelden nodig hebben; dit is een vrij fragiele manier van werken. Helaas zijn er sommige commando's die bepaalde opties via zo'n variabelen uitlezen.
+In de shell zijn al standaard een aantal variabelen gedefinieerd. Degene die je
+allicht het `meest' zal gebruikt zien (wat nog altijd heel zelden zal zijn),
+zijn de \verb!${USER}!-variabele die de naam van de huidige gebruiker bevat, en
+de \verb!${PWD}!-variabele die het absoluut pad naar de huidige directory
+bevat. Dit zijn beide omgevingsvariabelen (\emph{environment variables}): deze
+worden ook gebruikt door (sommige) programma's, die er acties aan zullen kunnen
+koppelen. Standaard wordt er echter slechts een beperkte set van deze
+variabelen doorgegeven aan een nieuw commando. Als je expliciet wil aangeven
+dat processen die je start in je shell deze variabelen kunnen uitlezen, dan kan
+dit op twee manieren: ofwel exporteer je deze globaal met de syntax
+\verb!export VARIABELE! (en dan zal deze beschikbaar blijven in alle commando's
+die je erna start), of exporteer je een variabele enkel voor de uitvoering van
+een bepaald commando met de syntax \verb!VARIABELE='waarde' commando!. In de
+praktijk zal je dit allemaal slechts zeer zelden nodig hebben; dit is namelijk
+een vrij fragiele manier van werken. Helaas zijn er sommige commando's die
+bepaalde opties via zo'n variabelen uitlezen.
 
 % Een voorbeeld van commando's die omgevingsvariabelen gebruiken om zijn functionaliteit aan te passen is \verb!sort!. Hoewel dit commando al vrij uitgebreide commandline opties heeft die je laten configureren of je in plaats van tekstueel misschien wel numeriek wil sorteren, of op SI-suffixes, of op maanden, of op ..., is dit niet altijd eenduidig. Sorteren op tekst is allemaal goed en wel, maar bepaalde letters moet je in bepaalde talen op een andere manier sorteren. Waar wij in het Nederlands niet echt letten op of een letter een diakritisch teken bevat of niet voor het sorteren, is dit wel zo in andere talen, zoals bijvoorbeeld het Zweeds. Daar moet je deze sorteren \emph{na de Z}. Dit kan je dan aangeven door de \verb!LC_ALL!-omgevingsvariabele te overschrijven met sort:
 
-Een voorbeeld hiervan is hoe \verb!egrep! omgaat met de definitie van alfanumerieke karakters en karaktercoderingen: er is bijvoorbeeld een voorgedefinieerde karakterklasse \verb![[:alnum:]]! die matcht op alles wat volgens de huidige taaldefinitie een alfanumeriek teken is. Je kan dan met omgevingsvariabelen aangeven hoe hij karaktertekens moet interpreteren: als pure ASCII, UTF-8, etc.)
+Een voorbeeld hiervan is hoe \verb!egrep! omgaat met de definitie van
+alfanumerieke karakters en karaktercoderingen: er is bijvoorbeeld een
+voorgedefinieerde karakterklasse \verb![[:alnum:]]! die matcht op alles wat
+volgens de huidige taaldefinitie een alfanumeriek teken is. Je kan dan met
+omgevingsvariabelen aangeven hoe hij karaktertekens moet interpreteren: als
+pure ASCII, UTF-8, etc.)
 
 \begin{verbatim}
 $ echo "étude" | egrep --only-matching '^[[:alnum:]]*$'
@@ -1389,9 +1438,15 @@ $ echo "étude" | LC_ALL=C egrep --only-matching '^[[:alnum:]]*$'
 $
 \end{verbatim}
 
-Zo merk je dus op dat bij de standaard uitvoering het karakter \emph{é} aanzien wordt als een alfanumeriek karakter, terwijl dit niet zo is indien de \verb!LC_ALL! omgevingsvariabele op \verb!C! gezet is.
+Zo merk je dus op dat bij de standaard uitvoering het karakter \emph{é} aanzien
+wordt als een alfanumeriek karakter, terwijl dit niet zo is indien de
+\verb!LC_ALL! omgevingsvariabele op \verb!C! gezet is.
 
-Je kan voorts ook de gebruikelijke controlestructuren gebruiken in de shell: \verb!if!, \verb!for!, \verb!while!, functies defini"eren, etc. Degene die je allicht het meest kan gebruiken is \verb!for!, die als synax heeft: \verb!for VAR in !\emph{lijst van dingen gescheiden door een spatie of een newline}\verb!; do commando1; commando2; ...; done!. In de plaats van de \verb!;!s kan je ook nieuwe lijnen beginnen. Bijvoorbeeld:
+Je kan voorts ook de gebruikelijke controlestructuren gebruiken in de shell:
+\verb!if!, \verb!for!, \verb!while!, functies defini"eren, etc. Degene die je
+allicht het meest kan gebruiken is \verb!for!, die als synax heeft: \verb!for VAR in !\emph{lijst van dingen gescheiden door een spatie of een
+newline}\verb!; do commando1; commando2; ...; done!. In de plaats van de
+\verb!;!s kan je ook nieuwe lijnen beginnen. Bijvoorbeeld:
 
 \begin{verbatim}
 $ for V in a b c "spaties erin"
@@ -1405,16 +1460,27 @@ Variabele is nu c
 Variabele is nu spaties erin
 \end{verbatim}
 
-Hierbij kan je ook gebruik maken (net als elders overigens) dat je overal in de shell ook \verb!*! kan gebruiken om een lijst bestanden te zetten die matchen op een patroon. Bijvoorbeeld \verb!./*pdf! zal op die plaats in je shell-commando een lijst van alle bestanden printen die beginnen met \verb!./! (dus die in de huidige directory staan) en eindigen op \verb!pdf!. (Let op! Dit zijn g\'e\'en reguliere expressies.)
+Hierbij kan je ook gebruik maken (net als elders overigens) van het feit dat je
+overal in de shell ook \verb!*! kan gebruiken om een lijst bestanden te zetten
+die matchen op een patroon. Bijvoorbeeld \verb!./*pdf! zal op die plaats in je
+shell-commando een lijst van alle bestanden printen die beginnen met \verb!./!
+(dus die in de huidige directory staan) en eindigen op \verb!pdf!. (Let op! Dit
+zijn g\'e\'en reguliere expressies.)
 \begin{verbatim}
 $ for FILE in ./*pdf
   do
       ...
 \end{verbatim}
 
-Let hier echter goed mee op: als bestandsnamen spaties, newlines, etc., bevatten, zal dit fout aflopen: de individuele delen zullen dan apart beschouwd worden in de lus (omwille van dat \verb!for! dus de variabele de waarde zal laten aannemen van alles wat met een spatie gescheiden is).
+Let hier echter goed mee op: als bestandsnamen spaties, newlines, etc.,
+bevatten, zal dit fout aflopen: de individuele delen zullen dan apart beschouwd
+worden in de lus (omwille van dat \verb!for! dus de variabele de waarde zal
+laten aannemen van alles wat met een spatie gescheiden is).
 
-Een andere handige tool hier is de \verb!seq!-tool: deze gaat een lijst van getallen afprinten tussen de opgegeven bounds. \verb!seq 1 10! zal dus 1 tot en met 10 naar het scherm printen. Je kan dit dan met command substitution gebruiken in \verb!for! als volgt:
+Een andere handige tool hier is de \verb!seq!-tool: deze gaat een lijst van
+getallen afprinten tussen de opgegeven bounds. \verb!seq 1 10! zal dus 1 tot en
+met 10 naar het scherm printen. Je kan dit dan met command substitution
+gebruiken in \verb!for! als volgt:
 
 \begin{verbatim}
 $ for I in $(seq 1 10)
@@ -1426,17 +1492,36 @@ I is nu 2
 ...
 \end{verbatim}
 
-Over andere controlestructuren kan je, indien ge"interesseerd, meer lezen op \url{http://tldp.org/LDP/Bash-Beginners-Guide/html/index.html}.
+Over andere controlestructuren kan je, indien ge"interesseerd, meer lezen op
+\url{http://tldp.org/LDP/Bash-Beginners-Guide/html/index.html}.
 
 \chapter{\texttt{vim}: een geavanceerde teksverwerker op de command line}
 
-Vorige week zagen we nog de simpele tekstverwerker \verb!nano!. Er bestaan echter veel geavanceerdere tekstgebaseerde tekstverwerkers. De meest gekende hiervan is \verb!vim!. Deze is extreem featurevol, maar heeft ook een redelijke leercurve om al die features goed te kunnen gebruiken. Dit hoofdstuk zal zich dan ook beperken tot \emph{eerste hulp bij} \verb!vim!.
+Vorige week zagen we nog de simpele tekstverwerker \verb!nano!. Er bestaan
+echter veel geavanceerdere tekstgebaseerde tekstverwerkers. De meest gekende
+hiervan is \verb!vim!. Deze is extreem featurevol, maar heeft ook een redelijke
+leercurve om al die features goed te kunnen gebruiken. Dit hoofdstuk zal zich
+dan ook beperken tot \emph{eerste hulp bij} \verb!vim!.
 
-\verb!vim! heeft meerdere \emph{modussen}, waarvan de belangrijkste de \emph{normal mode} en de \emph{insert mode} zijn. In normal mode ga je acties ingeven (zoals: opslaan van een bestand, afsluiten, etc.), terwijl je insert mode gebruikt om tekst te typen in een bestand. Om van normal mode te switchen naar insert mode, druk je gewoon de \emph{i}-toets in. Om van de insert mode naar normal mode te switchen, druk je op \emph{Escape}. Om een bestand op te slaan, typ je in de insert mode het volgende in: \verb!:w!\emph{enter} (van \emph{write}). Om af te sluiten, gebruik je \verb!:q!\emph{enter} (van quit). Om af te sluiten zonder op te slaan, gebruik je \verb@:q!@\emph{enter}.
+\verb!vim! heeft meerdere \emph{modussen}, waarvan de belangrijkste de
+\emph{normal mode} en de \emph{insert mode} zijn. In normal mode ga je acties
+ingeven (zoals: opslaan van een bestand, afsluiten, etc.), terwijl je insert
+mode gebruikt om tekst te typen in een bestand. Om van normal mode te switchen
+naar insert mode, druk je gewoon de \emph{i}-toets in. Om van de insert mode
+naar normal mode te switchen, druk je op \emph{Escape}. Om een bestand op te
+slaan, typ je in de insert mode het volgende in: \verb!:w!\emph{enter} (van
+\emph{write}). Om af te sluiten, gebruik je \verb!:q!\emph{enter} (van quit).
+Om af te sluiten zonder op te slaan, gebruik je \verb@:q!@\emph{enter}.
 
-Wat allicht het meest interessante is voor jullie, is dat \verb!vim! ook een visuelere versie van het \verb!diff!-commando aanbiedt: \verb!vimdiff!. Je kan dit gebruiken op exact dezelfde manier als \verb!diff! (probeer dit eens!), met als grote verschil dat de bestanden zij aan zij zullen verschijnen, met de verschillen gehighlight. (Om dit dan af te sluiten, moet je wel beide files afsluiten, door tweemaal \verb!:w!\emph{enter} te typen.)
+Wat allicht het meest interessante is voor jullie, is dat \verb!vim! ook een
+visuelere versie van het \verb!diff!-commando aanbiedt: \verb!vimdiff!. Je kan
+dit gebruiken op exact dezelfde manier als \verb!diff! (probeer dit eens!), met
+als grote verschil dat de bestanden zij aan zij zullen verschijnen, met de
+verschillen gehighlight. (Om dit dan af te sluiten, moet je wel beide files
+afsluiten, door tweemaal \verb!:w!\emph{enter} te typen.)
 
-Als je meer wil leren over hoe diff te gebruiken, is er een interactieve tutorial die je kan starten met het \verb!vimtutor!-commando.
+Als je meer wil leren over hoe diff te gebruiken, is er een interactieve
+tutorial die je kan starten met het \verb!vimtutor!-commando.
 
 \chapter{Versiecontrole met git}
 
