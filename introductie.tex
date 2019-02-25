@@ -913,7 +913,7 @@ configureerbare manier sterk afgeraden wordt. Tegenwoordig gebruikt men vaak
 tools die, gebaseerd op een high-level beschrijving en handig configureerbare
 instellingen voor jou zelf (complexe) makefiles genereren. Een tool die vaak
 gebruikt wordt hiervoor is \emph{CMake}, dat je kan vinden op
-\url{https://cmake.org/}/
+\url{https://cmake.org/}.
 
 \chapter{Administratietaken op Linux}
 
@@ -1149,7 +1149,41 @@ Binary files ./less and /bin/bash differ
 \end{verbatim}
 Bij het de eerste invocatie van \verb!find! gaan we zoeken naar alle bestanden die ergens te vinden zijn in \verb!/bin/! die eindigen op \verb!less!, en deze gewoon printen naar het scherm (in mijn geval zijn dit dus 3 bestanden). Bij de tweede invocatie, gaan we elk van deze gevonden bestanden vergelijken met het (binaire) bestand \verb!/bin/bash!, en meer specifiek gaan we elk van deze bestanden opgeven als éérste argument van het \verb!diff!-commando. Dus er zal worden uitgevoerd \verb!diff !\emph{gevonden bestand}\verb! /bin/bash!, voor élk van de gevonden bestanden.
 
-\chapter{Variabelen en controlestructuren}
+\chapter{Scripting}
+Met de shell kan je ook taken automatiseren, en dus met andere woorden (kleine) programma's schrijven. Dit wordt ook wel \emph{shell scripting} genoemd. Om programma's te schrijven hebben we wel enkele extra concepten nodig: variabelen en controlestructuren. 
+
+Een variabele ken je een waarde toe met de syntax \verb!VARIABELE='waarde'!. (Variabelen gaan we meestal in allemaal hoofdletters schrijven voor de duidelijkheid.) Je kan de waarde van een variabele elders gebruiken door er als volgt naar te verwijzen: \verb!${VARIABELE}!. Bijvoorbeeld:
+
+\begin{verbatim}
+$ BESTAND='/bin/bash'
+$ ls -lh ${BESTAND}
+-rwxr-xr-x 1 root root 1.2M Jan 14 16:27 /bin/bash
+\end{verbatim}
+
+We kunnen de waarde van een variabele naar het scherm printen met behulp van het \verb!echo!-commando. Dit commando gaat al zijn argumenten printen naar het scherm; dus ook enige variabelen die het als argument meekrijgt:
+\begin{verbatim}
+$ BESTAND='/bin/bash'
+$ echo Het bestand is ${BESTAND}
+Het bestand is /bin/bash
+\end{verbatim}
+
+Soms ga je willen dat een variabele deel uitmaakt van een groter, langer argument (al dan niet met spaties). Totnogtoe hebben we lange argumenten (met bijvoorbeeld spaties in) aangegeven door het tussen enkele quotes te zetten. We kunnen iets gelijkaardigs willen, maar dan met variabelen. Dit kan echter niet zomaar: als je in de shell iets tussen enkele quotes zet, gaan variabelen niet vervangen worden door hun waarde. Als je wil dat de variabele effectief vervangen wordt, dan zet je dit argument tussen dubbele quotes (\verb!"!). Je kan het verschil makkelijk zien in het volgende voorbeeld:
+
+\begin{verbatim}
+$ BESTAND='/bin/bash'
+$ echo 'Deze hele string is een enkel argument, en het bestand is ${BESTAND}'
+Deze hele string is een enkel argument, en het bestand is ${BESTAND}
+$ echo "Deze hele string is een enkel argument, en het bestand is ${BESTAND}"
+Deze hele string is een enkel argument, en het bestand is /bin/bash
+\end{verbatim}
+
+In de shell zijn al standaard een aantal (omgevings)variabelen gedefinieerd. Degene die je allicht het `meest' zal gebruikt zien (wat nog altijd heel zelden zal zijn), zijn de \verb!${USER}!-variabele die de naam van de huidige gebruiker bevat, en de \verb!${PWD}!-variabele die de huidige directory bevat.
+
+
+
+
+\textbf{Side-note: zetten bij find} Ctrl+R
+
 
 \chapter{\texttt{vim}: een geavanceerde teksverwerker op de command line}
 
