@@ -990,12 +990,34 @@ om zeep geholpen \verb!:)!).
 \chapter{Processen en subshells}
 
 \subsection{Processen in de achtergrond draaien}
-Elke keer we totnogtoe een programma gestart hebben op de command line, nam dit programma onze terminal over: ofwel opdat we er invoer aan konden geven (zoals een enkele \verb!egrep 'Hallo'! zonder een bestandsnaam als argument, waarna we het programma afsloten met \verb!Ctrl+D!), ofwel opdat we de hele uitvoer van het programma konden zien (bijvoorbeeld omdat we ergens ge"interesseerd waren in de uitvoer van bijvoorbeeld \verb!egrep!), ofwel een combinatie van beiden. Steeds word er een programma (of een keten van programma's, in het geval van een pipe) actief die de invoer overnemen tot het programma weer afgesloten is. Meestal is dit handig, maar niet altijd. Stel je bijvoorbeeld voor dat je een simpele \emph{grafische} tekstverwerker in de command line wil opstarten, zoals bijvoorbeeld de \emph{Kate} editor:
+
+Elke keer we totnogtoe een programma gestart hebben op de command line, nam dit
+programma onze terminal over: ofwel opdat we er invoer aan konden geven (zoals
+een enkele \verb!egrep 'Hallo'! zonder een bestandsnaam als argument, waarna we
+het programma afsloten met \verb!Ctrl+D!), ofwel opdat we de hele uitvoer van
+het programma konden zien (bijvoorbeeld omdat we ergens ge"interesseerd waren
+in de uitvoer van bijvoorbeeld \verb!egrep!), ofwel een combinatie van beiden.
+Steeds wordt er een programma (of een keten van programma's, in het geval van
+een pipe) actief die de invoer overnemen tot het programma weer afgesloten is.
+Meestal is dit handig, maar niet altijd. Stel je bijvoorbeeld voor dat je een
+simpele \emph{grafische} tekstverwerker in de command line wil opstarten, zoals
+bijvoorbeeld de \emph{Kate} editor:
 \begin{verbatim}
 student@student-VirtualBox:~$ kate
 \end{verbatim}
 
-Als we Kate op deze manier opstarten, wordt onze toetsenbordinvoer van de command line naar Kate doorgestuurd, en krijgen we op de command line de tekstuele uitvoer van Kate te zien. Maar Kate is volledig grafisch; dat heeft geen (voor ons relevante) uitvoer, en verwacht ook geen invoer. Dit zou willen zeggen dat om verdere commando's in deze shell uit te voeren, we zouden moeten wachten tot Kate terug afgesloten is, alvorens we een nieuw commando kunnen starten. Dat is niet zo handig; het zou veel handiger zijn als we Kate konden starten, en in dezelfde shell nieuwe commando's konden ingeven terwijl Kate blijft draaien. Gelukkig kunnen we dit doen door dit Kate-proces op de \emph{achtergrond te laten draaien} (zodat het een \emph{achtergrondproces} of \emph{background process} wordt). Dit doen we door op het einde van het commando om een programma te starten, een ampersand (\verb!&!) te zetten:
+Als we Kate op deze manier opstarten, wordt onze toetsenbordinvoer van de
+command line naar Kate doorgestuurd, en krijgen we op de command line de
+tekstuele uitvoer van Kate te zien. Maar Kate is volledig grafisch; dat heeft
+geen (voor ons relevante) uitvoer, en verwacht ook geen invoer. Dit zou willen
+zeggen dat om verdere commando's in deze shell uit te voeren, we zouden moeten
+wachten tot Kate terug afgesloten is, alvorens we een nieuw commando kunnen
+starten. Dat is niet zo handig; het zou veel handiger zijn als we Kate konden
+starten, en in dezelfde shell nieuwe commando's konden ingeven terwijl Kate
+blijft draaien. Gelukkig kunnen we dit doen door dit Kate-proces op de
+\emph{achtergrond te laten draaien} (zodat het een \emph{achtergrondproces} of
+\emph{background process} wordt). Dit doen we door op het einde van het
+commando om een programma te starten, een ampersand (\verb!&!) te zetten:
 
 \begin{verbatim}
 student@student-VirtualBox:~$ kate &
@@ -1003,12 +1025,38 @@ student@student-VirtualBox:~$ kate &
 student@student-VirtualBox:~$ egrep "Nu kunnen we verderwerken"
 \end{verbatim}
 
-Nu, het kan zijn dat je vergeten bent om de \verb!&! te gebruiken bij het opstarten van een proces. In dit geval kan je het huidige \emph{voorgrondproces} (\emph{foreground process}) onderbreken (\emph{suspend}) door \emph{Ctrl+Z} in te typen. Op dat punt is het proces volledig gestopt, en kan je ook niet meer interageren met het GUI-venster. Op dat punt kan je in je shell het \verb!bg!-commando (\emph{\textbf{b}ack\textbf{g}round}) uitvoeren om dit gestopte proces verder voort te zetten als een achtergrondproces en kan je verder werken in je shell. Als je zou beslissen om dit proces toch verder in de voorgrond te laten draaien, kan je dit ook doen door het \verb!fg!-commando (\emph{\textbf{f}ore\textbf{g}round}) uit te voeren. (Dit zijn de belangrijkste aspecten die je in de praktijk moet kennen van wat in het algemeen \emph{job control} heet.)
+Nu, het kan zijn dat je vergeten bent om de \verb!&! te gebruiken bij het
+opstarten van een proces. In dit geval kan je het huidige
+\emph{voorgrondproces} (\emph{foreground process}) onderbreken (\emph{suspend})
+door \emph{Ctrl+Z} in te typen. Op dat punt is het proces volledig gestopt, en
+kan je ook niet meer interageren met het GUI-venster. Op dat punt kan je in je
+shell het \verb!bg!-commando (\emph{\textbf{b}ack\textbf{g}round}) uitvoeren om
+dit gestopte proces verder voort te zetten als een achtergrondproces en kan je
+verder werken in je shell. Als je zou beslissen om dit proces toch verder in de
+voorgrond te laten draaien, kan je dit ook doen door het \verb!fg!-commando
+(\emph{\textbf{f}ore\textbf{g}round}) uit te voeren. (Dit zijn de belangrijkste
+aspecten die je in de praktijk moet kennen van wat in het algemeen \emph{job
+control} heet.)
 
 \subsection{Command substitution}
-We hebben al gezien hoe we in een shell de uitvoer van een proces aan de invoer van een ander proces kunnen koppelen, en hoe we de verschillende output-streams van een proces kunnen wegschrijven naar een bestand. Nu gaan we meer geavanceerde manieren zien waarop je de uitvoer van processen kan gebruiken in een shell.
 
-De eerste manier is \emph{command substitution}: we dan het opgegeven commando uitvoeren, en de \emph{output} ervan in de shell plakken als string op die plaats. Het commando wordt dus eigenlijk vervangen door zijn uitvoer, die je dan op die manier kan gebruiken om als argument aan een ander commando mee te geven. De syntax van deze constructie is \verb!$(commando)!, hoewel je soms ook een syntax zal zien die gebruik maakt van zogenaamde backticks: \verb!`commando`!. Het verschil tussen beide constructies kunnen jullie opzoeken of negeren \verb!:)!. Een voorbeeld (waarbij \verb!egrep -n! er voor zorgt dat bij elke matchende regel het \emph{regelnummer} gevolgd door een \verb!:! wordt afgeprint voor de match; en \verb!egrep --max-count=!$N$ er voor zorgt dat slechts de eerste $N$ matchende regels worden teruggegeven):
+We hebben al gezien hoe we in een shell de uitvoer van een proces aan de invoer
+van een ander proces kunnen koppelen, en hoe we de verschillende output-streams
+van een proces kunnen wegschrijven naar een bestand. Nu gaan we meer
+geavanceerde manieren zien waarop je de uitvoer van processen kan gebruiken in
+een shell.
+
+De eerste manier is \emph{command substitution}: het opgegeven commando wordt
+uitgevoerd, en de \emph{output} ervan wordt in de shell geplakt als string op
+die plaats. Het commando wordt dus eigenlijk vervangen door zijn uitvoer, die
+je dan op die manier kan gebruiken om als argument aan een ander commando mee
+te geven. De syntax van deze constructie is \verb!$(commando)!, hoewel je soms
+ook een syntax zal zien die gebruik maakt van zogenaamde backticks:
+\verb!`commando`!. Het verschil tussen beide constructies kunnen jullie
+opzoeken of negeren \verb!:)!. Een voorbeeld (waarbij \verb!egrep -n! er voor
+zorgt dat bij elke matchende regel het \emph{regelnummer} gevolgd door een
+\verb!:! wordt afgeprint voor de match; en \verb!egrep --max-count=!$N$ er voor
+zorgt dat slechts de eerste $N$ matchende regels worden teruggegeven):
 
 \begin{verbatim}
 $ egrep -n --max-count=1 '^Bart' /usr/share/dict/words
@@ -1024,9 +1072,14 @@ Bartholomew
 ...
 \end{verbatim}
 
-Wat we hierboven dus zien is dat het de pipe-sequentie met \verb!egrep! en \verb!cut! het regelnummer print van de eerste lijn die begint met \emph{Bart}, zijnde $1440$. Door die command substitution gaan we die pipe-sequentie uitvoeren, en het resultaat ($1440$) plakken op de plaats waar die \verb!$(...)! staat in die regel met \verb!tail!. Wat er dus op neerkomt dat wat uitgevoerd wordt op die laatste regel het volgende is: \verb!tail -n +1440 /usr/share/dict/words!.
+Wat we hierboven dus zien is dat het de pipe-sequentie met \verb!egrep! en
+\verb!cut! het regelnummer print van de eerste lijn die begint met \emph{Bart},
+zijnde $1440$. Door die command substitution gaan we die pipe-sequentie
+uitvoeren, en het resultaat ($1440$) plakken op de plaats waar die
+\verb!$(...)! staat in die regel met \verb!tail!. Wat er dus op neerkomt dat
+wat uitgevoerd wordt op die laatste regel het volgende is: \verb!tail -n +1440 /usr/share/dict/words!.
 
-\textbf{Opgelet!} Verwar deze syntax echter niet met de constructie \verb!$(( expressie ))$! die gebruikt wordt om (eenvoudige) wiskundige berekeningen uit te rekenen:
+\textbf{Opgelet!} Verwar deze syntax echter niet met de constructie \verb!$(( expressie ))$! die gebruikt wordt om (eenvoudige) wiskundige berekeningen uit te voeren:
 \begin{verbatim}
 $ tail -n $((2+1)) /usr/share/dict/words
 étude
@@ -1035,13 +1088,42 @@ $ tail -n $((2+1)) /usr/share/dict/words
 \end{verbatim}
 
 \subsection{Process substitution}
-Uitvoer doorsturen naar een ander commando is allemaal leuk, maar dan moet dat commando natuurlijk wel de mogelijkheid bieden om te lezen van standard input. Bovendien, wat als je nu om de een of andere manier de uitvoer van meerdere \emph{verschillende} processen wil pipen als verschillende inputs van een commando? Daarvoor kan je \emph{process substitution} gebruiken (wat helaas nogal makkelijk om te verwarren is qua naam met de command substitution van eerder).
 
-Bij process substitution gaat \verb!bash! een \emph{speciaal soort bestand} gebruiken, waarbij als een proces naar dit bestand schrijft, het besturingssysteem deze content slechts tijdelijk in het geheugen bijhoudt tot een ander proces deze inhoud uitleest. Het is dus een manier om expliciet streams tussen verschillende processen op te zetten door gebruik te maken van bestanden die zich ergens op het bestandssysteem bevinden. Dit soort bestand wordt een \emph{named pipe} of \emph{FIFO} genoemd. (Dit kan ook gebeuren via speciale \verb!/dev/fd!-bestanden, maar het concept blijft hetzelfde.)
+Uitvoer doorsturen naar een ander commando is allemaal leuk, maar dan moet dat
+commando natuurlijk wel de mogelijkheid bieden om te lezen van standard input.
+Bovendien, wat als je nu om de een of andere manier de uitvoer van meerdere
+\emph{verschillende} processen wil pipen als verschillende inputs van een
+commando? Daarvoor kan je \emph{process substitution} gebruiken (wat helaas
+nogal makkelijk om te verwarren is qua naam met de command substitution van
+eerder).
 
-De syntax om een process substitution op te zetten, waarbij een ander programma kan \emph{lezen van} het gesubstitueerde proces is \verb!<(commando)!. Wat er dus gaat gebeuren is dat er zo'n FIFO-bestand wordt aangemaakt, de uitvoor van \verb!commando! wordt naar dat bestand gestreamd, en hele sequentie \verb!<(...)! wordt in de opdracht vervangen door \emph{de naam van dat FIFO-bestand} zodat dit gebruikt kan worden als argument.
+Bij process substitution gaat \verb!bash! een \emph{speciaal soort bestand}
+gebruiken, waarbij als een proces naar dit bestand schrijft, het
+besturingssysteem deze content slechts tijdelijk in het geheugen bijhoudt tot
+een ander proces deze inhoud uitleest. Het is dus een manier om expliciet
+streams tussen verschillende processen op te zetten door gebruik te maken van
+bestanden die zich ergens op het bestandssysteem bevinden. Dit soort bestand
+wordt een \emph{named pipe} of \emph{FIFO} genoemd. (Dit kan ook gebeuren via
+speciale \verb!/dev/fd!-bestanden, maar het concept blijft hetzelfde.)
 
-Ik zal dit demonstreren aan de hand van het \verb!diff!-commando. \verb!diff! wordt gebruikt om twee bestanden (of directories) die het als argument krijgt met elkaar te vergelijken. De uitvoer geeft visueel aan hoe je het eerste bestand kan omzetten in het tweede bestand door het weglaten/toevoegen van lijnen: als er een \verb!+! voor een lijn staat, moet die worden toegevoegd, als er een \verb!-! voor staat moet deze worden verwijderd, en lijnen zonder iets voor (er staat een spatie voor zodat alles gealigneerd blijft) zijn identiek in beide bestanden. Als er ganse stukken tekst dezelfde zijn, worden deze geskipt (wat dan ook aangegeven wordt in de uitvoer). De syntax is \verb!diff --unified bestand1 bestand2!, waarbij \verb!--unified! er voor zorgt dat de uitvoer iets leesbaarder is. Bijvoorbeeld:
+De syntax om een process substitution op te zetten, waarbij een ander programma
+kan \emph{lezen van} het gesubstitueerde proces is \verb!<(commando)!. Wat er
+dus gaat gebeuren is dat er zo'n FIFO-bestand wordt aangemaakt, de uitvoer van
+\verb!commando! wordt naar dat bestand gestreamd, en hele sequentie
+\verb!<(...)! wordt in de opdracht vervangen door \emph{de naam van dat
+FIFO-bestand} zodat dit gebruikt kan worden als argument.
+
+Ik zal dit demonstreren aan de hand van het \verb!diff!-commando. \verb!diff!
+wordt gebruikt om twee bestanden (of directories) die het als argument krijgt
+met elkaar te vergelijken. De uitvoer geeft visueel aan hoe je het eerste
+bestand kan omzetten in het tweede bestand door het weglaten/toevoegen van
+lijnen: als er een \verb!+! voor een lijn staat, moet die worden toegevoegd,
+als er een \verb!-! voor staat moet deze worden verwijderd, en lijnen zonder
+iets voor (er staat een spatie voor zodat alles gealigneerd blijft) zijn
+identiek in beide bestanden. Als er ganse stukken tekst dezelfde zijn, worden
+deze geskipt (wat dan ook aangegeven wordt in de uitvoer). De syntax is
+\verb!diff --unified bestand1 bestand2!, waarbij \verb!--unified! er voor zorgt
+dat de uitvoer iets leesbaarder is. Bijvoorbeeld:
 
 \begin{verbatim}
 $ cat A
@@ -1062,14 +1144,18 @@ $ diff --unified A B
 +Joris
 \end{verbatim}
 
-Dit wil dus zeggen dat, om bestand \verb!A! in \verb!B! om te zetten (bovenaan de uitvoer staan de bestandsnamen voor de duidelijkheid vermeld), we de lijn met \verb!Femke! moeten verwijderen en vervangen met \verb!Joris!.
+Dit wil dus zeggen dat, om bestand \verb!A! in \verb!B! om te zetten (bovenaan
+de uitvoer staan de bestandsnamen voor de duidelijkheid vermeld), we de lijn
+met \verb!Femke! moeten verwijderen en vervangen met \verb!Joris!.
 
-Als we nu de \emph{uitvoer van twee programma's met elkaar willen vergelijken}, kunnen we dit dus doen met process substitution:
+Als we nu de \emph{uitvoer van twee programma's met elkaar willen vergelijken},
+kunnen we dit dus doen met process substitution:
 \begin{verbatim}
 $ diff --unified <(commando 1) <(commando 2)
 \end{verbatim}
 
-Een beetje een geforceerd voorbeeld, waarbij je wil weten wat het verschil is tussen twee \verb!egrep!-commando's:
+Een beetje een geforceerd voorbeeld, waarbij je wil weten wat het verschil is
+tussen twee \verb!egrep!-commando's:
 
 \begin{verbatim}
 $ diff --unified <(egrep '^B.$' /usr/share/dict/words) <(egrep -i '^B.$' /usr/share/dict/words)
@@ -1083,16 +1169,45 @@ $ diff --unified <(egrep '^B.$' /usr/share/dict/words) <(egrep -i '^B.$' /usr/sh
 +by
 \end{verbatim}
 
-Hier zie je dus dat het verschil tussen een case-sensitive en case-insensitive zoektocht naar bestanden die matchen op \verb!'^B.$'! enkel de twee woorden \emph{be} en \emph{by} zijn. Merk dus ook op dat de `bestandsnamen' van de argumenten die \verb!diff! bovenaan geprint heeft, de bestanden zijn die bash aangemaakt heeft om de uitput van de twee subshells naar te kunnen redirecten.
+Hier zie je dus dat het verschil tussen een case-sensitive en case-insensitive
+zoektocht naar bestanden die matchen op \verb!'^B.$'! enkel de twee woorden
+\emph{be} en \emph{by} zijn. Merk dus ook op dat de `bestandsnamen' van de
+argumenten die \verb!diff! bovenaan geprint heeft, de bestanden zijn die bash
+aangemaakt heeft om de uitvoer van de twee subshells naar te kunnen redirecten.
 
-In de oefeningen op Dodona vind je meer geavanceerde voorbeelden van processen wiens uitvoer je zo nuttig met elkaar kan vergelijken.
+In de oefeningen op Dodona vind je meer geavanceerde voorbeelden van processen
+wiens uitvoer je zo nuttig met elkaar kan vergelijken.
 
-(Het is hier misschien leuk om weten dat process substitution en redirects nog krachtiger zijn dan wat jullie gezien hebben: process substitution kan ook gebruikt worden om naar te schrijven, je kan werken met meerdere streams om output te redirecten naar files, zulke streams dupliceren, inputstreams redirecten ---al dan om van een bestand te lezen---, etc. Maar dat zou ons veel te ver leiden, maar zoek dat gerust op als je dat meer zou interesseren!)
+(Het is hier misschien leuk om weten dat process substitution en redirects nog
+krachtiger zijn dan wat jullie gezien hebben: process substitution kan ook
+gebruikt worden om naar te schrijven, je kan werken met meerdere streams om
+output te redirecten naar files, zulke streams dupliceren, inputstreams
+redirecten---al dan niet om van een bestand te lezen---, etc. Dat alles zou ons
+veel te ver leiden, maar zoek het gerust op als je dat meer zou interesseren!)
 
 \chapter{Remote shell}
-Een van de voordelen van de tekstgebaseerde interface die de Linux-shell aanbiedt, is dat je op deze manier vrij makkelijk programma's kan uitvoeren, systemen kan beheren, en dingen kan automatiseren vanop afstand. De meeste Linux-systemen draaien een server-programma waarop je kan inloggen vanop de command line, om dan op dat (remote) systeem ook commando's uit te voeren. De shell die je op zo'n systeem draait, wordt ook wel eens een \emph{remote shell} genoemd; het protocol dat je hiervoor gebruikt is het \emph{ssh-protocol} (wat voor \emph{\textbf{s}ecure \textbf{sh}ell} staat), en het commando dat je hiervoor moet gebruiken is dan ook het \verb!ssh!-commando. Zoals gebruikelijk heeft dit een hele boel verschillende opties, maar het belangrijkste argument heeft de vorm \emph{gebruikersnaam}\verb!@!\emph{hostnaam}.
 
-Om hier wat mee te oefenen, heeft de UGent een ssh-server draaien waar studenten naar kunnen connecteren. Deze server heet \emph{helios}, en is enkel beschikbaar via UGentNet (dus vanaf de PCs in de PC-klassen kan je hier mee verbinden, net zoals vanop je laptop als je via eduroam verbonden bent; van thuis zal je hiervoor de UGent-VPN moeten gebruiken). Eerst moet je er voor zorgen dat je \mbox{(UGent-)account} actief is op dit systeem. Dit doe je via (op UGentNet) te surfen naar \url{https://gaia.ugent.be/helios/account.cgi} en je daar te registreren (waarna het blijkbaar tot 10 minuten kan duren eer je account actief is).
+Een van de voordelen van de tekstgebaseerde interface die een Linux-shell
+aanbiedt, is dat je op deze manier vrij makkelijk programma's kan uitvoeren,
+systemen kan beheren, en taken kan automatiseren vanop afstand. De meeste
+Linux-systemen draaien een server-programma waarop je kan inloggen vanop de
+command line, om dan op dat (remote) systeem ook commando's uit te voeren. De
+shell die je op zo'n systeem draait, wordt ook wel eens een \emph{remote shell}
+genoemd; het protocol dat je hiervoor gebruikt is het \emph{ssh-protocol} (wat
+voor \emph{\textbf{s}ecure \textbf{sh}ell} staat), en het commando dat je
+hiervoor moet gebruiken is dan ook het \verb!ssh!-commando. Zoals gebruikelijk
+heeft dit een hele boel verschillende opties, maar het belangrijkste argument
+heeft de vorm \emph{gebruikersnaam}\verb!@!\emph{hostnaam}.
+
+Om hier wat mee te oefenen, heeft de UGent een ssh-server draaien waar
+studenten mee kunnen connecteren. Deze server heet \emph{helios}, en is enkel
+beschikbaar via UGentNet (dus vanaf de PCs in de PC-klassen kan je hier mee
+verbinden, net zoals vanop je laptop als je via eduroam verbonden bent; van
+thuis zal je hiervoor de UGent-VPN moeten gebruiken). Eerst moet je er voor
+zorgen dat je \mbox{(UGent-)account} actief is op dit systeem. Dit doe je via
+(op UGentNet) te surfen naar \url{https://gaia.ugent.be/helios/account.cgi} en
+je daar te registreren (waarna het blijkbaar tot 10 minuten kan duren eer je
+account actief is).
 
 Om dan te connecteren naar die server, gebruik je \verb!ssh !\emph{ugent-gebruikersnaam}\verb!@helios.ugent.be!. In mijn geval ziet dit er als volgt uit:
 \begin{verbatim}
@@ -1108,33 +1223,105 @@ Last login: Sat Feb 16 13:14:35 2019 from 157.193.213.43
 ~ [1]$
 \end{verbatim}
 
-Hier kan je een aantal dingen zien:
+Hier kan je de verschillende stappen zien:
 \begin{itemize}
-\item ssh probeert cryptografisch te verifi"eren dat de server waarmee je probeert te verbinden, de server is die je verwacht (door te kijken of dit dezelfde server is waarmee je voorheen al verbinding had). De eerste keer weet ssh echter nog niet of dit al dan niet de juiste server is; je wordt dan expliciet gevraagd om dit zelf te checken aan de hand van de gegeven \emph{fingerprint}. Als je het risico laag inschat dat iemand jouw connectie zou onderscheppen op exact die allereerste keer je verbinding, of als je lui bent (of als de systeembeheerder van deze machine je die fingerprint niet op voorhand gegeven heeft), kan je dit negeren en gewoon meteen \verb!yes! intypen. Let wel op: ssh zal de volgende keren effectief eisen dat de server cryptografisch kan garanderen dat deze dezelfde is als degene waarmee je de eerste keer verbond, en zal ook weigeren verder te gaan indien dit niet het geval is.
+\item ssh probeert cryptografisch te verifi"eren dat de server waarmee je
+  probeert te verbinden, de server is die je verwacht (door te kijken of dit
+    dezelfde server is waarmee je voorheen al verbinding had). De eerste keer
+    weet ssh echter nog niet of dit al dan niet de juiste server is; je wordt
+    dan expliciet gevraagd om dit zelf te checken aan de hand van de gegeven
+    \emph{fingerprint}. Als je het risico laag inschat dat iemand jouw
+    connectie zou onderscheppen op exact die allereerste keer je verbindt, of
+    als je lui bent (of als de systeembeheerder van deze machine je die
+    fingerprint niet op voorhand gegeven heeft), kan je dit negeren en gewoon
+    meteen \verb!yes! intypen. Let wel op: ssh zal de volgende keren effectief
+    eisen dat de server cryptografisch kan garanderen dat deze dezelfde is als
+    degene waarmee je de eerste keer verbond, en zal ook weigeren verder te
+    gaan indien dit niet het geval is.
 
 \item Er wordt gevraagd naar je wachtwoord (in dit geval is dit je UGent-wachtwoord).
 
-\item Als je je wachtwoord intypt, \emph{wordt er niets naar het scherm geprint!} Dus in tegenstelling tot wat je misschien verwacht, zal je géén sterretjes of bolletjes of wat dan ook zien verschijnen.
+\item Als je je wachtwoord intypt, \emph{wordt er niets naar het scherm
+  geprint!} Dus in tegenstelling tot wat je misschien verwacht, zal je géén
+    sterretjes of bolletjes of wat dan ook zien verschijnen.
 
-\item De prompt die je krijgt, ziet er als volgt uit: \verb!~ [1]$!, en niét, zoals je wellicht had verwacht, \verb!bcoppens@helios:~$!. Dit is omdat er een andere shell gebruikt wordt dan degene die we totnogtoe gebruikt hebben. Er zijn immers vele verschillende shell-programma's, elk met hun eigen set van features, en hun eigen manier van hoe exact je er mee interageert als gebruiker (verschillende shells hebben bijvoorbeeld verschillende systemen van hoe tab-completion werkt). De shell die wij totnogtoe gebruikt hebben is de \verb!bash!-shell (dit is een vaak-voorkomende shell die op de meeste systemen wel ge"installeerd is). Andere shells zijn bijvoorbeeld de \verb!zsh!-shell, de \verb!ksh!-shell (dit is de shell die standaard start op Helios), etc. Wil je in de vertrouwde \verb!bash!-shell terechtkomen, kan je deze simpelweg opstarten door \verb!bash! uit te voeren.
+\item De prompt die je krijgt, ziet er als volgt uit: \verb!~ [1]$!, en niét,
+  zoals je wellicht had verwacht, \verb!bcoppens@helios:~$!. Dit is omdat er
+    een andere shell gebruikt wordt dan degene die we totnogtoe gebruikt
+    hebben. Er zijn immers vele verschillende shell-programma's, elk met hun
+    eigen set van features, en hun eigen manier van hoe je er als gebruiker
+    exact mee interageert (verschillende shells hebben bijvoorbeeld
+    verschillende systemen van hoe tab-completion werkt). De shell die wij
+    totnogtoe gebruikt hebben is de \verb!bash!-shell (dit is een
+    vaak-voorkomende shell die op de meeste systemen wel ge"installeerd is).
+    Andere shells zijn bijvoorbeeld de \verb!zsh!-shell, de \verb!ksh!-shell
+    (dit is de shell die standaard start op Helios), etc. Wil je in de
+    vertrouwde \verb!bash!-shell terechtkomen, kan je deze simpelweg opstarten
+    door \verb!bash! uit te voeren.
 \end{itemize}
 
-Kijk als voorbeeld bijvoorbeeld eens naar hoe groot de schijven zijn die in Helios zitten.
+Kijk als voorbeeld bijvoorbeeld eens naar hoe groot de schijven zijn die in
+Helios zitten.
 
-Om een terminal (zoals een remote terminal of een terminal-in-een-terminal) af te sluiten, kan je ofwel gewoon \verb!exit! typen, ofwel de invoer van de shell afsluiten door \emph{Ctrl+D} te typen (wat net hetzelfde is als toen we de invoer afgesloten hebben toen \verb!egrep! de door jou ingetypte tekst in de terminal aan het filteren was).
+Om een terminal (zoals een remote terminal of een terminal-in-een-terminal) af
+te sluiten, kan je ofwel gewoon \verb!exit! typen, ofwel de invoer van de shell
+afsluiten door \emph{Ctrl+D} te typen (wat net hetzelfde is als toen we de
+invoer afgesloten hebben toen \verb!egrep! de door jou ingetypte tekst in de
+terminal aan het filteren was).
 
-Het gebruik van ssh kan trouwens ook handig zijn als je thuis bijvoorbeeld een Raspberry Pi zou liggen hebben die Linux draait: deze kan je dan ook proberen bedienen en configureren via ssh, in plaats van via een toetsenbord en scherm.
+Het gebruik van ssh kan trouwens ook handig zijn als je thuis bijvoorbeeld een
+Raspberry Pi zou liggen hebben die Linux draait: deze kan je dan ook proberen
+bedienen en configureren via ssh, in plaats van via een toetsenbord en scherm.
 
 \chapter{Bestanden zoeken en verwerken}
-Soms kan het ook handig zijn dat we een operatie willen toepassen op een aantal verschillende bestanden. We kunnen zoals hierboven altijd manueel dit bestand opgeven als argument aan het eerste commando. Soms weet je echter op voorhand niet welke bestanden dit allemaal zijn. Bijvoorbeeld wil je alle bestanden die eindigen op \verb!.backup! verwijderen met het \verb!rm!-commando.
 
-De eerste stap is een commando dat bestanden oplijst en filtert. Dit kan je doen met het \verb!find!-commando: in zijn meest simpele vorm gaat dit recursief alle bestanden en subdirectories afprinten die te vinden zijn in het argument. Probeer eens te kijken wat het verschil is tussen \verb!ls /dev/! en \verb!find /dev/!.
+Soms willen we een bepaalde actie toepassen op een aantal verschillende
+bestanden. We kunnen zoals hierboven altijd manueel deze bestanden opgeven als
+argument aan het eerste commando. Soms weet je echter op voorhand niet welke
+bestanden dit allemaal zijn. Bijvoorbeeld wil je alle bestanden die eindigen op
+\verb!.backup! verwijderen met het \verb!rm!-commando.
 
-Het \verb!find!-commando ondersteunt veel opties. De eerste die we gaan gebruiken is die om enkel bestanden uit te printen die een bepaald patroon matchen: \verb!-iregex! \emph{patroon} (de \verb!i! staat hier voor het feit dat het een case-insensitive zoekopdracht is). Het patroon moet hierbij matchen op \emph{het hele pad}. Bijvoorbeeld \verb!find . -iregex '.*[0-9]\.pdf'! zal alle bestanden uitprinten die eindigen op een cijfer gevolgd door \verb!.pdf!. Merk hierbij dus wel op dat, 1) het pad dat je doorzoekt \emph{vóór} het zoekargument staat, en 2) omdat de expressie het hele pad moet matchen, je moet beginnen met \verb!.*!. (Er bestaat ook een iéts simpeler manier om te zoeken, waar je géén reguliere expressies gebruikt: \verb!-name!, maar \verb!-iregex! is krachtiger en zo kan je je kennis over reguliere expressies ook hier toepassen.)
+De eerste stap hierbij is een commando dat bestanden oplijst en filtert. Dit
+kan je doen met het \verb!find!-commando: in zijn meest simpele vorm gaat dit
+recursief alle bestanden en subdirectories afprinten die te vinden zijn in het
+argument. Probeer eens te kijken wat het verschil is tussen de uitvoer van
+\verb!ls /dev/! en \verb!find /dev/!.
 
-\verb!find! heeft een héél uitgebreide repertoire aan manieren waarop je de bestanden kan filteren. Om er slechts enkele te noemen: je kan enkel uitvoerbare bestanden oplijsten, enkel bestanden oplijsten die recenter gewijzigd zijn dan een opgegeven tijd, enkel bestanden die groter of kleiner zijn dan een bepaalde grootte, etc. Die filters kan je bovendien ook met elkaar combineren. Meer info hierover kan je vinden in de man-page van \verb!find! onder de sectie \emph{TESTS}; de man-page heeft ook een uitgebreide lijst voorbeelden onderaan staan.
+Het \verb!find!-commando ondersteunt veel opties. De eerste die we gaan
+gebruiken is die om enkel bestanden uit te printen die een bepaald patroon
+matchen: \verb!-iregex! \emph{patroon} (de \verb!i! staat hier voor het feit
+dat het een case-insensitive zoekopdracht is). Het patroon moet hierbij matchen
+op \emph{het hele pad}. Bijvoorbeeld \verb!find . -iregex '.*[0-9]\.pdf'! zal
+alle bestanden uitprinten die eindigen op een cijfer gevolgd door \verb!.pdf!.
+Merk hierbij dus wel op dat, 1) het pad dat je doorzoekt \emph{vóór} het
+zoekargument staat, en 2) omdat de expressie het hele pad moet matchen, je moet
+beginnen met \verb!.*!. (Er bestaat ook een iéts simpeler manier om te zoeken,
+waar je géén reguliere expressies gebruikt: \verb!-name!, maar \verb!-iregex!
+is krachtiger en zo kan je je kennis over reguliere expressies ook hier
+toepassen.)
 
-Bovendien ondersteunt \verb!find! ook een hele hoop \emph{acties} die kunnen uitgevoerd worden bij elk bestand dat voldoet aan de zoekfilter. Standaard gebruikt \verb!find! de actie die al de bestanden gewoon uitprint naar het scherm (dit is de \verb!-print! actie). Willen we een bepaald commando oproepen voor elk bestand dat we gevonden hebben, gebruiken we het argument \verb!-execdir! als volgt: \verb!-execdir ... {} ... \;'!, waarbij het commando start met het eerste wat volgt op de \verb!-execdir!, en waarbij de \verb!{}! vervangen wordt door de bestandsnaam. Het commando eindigt op de plaats van de \verb!\;!. (Technisch gezien moet het commando eindigen op een \verb!;!, maar de shell interpreteert een \verb!;! standaard als het einde van een commando, en niet als een argument. Daarom moet je het escapen met een \verb!\!.) Het commando wordt opgestart in de directory waar het gevonden bestand zich bevindt.
+\verb!find! heeft een héél uitgebreide repertoire aan filters waarop je de
+bestanden kan selecteren. Om er slechts enkele te noemen: je kan enkel
+uitvoerbare bestanden oplijsten, enkel bestanden oplijsten die recenter
+gewijzigd zijn dan een opgegeven tijd, enkel bestanden die groter of kleiner
+zijn dan een bepaalde grootte, etc. Die filters kan je bovendien ook met elkaar
+combineren. Meer info hierover kan je vinden in de man-page van \verb!find!
+onder de sectie \emph{TESTS}; de man-page heeft ook een uitgebreide lijst
+voorbeelden onderaan staan.
+
+Bovendien ondersteunt \verb!find! ook een hele hoop \emph{acties} die kunnen
+uitgevoerd worden voor elk bestand dat voldoet aan de zoekfilter. Standaard
+gebruikt \verb!find! de actie die alle geselecteerde bestanden gewoon uitprint
+naar het scherm (dit is de \verb!-print! actie). Willen we een bepaald commando
+oproepen voor elk bestand dat we gevonden hebben, gebruiken we het argument
+\verb!-execdir! als volgt: \verb!-execdir ... {} ... \;'!, waarbij het commando
+start met het eerste wat volgt op de \verb!-execdir!, en waarbij de \verb!{}!
+vervangen wordt door de bestandsnaam. Het commando eindigt op de plaats van de
+\verb!\;!. (Technisch gezien moet het commando eindigen op een \verb!;!, maar
+de shell interpreteert een \verb!;! standaard als het einde van een commando,
+en niet als een argument. Daarom moet je het escapen met een \verb!\!.) Het
+commando wordt opgestart in de directory waar het gevonden bestand zich
+bevindt.
 
 Bijvoorbeeld:
 \begin{verbatim}
@@ -1147,7 +1334,14 @@ Binary files ./zless and /bin/bash differ
 Binary files ./bzless and /bin/bash differ
 Binary files ./less and /bin/bash differ
 \end{verbatim}
-Bij het de eerste invocatie van \verb!find! gaan we zoeken naar alle bestanden die ergens te vinden zijn in \verb!/bin/! die eindigen op \verb!less!, en deze gewoon printen naar het scherm (in mijn geval zijn dit dus 3 bestanden). Bij de tweede invocatie, gaan we elk van deze gevonden bestanden vergelijken met het (binaire) bestand \verb!/bin/bash!, en meer specifiek gaan we elk van deze bestanden opgeven als éérste argument van het \verb!diff!-commando. Dus er zal worden uitgevoerd \verb!diff !\emph{gevonden bestand}\verb! /bin/bash!, voor élk van de gevonden bestanden.
+Bij de eerste invocatie van \verb!find! gaan we zoeken naar alle bestanden die
+ergens te vinden zijn in \verb!/bin/! die eindigen op \verb!less!, en deze
+gewoon printen naar het scherm (in mijn geval zijn dit dus 3 bestanden). Bij de
+tweede invocatie, gaan we elk van deze gevonden bestanden vergelijken met het
+(binaire) bestand \verb!/bin/bash!, en meer specifiek gaan we elk van deze
+bestanden opgeven als éérste argument van het \verb!diff!-commando. Het
+uitgevoerde commando wordt dan \verb!diff !\emph{gevonden bestand}\verb! /bin/bash!,
+voor élk van de gevonden bestanden.
 
 \chapter{Variabelen en controlestructuren}
 
