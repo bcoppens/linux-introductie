@@ -20,17 +20,18 @@ deze zorgt er achter de schermen voor dat je verschillende programma's kan
 starten en tegelijkertijd laten draaien, dat de invoer die je via een
 toetsenbord ingeeft bij de programma's toekomt, dat deze programma's iets op
 het scherm kunnen printen als uitvoer, etc. Een gebruiker interageert echter
-niet direct met de (Linux-)kernel, maar eerder met programma's die als interface
+niet direct met de (Linux-)kernel, maar met programma's die als interface
 dienen. Meestal voorzien deze programma's een grafische interface: je bent dit
-wel gewend uit Windows en OS X, en deze interfaces bestaan ook onder Linux,
-zoals KDE en Gnome. Grafische, intuïtieve, interfaces zijn echter pas redelijk
-laat in gebruik genomen. Voorafgaand de opkomst van de grafische interface aan
-was er een andere interface die de computerwereld domineerde: de
-\emph{command-line} interface.
+wel gewend uit Windows of OS X. Deze interfaces bestaan ook onder Linux,
+voorbeelden hiervan zijn KDE en Gnome. Grafische, intuïtieve, interfaces zijn
+echter pas redelijk laat in gebruik genomen. Voorafgaand de opkomst van de
+grafische interface aan was er een andere interface die de computerwereld
+domineerde: de \emph{command-line} interface.
 
 Deze inleidende sessies gaan over de command-line interface (of
-\emph{commandolijninterface}). Deze is  helaas (veel) minder intuïtief, maar
-daarom niet minder belangrijk is om wat ervaring mee te hebben. Met enige kennis
+\emph{commandolijninterface}). Deze is  helaas (veel) minder intuïtief
+dan grafische omgevingen, maar het is echter ook belangrijk is wat ervaring
+met deze command-line interface te hebben. Met enige kennis
 van de command-line programma's, en hoe je die kan combineren met elkaar, kan je
 je leven later (hopelijk) veel makkelijker maken (en dat niet alleen in de
 eigenlijke practica van \emph{computerarchitectuur}, maar ook in andere vakken
@@ -50,14 +51,14 @@ interessante data rechtstreeks in een spreadsheet kan plakken, etc.
 \section{Organisatie van de sessies}
 
 Deze inleidende sessies gaan door tijdens de eerste drie lesweken, elke dinsdag
-van 8u30 tot 9u40, in PC-klassen A en B in de Plateau. Je gaat hier op twee
+van 8u30 tot 9u40, in PC-klassen 0.1 en 0.2 in de Plateau. Je gaat hier op twee
 manieren met Linux leren werken:
 
 \begin{enumerate}
 
   \item Met enkele oefeningen op Dodona. Deze oefeningen zullen gradueel
     beschikbaar gemaakt worden op de Dodona-site die je kan vinden op
-    \url{https://dodona.ugent.be/nl/courses/79/}.
+    \url{https://dodona.ugent.be/nl/courses/268/}.
 
   \item Door te oefenen op een virtueel Linux-systeem dat jullie in VirtualBox
     zullen opzetten. Installeer hiervoor eerst VirtualBox
@@ -105,9 +106,9 @@ Voor we beginnen met het echte werk, is het nuttig om enkele basisconcepten
 te kennen van het bestandssysteem, en hoe je kan verwijzen naar bestanden.
 
 Standaard zijn alle verwijzingen naar bestanden \emph{relatief ten opzichte van
-de huidige directory}. Dus als je weet dat je directory zit die een
+de huidige directory}. Dus als je weet dat je in een directory zit die een
 (sub)directory \verb!computerarchitectuur_practica! bevat, kan
-je met de verwijzijng \verb!computerarchitectuur_practica! direct naar deze
+je met de verwijzing \verb!computerarchitectuur_practica! direct naar deze
 subdirectory verwijzen.
 
 Directories en bestanden daarin worden van elkaar gescheiden door een forward
@@ -118,8 +119,10 @@ Merk op dat voor Linux een directory eigenlijk een speciaal bestand is. Dus
 als je vraagt om alle bestanden in een directory op te lijsten, zal je dus
 niet alleen de `gewone' bestanden zien, maar ook alle (sub)directories.
 
-Je kan ook werken met \emph{absolute paden}. In Windows is dit typisch iets wat
-begint met \verb!C:\!, \verb!D:\!, etc.. In Unix-gebaseerde systemen zoals
+Je kan ook werken met \emph{absolute paden}, die er voor zorgen dat je naar
+een bestand kan verwijzen zonder te hoeven weten waar je je bevindt relatief
+ten opzichte van je huidige locatie in het systeem. In Windows is dit typisch iets wat
+begint met \verb!C:\!, \verb!D:\!, etc. In Unix-gebaseerde systemen zoals
 Linux (maar ook OS X),
 beginnen deze echter steeds met een initiële forward slash. Alle bestanden zijn
 dus te vinden via verwijzingen die starten vanaf de zogeheten
@@ -186,8 +189,9 @@ manier bediend worden:
 
   \item \emph{Zoeken} door de tekst, kan je door forward slash (`/') te typen,
     gevolgd door je zoekterm (als je bijvoorbeeld in het geval van \verb!ls! wil
-    weten hoe de uitvoer gesorteerd kan worden, kan je `sort' typen), en dan op
-    \emph{enter} duwen. Alle hits op die zoekterm zullen oplichten in de tekst,
+    weten hoe de uitvoer gesorteerd kan worden, kan je `/' typen, en
+    dan `sort' typen), en dan op \emph{enter} duwen. Alle hits op die zoekterm
+    zullen oplichten in de tekst,
     en de viewer springt automatisch naar de eerste hit. Je kan bovendien
     eenvoudig naar de volgende/vorige hit in de tekst gaan met respectievelijk
     de toetsen `n' (\emph{next}) en `p' (\emph{previous}).
@@ -230,7 +234,8 @@ te typen.
 
 
 \textbf{Belangrijke tip!} Je gaat het misschien net als ik ook al beu zijn om
-elke keer opnieuw \verb!computerarchitectuur_practica! voluit te typen. Dat is
+elke keer opnieuw\\
+\verb!computerarchitectuur_practica! voluit te typen. Dat is
 saai, traag, en foutgevoelig. De \emph{shell} (het programma waarmee je
 interageert in de terminal en die je \verb!student@student-VirtualBox:~$!
 print), heeft gelukkig een feature die dit probleem zo goed als volledig oplost:
@@ -265,8 +270,8 @@ je meer hierover wil weten kan je dat opzoeken in de man-page.)
 \section{\texttt{cd} --- Change Directory}
 
 Enerzijds kennen we nu het concept van `de huidige directory', en anderzijds
-weten we hoe \verb!ls! te gebruiken om te zien welke directories (of files) er
-waar zijn. Met \verb!cd! kunnen we onze huidige directory veranderen naar de
+weten we hoe \verb!ls! te gebruiken om te zien welke directories (of files) zich
+waar bevinden. Met \verb!cd! kunnen we onze huidige directory veranderen naar de
 andere directory. Zo kunnen we naar de
 \verb!computerarchitectuur_practica!-directory gaan, en verolgens het
 \verb!ls!-commando uitvoeren. De inhoud van de
@@ -281,8 +286,9 @@ pract08 README
 
 De prompt geeft hier meteen mooi aan dat de huidige directory veranderd is.
 
-Je kan verwijzen naar de bovenliggende directory via \verb!..!. Dit kan je
-gebruiken om omhoog te gaan in de directorystructuur:
+Je kan verwijzen naar de bovenliggende directory via \verb!..! (twee
+punten na elkaar). Dit kan je gebruiken om omhoog te gaan in de
+directorystructuur:
 \begin{verbatim}
 student@student-VirtualBox:~/computerarchitectuur_practica$ cd ../..
 student@student-VirtualBox:/home$ 
@@ -301,7 +307,7 @@ laten aanmaken voor je.
 
 \section{\texttt{cp} --- CoPy Files}
 
-Met het \verb!cp!-commando kan je bestanden kopiëren. Er zijn twee mogelijkheden:
+Met het \verb!cp!-commando kan je bestanden kopi"eren. Er zijn twee mogelijkheden:
 
 \begin{itemize}
 
@@ -311,7 +317,8 @@ Met het \verb!cp!-commando kan je bestanden kopiëren. Er zijn twee mogelijkhede
   \item Het doel is een directory: \verb!cp bestand1 directory! zal een kopie
     van \verb!bestand1! aanmaken in \verb!directory!; het nieuwe bestand zal (in
     die directory) dezelfde naam hebben als het originele bestand. In dit geval
-    kan je ook meerdere bestanden in 1 keer kopieren: \verb!cp bestand1 bestand2 bestand3 directory!.
+    kan je ook meerdere bestanden in 1 keer kopi"eren:\\
+    \verb!cp bestand1 bestand2 bestand3 directory!.
 
 \end{itemize}
 
@@ -341,8 +348,8 @@ de \verb!computerarchitectuur_practica! directory op scherm te printen.
 Het \verb!cat!-commando is niet zo handig om tekst mee te bekijken. Het zou veel
 handiger zijn als we de textviewer die gebruikt wordt voor de man-pages zouden
 kunnen hergebruiken. Gelukkig is dit mogelijk: dit is het \verb!less!-commando.
-Probeer met \verb!less! eens hetzelfde bestand te bekijken als je zonet deed met
-\verb!cat!.
+Probeer met \verb!less! eens hetzelfde bestand te bekijken dat je zonet bekeek
+met \verb!cat!.
 
 \section{\texttt{touch} --- Een leeg bestand aanmaken}
 
@@ -420,7 +427,8 @@ achtergrond, die volledig buiten de scope van dit document valt. Wat belangrijk
 is, is wat je er mee kan en hoe je ze opbouwt.
 
 Je doorzoekt een of meerdere tekstbestanden met een reguliere expressie als
-volgt: \verb!egrep '!\emph{patroon}\verb!' bestand(en)!. Dit gaat alle lijnen
+volgt:\\
+\verb!egrep '!\emph{patroon}\verb!' bestand(en)!. Dit gaat alle lijnen
 uitprinten in de gegeven bestanden die voldoen aan de gegeven reguliere
 expressie/zoekpatroon. Zo'n patroon zet je opnieuw best tussen quotes, niet
 alleen omdat een patroon spaties kan bevatten, maar ook omdat bepaalde
@@ -432,7 +440,7 @@ Een regulier expressie bouw je op uit kleinere sub-expressies. De belangrijkste 
 \begin{itemize}
 
   \item \emph{Letterlijk karakter:} Dit geef je gewoon letterlijk in.
-    Bijvoorbeeld: \verb!egrep 'a' bestand.txt! zoekt geeft alle lijnen die het
+    Bijvoorbeeld: \verb!egrep 'a' bestand.txt! geeft alle lijnen die het
     karakter \emph{a} bevatten in het bestand \verb!bestand.txt!
 
   \item \emph{Aan elkaar plakken van expressies (concatenation)}: door
@@ -458,10 +466,10 @@ Een regulier expressie bouw je op uit kleinere sub-expressies. De belangrijkste 
     elkaar volgt in de ASCII-tabel, kan je dit afkorten door een streepje: het
     patroon \verb![a-d]! zal \emph{a,b,c,d} matchen.
 
-  \item \emph{Een keuzemogelijkheid:} als je lijnen wil printen die een van
-    meerdere zoekpatronen matcht, kan je die scheiden van elkaar met een
+  \item \emph{Een keuzemogelijkheid:} als je lijnen wil matchen/printen die een
+    van meerdere zoekpatronen matcht, kan je die scheiden van elkaar met een
     vertikaal streepje, ook wel het \emph{pipe symbol} genoemd: \verb!|!.
-    Bijvoorbeeld, \verb!Aap|Noot|Mies! zal alle lijnen printen die minstens
+    Bijvoorbeeld, \verb!Aap|Noot|Mies! zal alle lijnen matchen die minstens
     eenmaal \emph{Aap}, \emph{Noot}, of \emph{Mies} bevatten.
 
   \item \emph{Herhaling, 0 of meer keer:} Als je het voorgaande element 0 of
@@ -470,7 +478,7 @@ Een regulier expressie bouw je op uit kleinere sub-expressies. De belangrijkste 
     uiteraard ook op andere types referenties, \verb![0-9]*! zal matchen op
     gelijk welke opeenvolging van cijfers (en ook 0 cijfers).
 
-  \item \emph{Herhaling, 1 of meer keer:}, hiervoor gebruiken we een plus-teken.
+  \item \emph{Herhaling, 1 of meer keer:} hiervoor gebruiken we een plus-teken.
     Dus \verb![0-9]+! zal matchen op elk getal, dat minstens uit \'e\'en cijfer
     bestaat.
 
@@ -478,9 +486,15 @@ Een regulier expressie bouw je op uit kleinere sub-expressies. De belangrijkste 
     dat het herhaald wordt ertussen. Bijvoorbeeld, als je exact een Googol wil
     matchen, wat een 1 is gevolgd door 100 0'en, dan kan je dit doen als volgt:
     \verb!10{100}!. (Dus om precies te zijn: het element voor de accolades is
-    een 0, en dat moet 100 keer worden herhaald.) Je kan ook een heel bereik
-    opgeven (tussen twee getallen, ten hoogste een bepaald getal), de exacte
+    een 0, en dat moet 100 keer worden herhaald. En moet worden voorafgegaan
+    door een 1.) Je kan ook een heel bereik van de gewenste herhaling
+    opgeven (tussen twee getallen, ten hoogste een bepaald getal, ten
+    minste een bepaald getal), de exacte
     syntax hiervan kan je in de man-page van egrep vinden.
+
+  \item \emph{Herhaling: exact 0 of 1 keer}: er is een shortcut om te
+    matchen op een patroon dat exact 0 of 1 keer mag voorkomen. Zoek
+    ook dit eens op in de man-page van egrep.
 
   \item \emph{Groeperen:} De bovenstaande operaties slaan steeds op het vorige
     \emph{element} in de expressie. Aangezien individuele karakters ook al
