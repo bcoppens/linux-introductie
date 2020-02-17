@@ -419,6 +419,7 @@ student@student-VirtualBox:~$ cut -d : -f 5,6 /etc/passwd
 Probeer eens een spatie als delimiter te gebruiken?
 
 \chapter{Reguliere expressies}
+\label{regexp_basic}
 
 Reguliere expressies zijn uitdrukkingen die je toestaan om simpele zoekpatronen
 (dit zijn dan de expressies) te beschrijven die meer zijn dan enkel letterlijke
@@ -465,6 +466,14 @@ Een regulier expressie bouw je op uit kleinere sub-expressies. De belangrijkste 
     \emph{Bart} als \emph{Bard} zal matchen. Als het bereik groot is, maar op
     elkaar volgt in de ASCII-tabel, kan je dit afkorten door een streepje: het
     patroon \verb![a-d]! zal \emph{a,b,c,d} matchen.
+  
+  \item \emph{Een bereik (range) van karakters die \emph{niet} mogen matchen}:
+    soms wil je dat op een bepaalde plaats in een te matchen regel een aantal
+    karakters \emph{niet} voorkomen. Dan kan je een range inverteren: dan zet
+    je aan het begin van die range een \verb!^!. Bijvoorbeeld:
+    het patroon \verb!'^[a-z0-9]*[^0-9]+$'! zal matchen op een lijn die een
+    alfanumeriek woord bevat, maar dat niet eindigt op een cijfer (opgelet,
+    het kan dus in principe nu ook eindigen op een leesteken).
 
   \item \emph{Een keuzemogelijkheid:} als je lijnen wil matchen/printen die een
     van meerdere zoekpatronen matcht, kan je die scheiden van elkaar met een
@@ -507,7 +516,10 @@ Een regulier expressie bouw je op uit kleinere sub-expressies. De belangrijkste 
     gebruiken.
 
   \item \emph{Begin van een regel:} Dit geef je aan met het teken \verb!^!. Dus
-    \verb!^A! gaat enkel op regels matchen die beginnen met een \emph{A}.
+    \verb!^A! gaat enkel op regels matchen die beginnen met een \emph{A}. (Merk
+    het verschil op tussen \verb!^! dat aangeeft dat iets aan het begin
+    van een regel moet staan, en \verb!^! die in het begin van vierkante haakjes
+    staat om een range te inverteren.)
 
   \item \emph{Einde van een regel:} Dit geef je aan met het teken \verb!$!. Dus
     \verb!A$! gaat enkel op regels matchen die eindigen op een \emph{A}.
@@ -575,8 +587,9 @@ Zoals je misschien weet, kunnen programma's uitvoer wegschrijven via
 verschillende soorten \emph{(output)streams}, die onafhankelijk zijn van elkaar.
 Het gaat hier over \emph{standard output} (in Python is dit waar je standaard
 impliciet naar schrijft via \verb!print()!, of expliciet naar schrijft via
-\verb!sys.stdout!; in Java is dit \verb!System.out!), en \emph{standard error}
-(in Python is dit \verb!sys.stderr!, in Java is dit \verb!System.err!). De
+\verb!sys.stdout!; in Java is dit \verb!System.out!; in C is dit de \verb!stdout!
+file descriptor), en \emph{standard error} (in Python is dit \verb!sys.stderr!,
+in Java is dit \verb!System.err!, in C \verb!stderr!). De
 eerste stream dient om normale uitvoer naar te schrijven, de tweede dient om
 alle informatie over fouten naar toe te schrijven.
 
@@ -616,7 +629,7 @@ ls: cannot access '/dit/bestand/bestaat/niet': No such file or directory
 Veel van de Linux-tools voor tekstoperaties die we eerder gezien hebben, zoals
 \verb!egrep!, kunnen die operaties niet enkel toepassen op bestanden, maar ook
 op een \emph{input stream}. Door geen bestanden als argument mee te geven, gaat
-zo een tool automatisch de tekstoperaties uitvoeren op de invoer uit
+zo een tool (meestal) automatisch de tekstoperaties uitvoeren op de invoer uit
 \emph{standard input} (en zoals altijd de uitvoer naar standard output sturen).
 In het geval dat je eens een programma opstart zonder bestandsargumenten, kan je
 zelf de inputstream afsluiten door \emph{Ctrl+d} in te drukken. Probeer dit zelf
@@ -660,9 +673,10 @@ aan te passen.
 
 Bij backreferences ga je in je expressie expliciet vragen dat bepaalde delen van
 een match op een andere plaats ook voorkomen, door naar die delen te verwijzen
-in de expressie. We hebben reeds gezien dat we een groep kunnen aanmaken in een
-reguliere expressie met behulp van ronde haakjes; je kan later in je expressie
-verwijzen naar wat tussen die haakjes stond met behulp van de syntax  $\\n$
+in de expressie. We hebben reeds gezien dat we in een reguliere expressie
+verschillende op elkaar volgende deel-expressies kunnen groeperen
+met behulp van ronde haakjes; je kan later in je expressie
+verwijzen naar wat tussen die haakjes stond met behulp van de syntax \verb!\!$n$
 (waarbij $n$ aangeeft naar welke groep verwezen wordt, en er vanaf 1 gestart
 wordt met tellen). Dus bijvoorbeeld, de expressie \verb!(ba)\1! zal zoeken naar
 de lijnen die \emph{baba} bevatten. Natuurlijk is dit niet zo nuttig als je
@@ -676,8 +690,11 @@ Een ander voorbeeld: het patroon \verb!^([0-9]).*\1$! geeft aan dat het lijnen m
 met een bepaald cijfer, gevolgd door een sequentie van gelijk welk teken, en dat eindigt in hetzelfde cijfer
 als het begon. Dus: \textbf{9}hallo\textbf{9} matcht wel, \textbf{9}hallo\textbf{0} matcht \emph{niet}.
 Een voorbeeld met twee groepen: \verb!([aeiouy]).\1([^aeiouy])\2! is een patroon dat matcht op woorden
-die ergens twee een klinker bevat, gevolgd door gelijk welk teken, gevolgd door \emph{dezelfde} klinker, gevolgd
-door twee keer \emph{dezelfde} medeklinker. Dus \emph{useless} matcht, want groep 1 bevat hier de \emph{e} (die dus voorkomt zowel voor als na de \emph{l}), en groep
+die ergens een klinker bevat, gevolgd door gelijk welk teken, gevolgd door \emph{dezelfde} klinker, gevolgd
+door twee keer \emph{dezelfde} medeklinker\footnote{In de les van reguliere expressies
+van week 1 stond niet uitgelegd wat \^{} in een range wil zetten. Ik heb inmiddels
+de tekst in Hoofdstuk~\ref{regexp_basic} uitgebreid met die uitleg.}.
+Dus \emph{useless} matcht, want groep 1 bevat hier de \emph{e} (die dus voorkomt zowel voor als na de \emph{l}), en groep
 2 bevat hier de bevat hier de \emph{s}.
 
 \textbf{Nuttig om weten} is dat veel programmeertalen (of hun
@@ -751,7 +768,7 @@ vanop de command line. Hiervoor bestaan verschillende soorten tekstverwerkers.
 Deze week gaan we kennis maken met een heel eenvoudige tekstverwerker:
 \verb!nano!. Je start deze editor op met \verb!nano bestand.txt!. Je kan hier
 gewoon tekst in typen. Onderaan het scherm staan de acties die je kan doen, en
-hoe je ze moet oproepen. Hierbij geeft een hoedje (\^) aan dat je de
+hoe je ze moet oproepen. Hierbij geeft een hoedje (\^{}) aan dat je de
 \emph{Ctrl-toets} moet ingeduwd houden. Als er onderaan dus staat: \verb!^O Write Out!,
 wil dit dus zeggen dat om het bestand weg te schrijven, je \emph{Ctrl+o} moet
 typen. Gelijkaardig moet je \emph{Ctrl+x} intypen om de editor te verlaten.
@@ -771,7 +788,7 @@ Ruw gesproken bestaat wat je vaak zou beschouwen als compileren eigenlijk
 uit twee stappen: het omzetten van \emph{individuele} bronbestanden
 in binaire bestanden (ook wel \emph{objectbestanden} of \emph{object files}
 genoemd), en het \emph{linken} van al deze objectbestanden in één enkel
-uitvoerbaar bestand. We beginne met twee C-bestanden te maken: \verb!print.c! en
+uitvoerbaar bestand. We beginnen met twee C-bestanden te maken: \verb!print.c! en
 \verb!main.c!. Deze hebben de volgende inhoud:
 
 \begin{verbatim}
@@ -926,7 +943,7 @@ afhankelijkheden, makefiles zelf schrijven op een platformonafhankelijke en
 configureerbare manier sterk afgeraden wordt. Tegenwoordig gebruikt men vaak
 tools die, gebaseerd op een high-level beschrijving en handig configureerbare
 instellingen voor jou zelf (complexe) makefiles genereren. Een tool die vaak
-gebruikt wordt hiervoor is \emph{CMake}, dat je kan vinden op
+gebruikt wordt hiervoor is \emph{CMake}, die je kan vinden op
 \url{https://cmake.org/}.
 
 \chapter{Administratietaken op Linux}
