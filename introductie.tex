@@ -1089,11 +1089,12 @@ zorgt dat bij elke matchende regel het \emph{regelnummer} gevolgd door een
 zorgt dat slechts de eerste $N$ matchende regels worden teruggegeven):
 
 \begin{verbatim}
-$ egrep -n --max-count=1 '^Bart' /usr/share/dict/words
+$ cp /usr/share/dict/words words
+$ egrep -n --max-count=1 '^Bart' words
 1440:Bart
-$ egrep -n --max-count=1 '^Bart' /usr/share/dict/words | cut -d : -f 1
+$ egrep -n --max-count=1 '^Bart' words | cut -d : -f 1
 1440
-$ tail -n +$(egrep -n --max-count=1 '^Bart' /usr/share/dict/words | cut -d : -f 1) /usr/share/dict/words
+$ tail -n +$(egrep -n --max-count=1 '^Bart' words | cut -d : -f 1) words
 Bart
 Barth
 Bartholdi
@@ -1109,7 +1110,7 @@ uitvoeren, en het resultaat ($1440$) plakken op de plaats waar die
 \verb!$(...)! staat in die regel met \verb!tail!. Wat er dus op neerkomt dat
 wat uitgevoerd wordt op die laatste regel het volgende is: \verb!tail -n +1440 /usr/share/dict/words!.
 
-\textbf{Opgelet!} Verwar deze syntax echter niet met de constructie \verb!$(( expressie ))$! die gebruikt wordt om (eenvoudige) wiskundige berekeningen uit te voeren:
+\textbf{Opgelet!} Verwar deze syntax echter niet met de constructie \verb!$(( expressie ))! die gebruikt wordt om (eenvoudige) wiskundige berekeningen uit te voeren:
 \begin{verbatim}
 $ tail -n $((2+1)) /usr/share/dict/words
 étude
@@ -1119,7 +1120,7 @@ $ tail -n $((2+1)) /usr/share/dict/words
 
 \subsection{Process substitution}
 
-Uitvoer doorsturen naar een ander commando is allemaal leuk, maar dan moet dat
+Uitvoer doorsturen naar een ander commando is misschien wel handig, maar dan moet dat
 commando natuurlijk wel de mogelijkheid bieden om te lezen van standard input.
 Bovendien, wat als je nu om de een of andere manier de uitvoer van meerdere
 \emph{verschillende} processen wil pipen als verschillende inputs van een
@@ -1227,7 +1228,8 @@ genoemd; het protocol dat je hiervoor gebruikt is het \emph{ssh-protocol} (wat
 voor \emph{\textbf{s}ecure \textbf{sh}ell} staat), en het commando dat je
 hiervoor moet gebruiken is dan ook het \verb!ssh!-commando. Zoals gebruikelijk
 heeft dit een hele boel verschillende opties, maar het belangrijkste argument
-heeft de vorm \emph{gebruikersnaam}\verb!@!\emph{hostnaam}.
+geeft aan met welke server je wil verbinden (en hoe je gebruiker heet op
+die server), en heeft de vorm \emph{gebruikersnaam}\verb!@!\emph{hostnaam}.
 
 Om hier wat mee te oefenen, heeft de UGent een ssh-server draaien waar
 studenten mee kunnen connecteren. Deze server heet \emph{helios}, en is enkel
@@ -1269,11 +1271,13 @@ Hier kan je de verschillende stappen zien:
     degene waarmee je de eerste keer verbond, en zal ook weigeren verder te
     gaan indien dit niet het geval is.
 
-\item Er wordt gevraagd naar je wachtwoord (in dit geval is dit je UGent-wachtwoord).
+\item Er wordt gevraagd naar je wachtwoord (\emph{in dit geval is dit je UGent-wachtwoord}).
 
 \item Als je je wachtwoord intypt, \emph{wordt er niets naar het scherm
   geprint!} Dus in tegenstelling tot wat je misschien verwacht, zal je géén
-    sterretjes of bolletjes of wat dan ook zien verschijnen.
+    sterretjes of bolletjes of wat dan ook zien verschijnen. De getypte
+    karakters worden natuurlijk wel geregistreerd, en eens je op enter
+    duwt zal het (niet-geprinte) wachtwoord naar de server doorgestuurd worden.
 
 \item De prompt die je krijgt, ziet er als volgt uit: \verb!~ [1]$!, en niét,
   zoals je wellicht had verwacht, \verb!bcoppens@helios:~$!. Dit is omdat er
@@ -1301,10 +1305,10 @@ Een aantal commando's die wellicht eens leuk zijn om mee te experimenteren op
 Helios zijn: \verb!ps! om een tekstueel overzicht te geven van alle draaiende
 processen (waarbij \verb!ps aux! er voor zorgt dat meer informatie over meer
 processen wordt uitgeprint), \verb!free! om informatie over het beschikbare
-gebeugen te printen, en \verb!htop! dat een visuele overzicht maakt van niet
+geheugen te printen, en \verb!htop! dat een visuele overzicht maakt van niet
 alleen de lopende processen (die je dan kan sorteren op allerhande manieren),
-visueel laat zien hoeveel geheugen beschikbaar is en gebruikt wordt, maar ook
-laat zien hoeveel CPU's er in een machine zitten en hoe zwaar deze bezet
+maar ook visueel laat zien hoeveel geheugen beschikbaar is en gebruikt wordt, 
+en zelfs laat zien hoeveel CPU's er in een machine zitten en hoe zwaar deze bezet
 worden. Probeer eens al deze commando's uit op Helios. (Kijk eens of je ook de
 gebruikersnamen van medestudenten kan herkennen als zij toevallig op dat moment
 ook ingelogd zijn!)
@@ -1334,8 +1338,8 @@ argument. Probeer eens te kijken wat het verschil is tussen de uitvoer van
 \verb!ls /dev/! en \verb!find /dev/!.
 
 Het \verb!find!-commando ondersteunt veel opties. De eerste die we gaan
-gebruiken is die om enkel bestanden uit te printen die een bepaald patroon
-matchen: \verb!-iregex! \emph{patroon} (de \verb!i! staat hier voor het feit
+gebruiken is die om enkel bestanden uit te printen wier naam een bepaald patroon
+matcht: \verb!-iregex! \emph{patroon} (de \verb!i! staat hier voor het feit
 dat het een case-insensitive zoekopdracht is). Het patroon moet hierbij matchen
 op \emph{het hele pad}. Bijvoorbeeld \verb!find . -iregex '.*[0-9]\.pdf'! zal
 alle bestanden uitprinten die eindigen op een cijfer gevolgd door \verb!.pdf!.
@@ -1470,7 +1474,7 @@ bepaalde opties via zo'n variabelen uitlezen.
 Een voorbeeld hiervan is hoe \verb!egrep! omgaat met de definitie van
 alfanumerieke karakters en karaktercoderingen: er is bijvoorbeeld een
 voorgedefinieerde karakterklasse \verb![[:alnum:]]! die matcht op alles wat
-volgens de huidige taaldefinitie een alfanumeriek teken is. Je kan dan met
+volgens de \emph{huidige taaldefinitie} een alfanumeriek teken is. Je kan dan met
 omgevingsvariabelen aangeven hoe hij karaktertekens moet interpreteren: als
 pure ASCII, UTF-8, etc.)
 
@@ -1552,7 +1556,7 @@ ingeven (zoals: opslaan van een bestand, afsluiten, etc.), terwijl je insert
 mode gebruikt om tekst te typen in een bestand. Om van normal mode te switchen
 naar insert mode, druk je gewoon de \emph{i}-toets in. Om van de insert mode
 naar normal mode te switchen, druk je op \emph{Escape}. Om een bestand op te
-slaan, typ je in de insert mode het volgende in: \verb!:w!\emph{enter} (van
+slaan, typ je in de normal mode het volgende in: \verb!:w!\emph{enter} (van
 \emph{write}). Om af te sluiten, gebruik je \verb!:q!\emph{enter} (van quit).
 Om af te sluiten zonder op te slaan, gebruik je \verb@:q!@\emph{enter}.
 
@@ -1561,7 +1565,7 @@ visuelere versie van het \verb!diff!-commando aanbiedt: \verb!vimdiff!. Je kan
 dit gebruiken op exact dezelfde manier als \verb!diff! (probeer dit eens!), met
 als grote verschil dat de bestanden zij aan zij zullen verschijnen, met de
 verschillen gehighlight. (Om dit dan af te sluiten, moet je wel beide files
-afsluiten, door tweemaal \verb!:w!\emph{enter} te typen.)
+afsluiten, door tweemaal \verb!:q!\emph{enter} te typen.)
 
 Als je meer wil leren over hoe diff te gebruiken, is er een interactieve
 tutorial die je kan starten met het \verb!vimtutor!-commando.
@@ -1573,9 +1577,9 @@ Tot slot is het zeer interessant om wat kennis te hebben van
 Het versiecontrolesysteem dat we hier gaan introduceren is \verb!git!.
 
 Als je aan een project aan het werken bent (en dat kan dan vaak een codeproject
-zijn, maar dat kan ook het schrijven van een paper, boek, introductie tot
-Linux, etc. zijn), is het vaak nuttig om vorige versies van je (bron)bestanden
-bij te houden. Liefst zelfs op z'o een manier dat je makkelijk kan teruggaan
+zijn, maar dat kan ook het schrijven van een verslag, een paper, een boek, 
+een introductie tot Linux, etc.~zijn), is het vaak nuttig om vorige versies van
+je (bron)bestanden bij te houden. Liefst zelfs op z\'o een manier dat je makkelijk kan teruggaan
 naar een set van bestanden die allemaal met elkaar compatibel zijn en die samen
 werken. (Dus dat je niet moet zoeken naar een tijdstip waarop alle aanpassingen
 die je aan functiesignaturen in je headerbestanden van een C-project hebt
@@ -1607,7 +1611,8 @@ waar je zowel publieke als private repositories kan aanmaken (maar bij private
 kan je slechts met een beperkt aantal mensen samenwerken op de gratis versie).
 GitHub heeft ook een \emph{GitHub Enterprise} versie voor bedrijven; de UGent
 betaalt hier ook voor en je kan deze versie vinden op
-\url{https://github.ugent.be/}. Hierbij kan je dan onbeperkt (en voor jullie
+\url{https://github.ugent.be/} (hiervoor gebruik je dan je UGent-wachtwoord).
+Hierbij kan je dan onbeperkt (en voor jullie
 gratis) private repositories aanmaken met onbeperkt veel anderen, zolang deze
 mensen tot de UGent behoren.
 
@@ -1615,8 +1620,8 @@ Als je meer wil leren hierover, raad ik aan om enkele tutorials te volgen:
 eentje over \verb!git! zelf (zoals bijvoorbeeld voor de pure basics,
 \url{https://guides.github.com/introduction/git-handbook/}), en eenje over de
 functionaliteit van de web-interface van GitHub (zoals op
-\url{https://guides.github.com/activities/hello-world/}). Wil je meer de
-details ook kennen, raad ik ook aan om naar de eerste hoofdstukken van het
+\url{https://guides.github.com/activities/hello-world/}). Wil je ook meer van de
+details kennen, raad ik ook aan om naar de eerste hoofdstukken van het
 \emph{Pro Git} boek te lezen, dat gratis te lezen/downloaden is op
 \url{https://git-scm.com/book/en/v2}.
 
@@ -1631,7 +1636,9 @@ verwijzen naar enkele voorbeelden:
   op de UGent-GitHub staat: deze repository (en dus de bijhorende geschiedenis)
     is dus enkel zichtbaar voor mensen met een UGent-account:
     \url{https://github.ugent.be/bcoppens/revisualise-cko/commits/master}
-\item Een serieuze (academisch) open source project:
+\item Een (kopie van) de broncode (en bijhorende geschiedenis) van de Linux
+  kernel: \url{https://github.com/torvalds/linux}
+\item Een serieus (academisch) open source project:
   \url{https://github.com/panda-re/panda}
 \item Dat je niet enkel code hoeft te bewaren via \verb!git! kan ik allicht
   best laten zien door te linken naar de repository die hoort bij deze
@@ -1647,8 +1654,8 @@ termijn gezien. En dan hebben we nog maar een deel gezien van wat mogelijk
 is! Dat je niet alles gaan onthouden is dan ook niet erg. Zolang je
 later, als je nog eens ergens met de Linux command line iets moet doen, je je
 nog vaag herinnert wat er allemaal mogelijk is, en vooral geen schrik hebt om
-nog eens op te zoeken (al dan niet in deze cursus, of een van de vele sheat
-cheets die je online kan vinden, of waar dan ook) wat er mogelijk was. En dat
+nog eens op te zoeken (al dan niet in deze cursus, of een van de vele cheat
+sheets die je online kan vinden, of waar dan ook) wat er mogelijk was. En dat
 als je later eens ergens een tool hebt die een hoop uitvoer naar een terminal
 spuwt, maar waar je eigenlijk slechts ge"interesseerd bent in een deeltje, dat
 je dan herinnert dat er zoiets was als \verb!egrep!. En dat je reguliere
