@@ -132,9 +132,9 @@ beginnen deze echter steeds met een initiële forward slash. Alle bestanden zijn
 dus te vinden via verwijzingen die starten vanaf de zogeheten
 \emph{root-directory}. Al je schijven, USB-sticks, etc., zitten in eenzelfde
 directorystructuur. Een voorbeeld van zo'n pad is de
-home-directory van de gebruiker: \verb!/home/student!. Dit wil zeggen dat we starten vanaf de
+home-directory van de gebruiker: \verb!/home/comparch!. Dit wil zeggen dat we starten vanaf de
 root-directory \verb!/!, die een subdirectory \verb!home! bevat, die dan op zijn
-beurt een subdirectory \verb!student! bevat.
+beurt een subdirectory \verb!comparch! bevat.
 
 
 \chapter{Inleiding tot de command line}
@@ -148,13 +148,13 @@ opgaves op je systeem zal downloaden). Na even te wachten, zal je dan volgende
 \emph{prompt} te zien krijgen:
 
 \begin{verbatim}
-student@student-VirtualBox:~$ 
+comparch@comparch-VirtualBox:~$ 
 \end{verbatim}
 
 Deze prompt vraagt (of `prompt') achter nieuwe commando's om uit te voeren. De
 tekst duidt aan dat deze sessie draait op het systeem genaamd
-\emph{student-VirtualBox} (later zullen we inloggen op een ander systeem met een
-andere naam), als gebruiker \emph{student}. De naam van de gebruiker vind je dus
+\emph{comparch-VirtualBox} (later zullen we inloggen op een ander systeem met een
+andere naam), als gebruiker \emph{comparch}. De naam van de gebruiker vind je dus
 voor de \texttt{@}, de naam van het systeem na de \texttt{@}. Wat er tussen de
 \texttt{:} en de \texttt{\$} staat, is de \emph{directory} waar je je op dit
 moment bevindt. Standaard zal een terminal starten in de \emph{home-directory}
@@ -164,8 +164,8 @@ Om er achter te komen in welke directory we ons eigenlijk bevinden, gaan we het
 eerste commando invoeren, \verb!pwd! (\emph{Print Working Directory}):
 
 \begin{verbatim}
-student@student-VirtualBox:~$ pwd
-/home/student
+comparch@comparch-VirtualBox:~$ pwd
+/home/comparch
 \end{verbatim}
 
 In de loop van deze sessies zal je nog veel meer van deze commando's tegenkomen
@@ -177,7 +177,7 @@ voor dat je je afvraagt wat de mogelijke opties zijn van het \verb!ls!-commando
 (dat we zometeen gaan zien). Dit doe je via:
 
 \begin{verbatim}
-student@student-VirtualBox:~$ man ls
+comparch@comparch-VirtualBox:~$ man ls
 \end{verbatim}
 waarna je in een zeer simpele textviewer terecht komt met de handleiding van het
 \verb!ls!-commando. Helemaal bovenaan staan heel summiere uitleg van wat het
@@ -220,7 +220,7 @@ directory. Standaard zal het \emph{énkel} de lijst van bestanden (en dus ook
 directories) in de huidige directory uitprinten:
 
 \begin{verbatim}
-student@student-VirtualBox:~$ ls
+comparch@comparch-VirtualBox:~$ ls
 computerarchitectuur_practica Desktop Documents Downloads Music Pictures Public
 Templates Videos
 \end{verbatim}
@@ -241,7 +241,7 @@ te typen.
 elke keer opnieuw\\
 \verb!computerarchitectuur_practica! voluit te typen. Dat is
 saai, traag, en foutgevoelig. De \emph{shell} (het programma waarmee je
-interageert in de terminal en die je \verb!student@student-VirtualBox:~$!
+interageert in de terminal en die je \verb!comparch@comparch-VirtualBox:~$!
 print), heeft gelukkig een feature die dit probleem zo goed als volledig oplost:
 \emph{tab completion}. Je typt gewoon het begin van een bestand/directory, en
 drukt de tab-toets in. De shell zal dan zo ver mogelijk aanvullen als hij kan,
@@ -282,8 +282,8 @@ andere directory. Zo kunnen we naar de
 \verb!computerarchitectuur_practica!-directory zal dan getoond worden:
 
 \begin{verbatim}
-student@student-VirtualBox:~$ cd computerarchitectuur_practica
-student@student-VirtualBox:~/computerarchitectuur_practica$ ls
+comparch@comparch-VirtualBox:~$ cd computerarchitectuur_practica
+comparch@comparch-VirtualBox:~/computerarchitectuur_practica$ ls
 pract01 pract02 pract03 pract04 pract05 pract06 pract07
 pract08 README
 \end{verbatim}
@@ -294,8 +294,8 @@ Je kan verwijzen naar de bovenliggende directory via \verb!..! (twee
 punten na elkaar). Dit kan je gebruiken om omhoog te gaan in de
 directorystructuur:
 \begin{verbatim}
-student@student-VirtualBox:~/computerarchitectuur_practica$ cd ../..
-student@student-VirtualBox:/home$ 
+comparch@comparch-VirtualBox:~/computerarchitectuur_practica$ cd ../..
+comparch@comparch-VirtualBox:/home$ 
 \end{verbatim}
 
 Hier verplaatsen we ons dus naar de bovenliggende directory van de bovenliggende
@@ -375,7 +375,7 @@ bestanden willen aanmaken, waarvan één bestand wiens naam spaties bevat, kan j
 dit als volgt doen:
 
 \begin{verbatim}
-student@student-VirtualBox:~$ touch bestand1 'bestandsnaam 2 met spaties' bestand3
+comparch@comparch-VirtualBox:~$ touch bestand1 'bestandsnaam 2 met spaties' bestand3
 \end{verbatim}
 
 Probeer dit zelf eens, en kijk ook hoe dit er uit ziet met zowel \verb!ls! als
@@ -384,7 +384,7 @@ dat het geen kwaad kan om ook quote-tekens te zetten rond argumenten zonder
 spatie:
 
 \begin{verbatim}
-student@student-VirtualBox:~$ touch 'bestand4' 'bestand5'
+comparch@comparch-VirtualBox:~$ touch 'bestand4' 'bestand5'
 \end{verbatim}
 
 Dit zal 2 extra bestanden aanmaken, waarbij de quotes geen deel uitmaken van de
@@ -417,7 +417,7 @@ gebruiker de volledige naam (het vijfde veld) en de home-directory van die
 gebruiker (het zesde veld) wil uitprinten, kan je dit doen als volgt:
 
 \begin{verbatim}
-student@student-VirtualBox:~$ cut -d : -f 5,6 /etc/passwd
+comparch@comparch-VirtualBox:~$ cut -d : -f 5,6 /etc/passwd
 \end{verbatim}
 
 Probeer eens een spatie als delimiter te gebruiken?
@@ -533,7 +533,7 @@ Een regulier expressie bouw je op uit kleinere sub-expressies. De belangrijkste 
 Een voorbeeldje:
 
 \begin{verbatim}
-student@student-VirtualBox:~$ egrep '(nologin|false)$' /etc/passwd
+comparch@comparch-VirtualBox:~$ egrep '(nologin|false)$' /etc/passwd
 \end{verbatim}
 
 zal alle regels in \verb!/etc/passwd! uitprinten die eindigen op ofwel
@@ -566,7 +566,7 @@ door een groter-dan teken te plaatsen na het commando, gevolgd door een
 bestandsnaam waar de uitvoer naar geschreven moet worden. Bijvoorbeeld:
 
 \begin{verbatim}
-student@student-VirtualBox:~$ egrep '(nologin|false)$' /etc/passwd > bestand.txt
+comparch@comparch-VirtualBox:~$ egrep '(nologin|false)$' /etc/passwd > bestand.txt
 \end{verbatim}
 
 maakt het bestand \verb!bestand.txt! aan in de huidige directory (in dit geval:
@@ -581,7 +581,7 @@ dat de uitvoer van een programma achteraan een reeds bestaand bestand wordt
 toegevoegd (\emph{appended}), dan gebruik je een dubbele groter-dan:
 
 \begin{verbatim}
-student@student-VirtualBox:~$ egrep '(nologin|false)$' /etc/passwd >> bestand.txt
+comparch@comparch-VirtualBox:~$ egrep '(nologin|false)$' /etc/passwd >> bestand.txt
 \end{verbatim}
 
 zal de uitvoer van het \verb!egrep!-commando \emph{achteraan toevoegen} aan
@@ -602,10 +602,10 @@ hierboven slaat énkel op standard output. Fouten zullen dus niet geredirect
 worden naar een bestand, maar nog altijd op het scherm verschijnen:
 
 \begin{verbatim}
-student@student-VirtualBox:~$ ls /dit/bestand/bestaat/niet > bestand.txt
+comparch@comparch-VirtualBox:~$ ls /dit/bestand/bestaat/niet > bestand.txt
 ls: cannot access '/dit/bestand/bestaat/niet': No such file or directory
-student@student-VirtualBox:~$ cat bestand.txt
-student@student-VirtualBox:~$
+comparch@comparch-VirtualBox:~$ cat bestand.txt
+comparch@comparch-VirtualBox:~$
 \end{verbatim}
 
 Wil je énkel standard error redirecten, dan doe je dit met de syntax \verb!2>!.
@@ -613,17 +613,17 @@ Als je zowel standard output als standard error wil redirecten naar eenzelfde
 bestand, dan doe je dit met de syntax \verb!&>!:
 
 \begin{verbatim}
-student@student-VirtualBox:~$ ls /etc/passwd /dit/bestand/bestaat/niet 2> error.txt
+comparch@comparch-VirtualBox:~$ ls /etc/passwd /dit/bestand/bestaat/niet 2> error.txt
 /etc/passwd
-student@student-VirtualBox:~$ cat error.txt
+comparch@comparch-VirtualBox:~$ cat error.txt
 ls: cannot access '/dit/bestand/bestaat/niet': No such file or directory
-student@student-VirtualBox:~$ ls /etc/passwd /dit/bestand/bestaat/niet 2> error.txt > bestand.txt
-student@student-VirtualBox:~$ cat bestand.txt
+comparch@comparch-VirtualBox:~$ ls /etc/passwd /dit/bestand/bestaat/niet 2> error.txt > bestand.txt
+comparch@comparch-VirtualBox:~$ cat bestand.txt
 /etc/passwd
-student@student-VirtualBox:~$ cat error.txt
+comparch@comparch-VirtualBox:~$ cat error.txt
 ls: cannot access '/dit/bestand/bestaat/niet': No such file or directory
-student@student-VirtualBox:~$ ls /etc/passwd /dit/bestand/bestaat/niet &> alles.txt
-student@student-VirtualBox:~$ cat alles.txt
+comparch@comparch-VirtualBox:~$ ls /etc/passwd /dit/bestand/bestaat/niet &> alles.txt
+comparch@comparch-VirtualBox:~$ cat alles.txt
 ls: cannot access '/dit/bestand/bestaat/niet': No such file or directory
 /etc/passwd
 \end{verbatim}
@@ -647,11 +647,11 @@ de uitvoer van een \verb!egrep!-operatie doorsturen als invoer van een
 \verb!cut!-operatie. Dit doen we door middel van de vertikale streep (\verb!|!,
 ook wel \emph{pipe} genoemd) tussen de operaties te zetten. Bijvoorbeeld:
 \begin{verbatim}
-student@student-VirtualBox:~$ egrep 'student' /etc/passwd | cut -d : -f 6
-/home/student
+comparch@comparch-VirtualBox:~$ egrep 'comparch' /etc/passwd | cut -d : -f 6
+/home/comparch
 \end{verbatim}
 
-houdt enkel de lijnen van \verb!/etc/passwd! over die \emph{student} bevatten,
+houdt enkel de lijnen van \verb!/etc/passwd! over die \emph{comparch} bevatten,
 en gaat enkel die lijnen onderverdelen in kolommen (met : als delimiter), en
 print daarvan de 6e kolom. Je kan je pijplijnen zo lang maken als je zelf wil.
 Uiteindelijk kan je dan het eindresultaat naar een bestand wegschrijven om later
@@ -728,11 +728,11 @@ meegeeft, gaat per lijn slechts de eerste match vervangen worden. Meestal wil je
 echter alle voorkomens van een patroon vervangen. Bijvoorbeeld:
 
 \begin{verbatim}
-student@student-VirtualBox:~$ sed -E -e 's/:/ /g' /etc/passwd
+comparch@comparch-VirtualBox:~$ sed -E -e 's/:/ /g' /etc/passwd
 root x 0 0 root /root /bin/bash
 daemon x 1 1 daemon /usr/sbin /usr/sbin/nologin
 ....
-student@student-VirtualBox:~$ sed -E -e 's/:/ /' /etc/passwd
+comparch@comparch-VirtualBox:~$ sed -E -e 's/:/ /' /etc/passwd
 root x:0:0:root:/root:/bin/bash
 daemon x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
 ...
@@ -796,11 +796,11 @@ uitvoerbaar bestand. We beginnen met twee C-bestanden te maken: \verb!print.c! e
 \verb!main.c!. Deze hebben de volgende inhoud:
 
 \begin{verbatim}
-student@student-VirtualBox:~$ cat print.c
+comparch@comparch-VirtualBox:~$ cat print.c
 #include <stdio.h>
 void print() { printf("Hallo iedereen!\n"); }
 
-student@student-VirtualBox:~$ cat main.c
+comparch@comparch-VirtualBox:~$ cat main.c
 void print();
 int main() { print(); }
 \end{verbatim}
@@ -814,10 +814,10 @@ als de invoerbestanden, maar met het suffix \verb!.o! (verwijzend naar het feit
 dat het een objectbestand is). Dus:
 
 \begin{verbatim}
-student@student-VirtualBox:~$ gcc -c main.c print.c 
-student@student-VirtualBox:~$ ls -lh main.o print.o 
--rw-r--r-- 1 student student 1.4K Feb 18 15:56 main.o
--rw-r--r-- 1 student student 1.5K Feb 18 15:56 print.o
+comparch@comparch-VirtualBox:~$ gcc -c main.c print.c 
+comparch@comparch-VirtualBox:~$ ls -lh main.o print.o 
+-rw-r--r-- 1 comparch comparch 1.4K Feb 18 15:56 main.o
+-rw-r--r-- 1 comparch comparch 1.5K Feb 18 15:56 print.o
 \end{verbatim}
 
 Willen we deze twee bestanden nu tot een uitvoerbaar bestand combineren/linken,
@@ -836,8 +836,8 @@ noemen (op Linux gebruik je normaal gezien geen \verb!.exe!-suffix), en dan
 uitvoeren, dan kan dit als volgt:
 
 \begin{verbatim}
-student@student-VirtualBox:~$ gcc -o hallo main.o print.o
-student@student-VirtualBox:~$ ./hallo 
+comparch@comparch-VirtualBox:~$ gcc -o hallo main.o print.o
+comparch@comparch-VirtualBox:~$ ./hallo 
 Hallo iedereen!
 \end{verbatim}
 
@@ -849,8 +849,8 @@ compileren gaat snel), naar \verb!-O3! (heel effici"ente code, maar het
 compileren zal trager zijn bij grote codebases). Vaak wordt \verb!-O2! als
 tussenweg gekozen:
 \begin{verbatim}
-student@student-VirtualBox:~$ gcc -O2 -c main.c print.c 
-student@student-VirtualBox:~$ gcc -o hallo main.o print.o
+comparch@comparch-VirtualBox:~$ gcc -O2 -c main.c print.c 
+comparch@comparch-VirtualBox:~$ gcc -o hallo main.o print.o
 \end{verbatim}
 
 Voor C++-programma's is dit allemaal identiek, maar dan met \verb!g++! op beide
@@ -882,7 +882,7 @@ van een makefile die hoort bij de C-bestanden van vorig hoofdstuk, zou er als
 volgt kunnen uitzien:
 
 \begin{verbatim}
-student@student-VirtualBox:~$ cat Makefile
+comparch@comparch-VirtualBox:~$ cat Makefile
 hallo: main.o print.o
         gcc -o hallo main.o print.o
 main.o: main.c
@@ -895,7 +895,7 @@ reeds bestaande objectbestand en uitvoerbare bestanden weghalen, kunnen we nu
 opnieuw beginnen als volgt:
 
 \begin{verbatim}
-student@student-VirtualBox:~$ make hallo
+comparch@comparch-VirtualBox:~$ make hallo
 gcc -c main.c
 gcc -c print.c
 gcc -o hallo main.o print.o
@@ -905,7 +905,7 @@ Indien we nu \verb!main.c! zouden aanpassen, gaat \verb!make! niet meer
 \verb!print.o! hergenereren:
 
 \begin{verbatim}
-student@student-VirtualBox:~$ make hallo 
+comparch@comparch-VirtualBox:~$ make hallo 
 gcc -c main.c
 gcc -o hallo main.o print.o
 \end{verbatim}
@@ -913,7 +913,7 @@ gcc -o hallo main.o print.o
 Indien we \emph{niets} veranderen, gaat  \verb!make! ook doorhebben dat er niets
 moet veranderd worden om \verb!hallo! up to date te houden:
 \begin{verbatim}
-student@student-VirtualBox:~$ make hallo 
+comparch@comparch-VirtualBox:~$ make hallo 
 make: 'hallo' is up to date.
 \end{verbatim}
 
@@ -931,12 +931,12 @@ optimalisatieniveau) kan instellen door in je makefile een
 bovenstaande makefile ziet er dan ook als volgt uit:
 
 \begin{verbatim}
-student@student-VirtualBox:~$ cat Makefile 
+comparch@comparch-VirtualBox:~$ cat Makefile 
 CFLAGS=-O2
 hallo: main.o print.o
         gcc -o hallo main.o print.o
-student@student-VirtualBox:~$ rm main.o print.o hallo 
-student@student-VirtualBox:~$ make
+comparch@comparch-VirtualBox:~$ rm main.o print.o hallo 
+comparch@comparch-VirtualBox:~$ make
 cc -O2   -c -o main.o main.c
 cc -O2   -c -o print.o print.c
 gcc -o hallo main.o print.o
@@ -966,7 +966,7 @@ weet dat er een pakket is met een tool die allerhande bewerkingen met het
 klembord (\emph{clipboard}) toestaat. Dan kan je naar dit pakket zoeken als
 volgt:
 \begin{verbatim}
-student@student-VirtualBox:~$ apt search clipboard tool
+comparch@comparch-VirtualBox:~$ apt search clipboard tool
 Sorting... Done
 Full Text Search... Done
 deepin-picker/testing 1.6.4-1 amd64
@@ -983,7 +983,7 @@ Wil je een uitgebreidere beschrijving van een pakket waarvan je de naam weet,
 kan je die verkrijgen met \verb!apt show! \emph{pakketnaam}:
 
 \begin{verbatim}
-student@student-VirtualBox:~$ apt show xsel
+comparch@comparch-VirtualBox:~$ apt show xsel
 ...
 Description: command-line tool to access X clipboard and selection buffers
  XSel is a command-line program for getting and setting the contents of
@@ -996,7 +996,7 @@ Paketten installeren doe je met \verb!apt install! \emph{pakketnaam}.
 
 \textbf{Opgelet}: pakketten moet je installeren als de administrator, niet als
 gewone gebruiker. Totnogtoe hebben we alles als de gewone
-\verb!student!-gebruiker kunnen doen. Nu volstaat dit niet, en zullen we deze
+\verb!comparch!-gebruiker kunnen doen. Nu volstaat dit niet, en zullen we deze
 taken moeten uitvoeren als administrator. Die gebruiker heet onder
 Linux-systemen de \verb!root!-gebruiker (vroeger ook wel
 \textbf{s}uper\textbf{u}ser). Om een commando als \verb!root! uit te voeren
@@ -1007,8 +1007,8 @@ voor hebt. Je moet dan, voor de veiligheid, eerst nog eens het wachtwoord van
 jezelf ingeven:
 
 \begin{verbatim}
-student@student-VirtualBox:~$ sudo apt install xsel
-[sudo] password for student: 
+comparch@comparch-VirtualBox:~$ sudo apt install xsel
+[sudo] password for comparch: 
 ....
 \end{verbatim}
 
@@ -1036,7 +1036,7 @@ Meestal is dit handig, maar niet altijd. Stel je bijvoorbeeld voor dat je een
 simpele \emph{grafische} tekstverwerker in de command line wil opstarten, zoals
 bijvoorbeeld de \emph{Kate} editor:
 \begin{verbatim}
-student@student-VirtualBox:~$ kate
+comparch@comparch-VirtualBox:~$ kate
 \end{verbatim}
 
 Als we Kate op deze manier opstarten, wordt onze toetsenbordinvoer van de
@@ -1053,9 +1053,9 @@ blijft draaien. Gelukkig kunnen we dit doen door dit Kate-proces op de
 commando om een programma te starten, een ampersand (\verb!&!) te zetten:
 
 \begin{verbatim}
-student@student-VirtualBox:~$ kate &
+comparch@comparch-VirtualBox:~$ kate &
 [1] 29716
-student@student-VirtualBox:~$ egrep "Nu kunnen we verderwerken"
+comparch@comparch-VirtualBox:~$ egrep "Nu kunnen we verderwerken"
 \end{verbatim}
 
 Nu, het kan zijn dat je vergeten bent om de \verb!&! te gebruiken bij het
@@ -1247,7 +1247,7 @@ account actief is).
 
 Om dan te connecteren naar die server, gebruik je \verb!ssh !\emph{ugent-gebruikersnaam}\verb!@helios.ugent.be!. In mijn geval ziet dit er als volgt uit:
 \begin{verbatim}
-student@student-VirtualBox:~$ ssh bcoppens@helios.ugent.be
+comparch@comparch-VirtualBox:~$ ssh bcoppens@helios.ugent.be
 The authenticity of host 'helios.ugent.be (157.193.40.2)' can't be established.
 RSA key fingerprint is e8:26:10:9c:07:44:e4:d4:bb:89:29:fd:3d:8c:7c:d9.
 Are you sure you want to continue connecting (yes/no)? yes
