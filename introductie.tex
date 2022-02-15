@@ -50,31 +50,30 @@ interessante data rechtstreeks in een spreadsheet kan plakken, etc.
 
 \section{Organisatie van de sessies}
 
-%Deze inleidende sessies gaan door tijdens de eerste drie lesweken, elke dinsdag
-%van 8u30 tot 9u40, in PC-klassen 0.1 en 0.2 in de Plateau. Je gaat hier op twee
-%manieren met Linux leren werken:
-
-Deze inleidende sessies gaan door tijdens de eerste drie lesweken, elke dinsdag
-van 8u30 tot 9u45, online via MS Teams (meer details over hoe dit zal
-gebeuren vind je op Ufora). Je gaat hier op twee manieren met Linux leren werken:
+Deze inleidende sessies gaan door tijdens de lesweken 2, 3, en 4, elk dinsdag
+van 8u30 tot 9u45, in PC-zalen 0.1 en 0.2 in het iGent-gebouw op campus Zwijnaarde.
+Je gaat hier op twee manieren met Linux leren werken:
 
 \begin{enumerate}
 
   \item Met enkele oefeningen op Dodona. Deze oefeningen zullen gradueel
     beschikbaar gemaakt worden op de Dodona-site die je kan vinden op
-    \url{https://dodona.ugent.be/nl/courses/463/}. De ochtend van elk van de PC-sessies,
+    \url{https://dodona.ugent.be/nl/courses/1174/}. De ochtend van elk van de PC-sessies,
     zullen de oefeningen van die dag beschikbaar gemaakt worden.
 
   \item Door te oefenen op een virtueel Linux-systeem dat jullie in VirtualBox
     zullen opzetten. Installeer hiervoor eerst VirtualBox
-    (\url{https://www.virtualbox.org/}), end download onze image op
-    \url{https://users.elis.ugent.be/~bcoppens/kubuntu-computerarchitectuur.7z}.
+    (\url{https://www.virtualbox.org/}), en download onze image op
+    \url{https://users.elis.ugent.be/~jdiroela/computer_architectuur.7z}. Je pakt dit
+    7z-bestand uit, en voegt dan het \texttt{Computer\_Architectuur.vdi} bestand toe in VirtualBox als machine (Machine -$>$ Add ...).
     \textbf{Gelieve deze stappen reeds op voorhand te voltooien zodat we hier
     tijdens de labo's zelf niet te veel tijd aan verliezen.}
     %Indien je wil werken op een PC in de practicumzaal, zet dan best de (gedecomprimeerde) image al op een USB stick.
     Op dit Linux-systeem hebben we voor jullie al
-    een gebruiker \emph{student} aangemaakt wiens \textbf{wachtwoord} ook
-    simpelweg \emph{student} is.
+    een gebruiker \emph{comparch} aangemaakt wiens \textbf{wachtwoord} ook
+    simpelweg \emph{comparch} is.
+    (Als zou blijken dat jullie VirtualBox bij het opstarten lang op een zwart scherm zou blijven hangen, kan je proberen om te gaan naar Settings -$>$ Display en daar Enable 3D Acceleration aan te vinken.)
+  \item Standaard staat de toetsenbordlayout op qwerty, maar je kan deze makkelijk switchen naar azerty door rechtsonderaan in de taakbalk te klikken op `us' (waarna dit zal switchen naar `be').
 
 \end{enumerate}
 
@@ -1012,11 +1011,6 @@ student@student-VirtualBox:~$ sudo apt install xsel
 [sudo] password for student: 
 ....
 \end{verbatim}
-
-\textbf{Opgelet}: De versie van KUbuntu Linux die op de VM draait is al wat verouderd,
-en je zou deze eigenlijk intussen iets moeten aanpassen om deze commando's allemaal te
-laten werken. Voor de echte PC-practica zal ik jullie een nieuwe versie van de VM
-maken die terug helemaal up-to-date is.
 
 Wil je de lijst paketten bijwerken met de meest actuele versies, dan moet je dit
 doen met \verb!apt update! (als \verb!root!-gebruiker).
