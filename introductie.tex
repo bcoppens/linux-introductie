@@ -64,7 +64,7 @@ Je gaat hier op twee manieren met Linux leren werken:
   \item Door te oefenen op een virtueel Linux-systeem dat jullie in VirtualBox
     zullen opzetten. Installeer hiervoor eerst VirtualBox
     (\url{https://www.virtualbox.org/}), en download onze image op
-    \url{https://users.elis.ugent.be/~jdiroela/computer_architectuur.7z}. Je pakt dit
+    \url{https://users.elis.ugent.be/~jdiroela/ComputerArchitectuur.7z}. Je pakt dit
     7z-bestand uit, en voegt dan het \texttt{Computer\_Architectuur.vdi} bestand toe in VirtualBox als machine (Machine -$>$ Add ...).
     \textbf{Gelieve deze stappen reeds op voorhand te voltooien zodat we hier
     tijdens de labo's zelf niet te veel tijd aan verliezen.}
@@ -72,7 +72,8 @@ Je gaat hier op twee manieren met Linux leren werken:
     Op dit Linux-systeem hebben we voor jullie al
     een gebruiker \emph{comparch} aangemaakt wiens \textbf{wachtwoord} ook
     simpelweg \emph{comparch} is.
-    (Als zou blijken dat jullie VirtualBox bij het opstarten lang op een zwart scherm zou blijven hangen, kan je proberen om te gaan naar Settings -$>$ Display en daar Enable 3D Acceleration aan te vinken.)
+  \item Als je virtuele machine zou crashen (of een vreemde error geven) bij het opstarten terwijl je op Windows 11 zit als host-besturingssysteem: dit komt door de een nieuwe security feature in Windows 11 die onderliggend HyperV gebruikt. De oplossing is om de acceleratie van de VM in te stellen op HyperV (bij de Settings van je VM ga je naar System en dan Acceleration, en dan pas je Paravirtualization Interface aan naar Hyper-V), en ken je 2 cores toe aan je VM door in hetzelfde scherm naar het Processor-tabblad te gaan en daar het aantal CPU-cores op 2 (of meer) te zetten.
+  \item Als zou blijken dat jullie VirtualBox bij het opstarten lang op een zwart scherm zou blijven hangen, kan je proberen om te gaan naar Settings -$>$ Display en daar Enable 3D Acceleration aan te vinken.
   \item Standaard staat de toetsenbordlayout op qwerty, maar je kan deze makkelijk switchen naar azerty door rechtsonderaan in de taakbalk te klikken op `us' (waarna dit zal switchen naar `be').
 
 \end{enumerate}
