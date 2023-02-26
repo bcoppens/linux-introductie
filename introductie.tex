@@ -310,6 +310,21 @@ diepe directory moet worden aangemaakt, en alle tussenliggende directories reeds
 bestaan. Zoek op in de man-page hoe je \verb!mkdir! deze directories ook kan
 laten aanmaken voor je.
 
+Nu, als je deze uitleg exact gevolgd hebt zoals hierboven, zat je nu in de directory \verb!/home!, en \emph{niet} in de directory \verb!/home/comparch!. Als dat inderdaad zo is, zal je merken dat \verb!mkdir! niet lijkt te werken:
+\begin{verbatim}
+comparch@comparch-VirtualBox:/home$ mkdir nieuwedirectory
+mkdir: cannot create directory ‘nieuwedirectory’: Permission denied
+\end{verbatim}
+
+De reden hiervoor is dat de directory \verb!/home/! de map is waarin \emph{alle gewone gebruikers van het systeem} hun home-directory in staat. Het is echter niet de bedoeling dat een gewone user zoals jij zomaar nieuwe mappen daar kan aanmaken: die folder is `beschermd' tegen ongewenste aanpassingen. (Later zal je zien hoe je meer privileges op het systeem kan krijgen om die aanpassing w\'el te maken; hoewel dat in dit geval wel een slecht idee is.)
+
+Om dan toch een nieuwe map aan te maken, zal je dan ook moeten gaan naar een directory waar je w\'el de juiste rechten op hebt, zoals je homefolder:
+\begin{verbatim}
+comparch@comparch-VirtualBox:/home$ cd ~
+comparch@comparch-VirtualBox:~/$ mkdir nieuwedirectory
+comparch@comparch-VirtualBox:~/$
+\end{verbatim}
+
 \section{\texttt{cp} --- CoPy Files}
 
 Met het \verb!cp!-commando kan je bestanden kopi"eren. Er zijn twee mogelijkheden:
