@@ -1038,6 +1038,21 @@ Indien je ooit een \verb!bash!-shell zou willen opstarten als
 \emph{h\'e\'el} goed op met wat je doet, want voor je het weet heb je je systeem
 om zeep geholpen \verb!:)!).
 
+Nu we het toch hebben over het om zeep helpen van een systeem: in week 1 had je bij de \verb!mkdir nieuwedirectory! misschien ook
+door dat, als je dat in de \verb!/home/!-directory probeerde te doen, in plaats van in de \verb!/home/comparch!-directory, dat dat een foutmelding gaf: \emph{Permission denied}. Ook dat kunnen we nu uitleggen: je probeerde dit uit te voeren als de \verb!comparch!-gebruiker, en die mag dat niet. Maar hoe weet je nu dat dat niet mag? Of, alternatief, hoe weet je welke dingen je mag doen met een bestand of directory? Die informatie kan je opvragen met \verb!ls -lh!, en die hebben we eigenlijk totnogtoe volledig genegeerd.
+
+\begin{verbatim}
+comparch@comparch-VirtualBox:~$ ls -lh / | grep home
+drwxr-xr-x   5 root root 4.0K Jan 31  2022 home
+\end{verbatim}
+
+Een deel van die mysterieuze karakters in het begin zijn de \emph{permissies}. Dat begint in dit geval met een \verb!d! voor \emph{d}irectory; bij gewone bestanden begint dat met een \verb!-! (dat zijn dus niet \'echt permissies). Dan wordt dit gevolgd door 3 blokjes van 3 karakters: eerst de permissies voor de \emph{eigenaar} van het bestand; gevolgd door de permissies voor degenen die in de \emph{groep} van het bestand zitten; gevolgd door de permissies voor \emph{alle andere gebruikers}. Nu, wie zijn nu de eigenaar en de groep van \verb!/home!? Ook die worden aangegeven in de uitvoer van \verb!ls -lh!: die eerste \verb!root! staat voor de \emph{eigenaar}. De tweede \verb!root! geeft aan dat de \emph{groep} hier (toevallig) ook \verb!root! heet. (Dat beide dezelfde naam hebben hoeft niet; je kan bijvoorbeeld eens kijken naar de verschillende groepen die gebruikt worden om hardware-apparaten te kunnen accessen in de \verb!/dev/!-folder. (Je wil bijvoorbeeld niet dat een gebruiker die toegang heeft om de webcam aan te sturen, daarom ook meteen arbitraire bits naar je harde schijf kan schrijven!))
+
+Nu, elk van die groepjes van 3 karakters geeft de specifieke permissies aan voor de eigenaar / groepsleden / overige gebruikers. Die staan steeds in \emph{dezelfde volgorde}: \textbf{r}ead (lezen van een bestand), \textbf{w}rite (aanpassen van een bestand), en e\textbf{x}ecute (uitvoeren van een bestand). Als de respectievelijke letter er staat, staat die permissie aan voor die gebruiker; staat er een streepje, dan heeft die gebruiker die rechten niet. (Voor directories zijn er subtiele verschillen, in het bijzonder kan je directories natuurlijk niet uitvoeren; de \textbf{x} vlag geeft daar onder andere aan dat je naar die directory kan \verb!cd!en.)
+
+Dus kijken we naar de \verb!/home!-directory hierboven, met \verb!rwxr-xr-x!? Wat zijn voor ons de implicaties? Als gewone \verb!comparch!-gebruiker zijn we duidelijk niet de \verb!root!-gebruiker. Waren we w\'el de \verb!root!-gebruiker geweest (bijvoorbeeld door \verb!sudo su! uit te voeren), dan hadden we lees/schrijf/cd-rechten op deze directory. Maargoed, we zijn dat niet. Maken we misschien deel uit van de \verb!root!-groep? Ook dat zijn we als \verb!comparch! niet. (Je kan afprinten tot welke groep je als gebruiker behoort door het \verb!groups! commando uit te voeren.) Dat wil dus zeggen dat enkel het laatste 3-tupel \verb!r-x! van toepassing is voor ons als `overige' gebruiker: we kunnen dus met andere woorden de inhoud van deze directory opvragen, en er naar cd'en; maar we kunnen geen nieuwe directories aanmaken (omdat we geen schrijfrechten hebben: er staat geen \verb!w!).
+
+Je kan eens de permissies van een aantal bestanden in een aantal directories met elkaar vergelijken (vergelijk bijvoorbeeld eens de permissies van een aantal bestanden in \verb!/bin/!, bestanden in \verb!/dev/!, bestanden in \verb!/var/log/!, en bestanden in \verb!/home/comparch!).
 \part{Week 3}
 
 \chapter{Processen in de achtergrond draaien}
