@@ -491,8 +491,8 @@ Een regulier expressie bouw je op uit kleinere sub-expressies. De belangrijkste 
     soms wil je dat op een bepaalde plaats in een te matchen regel een aantal
     karakters \emph{niet} voorkomen. Dan kan je een range inverteren: dan zet
     je aan het begin van die range een \verb!^!. Bijvoorbeeld:
-    het patroon \verb!'^[a-z0-9]*[^0-9]+$'! zal matchen op een lijn die een
-    alfanumeriek woord bevat, maar dat niet eindigt op een cijfer (opgelet,
+    het patroon \verb!'[a-z0-9][^0-9]'! zal matchen op een lijn die een
+    alfanumeriek karakter bevat, dat gevolgd wordt door een niet-cijfer (opgelet,
     het kan dus in principe nu ook eindigen op een leesteken).
 
   \item \emph{Een keuzemogelijkheid:} als je lijnen wil matchen/printen die een
@@ -543,6 +543,8 @@ Een regulier expressie bouw je op uit kleinere sub-expressies. De belangrijkste 
 
   \item \emph{Einde van een regel:} Dit geef je aan met het teken \verb!$!. Dus
     \verb!A$! gaat enkel op regels matchen die eindigen op een \emph{A}.
+    En om het voorbeeld van daarstraks uit te breiden: het patroon \verb!'^[a-z0-9]*[^0-9]+$'! zal matchen op een lijn die een
+    een alfanumeriek woord is, maar dat niet eindigt op een cijfer (opnieuw: het kan dus in principe nu ook eindigen op een leesteken).
 
 \end{itemize}
 
