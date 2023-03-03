@@ -1254,14 +1254,13 @@ redirecten---al dan niet om van een bestand te lezen---, etc. Dat alles zou ons
 veel te ver leiden, maar zoek het gerust op als je dat meer zou interesseren!)
 
 \chapter{Remote shell}
-
-\textbf{TODO TODO TODO BART BART BART HELIOS IS DOOD :sob: Fixen met HPC zoals DICT aanraadt? Of gewoon laten vallen?}
-EOL - End Of Life
-
-Na meer dan 10 jaar wordt de helios server eind dit academiejaar (2021-2022) afgevoerd.
-
-De HPC infrastructuur kan een volwaardig alternatief voor helios bieden. In casu de nieuwe webportal op https://login.hpc.ugent.be biedt een zeer gebruiksvriendelijke instappunt voor onderzoekers en studenten. Dit staat beschreven in hoofdstuk 8 van de handleiding op https://www.ugent.be/hpc/en/support/documentation.htm Met de komst van nieuwe debug/visualisatie cluster 'slaking' kunnen we bovendien interactieve desktops aanbieden, zonder nadelen van een wachtrij. 
-\textbf{TODO TODO TODO BART BART BART HELIOS IS DOOD :sob:}
+% \textbf{TODO TODO TODO BART BART BART HELIOS IS DOOD :sob: Fixen met HPC zoals DICT aanraadt? Of gewoon laten vallen?}
+% EOL - End Of Life
+% 
+% Na meer dan 10 jaar wordt de helios server eind dit academiejaar (2021-2022) afgevoerd.
+% 
+% De HPC infrastructuur kan een volwaardig alternatief voor helios bieden. In casu de nieuwe webportal op https://login.hpc.ugent.be biedt een zeer gebruiksvriendelijke instappunt voor onderzoekers en studenten. Dit staat beschreven in hoofdstuk 8 van de handleiding op https://www.ugent.be/hpc/en/support/documentation.htm Met de komst van nieuwe debug/visualisatie cluster 'slaking' kunnen we bovendien interactieve desktops aanbieden, zonder nadelen van een wachtrij. 
+% \textbf{TODO TODO TODO BART BART BART HELIOS IS DOOD :sob:}
 
 Een van de voordelen van de tekstgebaseerde interface die een Linux-shell
 aanbiedt, is dat je op deze manier vrij makkelijk programma's kan uitvoeren,
@@ -1276,28 +1275,59 @@ heeft dit een hele boel verschillende opties, maar het belangrijkste argument
 geeft aan met welke server je wil verbinden (en hoe je gebruiker heet op
 die server), en heeft de vorm \emph{gebruikersnaam}\verb!@!\emph{hostnaam}.
 
-Om hier wat mee te oefenen, heeft de UGent een ssh-server draaien waar
-studenten mee kunnen connecteren. Deze server heet \emph{helios}, en is enkel
-beschikbaar via UGentNet (dus vanaf de PCs in de PC-klassen kan je hier mee
-verbinden, net zoals vanop je laptop als je via eduroam verbonden bent; van
-thuis zal je hiervoor de UGent-VPN moeten gebruiken). Eerst moet je er voor
-zorgen dat je \mbox{(UGent-)account} actief is op dit systeem. Dit doe je via
-(op UGentNet) te surfen naar \url{https://gaia.ugent.be/helios/account.cgi} en
-je daar te registreren (waarna het blijkbaar tot 10 minuten kan duren eer je
-account actief is).
+Om hier wat mee te oefenen, \emph{had} de UGent vroeger een ssh-server draaien waar
+studenten mee kunnen connecteren. Helaas hebben ze die afgevoerd :-( Nu, ze bieden (in hun woorden)
+een `volwaardig alternatief' aan, in de vorm van de HPC (High Performance Computing) infrastructuur. Dat is
+inderdaad een van de vele toepassingen voor een remote shell (net als het beheer van `gewone' serverinfrastructuur).
+Voor beginnende student is dat misschien wel een beetje overkill, maar bekijk het zo: dan heb je meteen
+al een account en ervaring ermee voor later :-)
 
-Om dan te connecteren naar die server, gebruik je \verb!ssh !\emph{ugent-gebruikersnaam}\verb!@helios.ugent.be!. In mijn geval ziet dit er als volgt uit:
+
+% Deze server heet \emph{helios}, en is enkel
+% beschikbaar via UGentNet (dus vanaf de PCs in de PC-klassen kan je hier mee
+% verbinden, net zoals vanop je laptop als je via eduroam verbonden bent; van
+% thuis zal je hiervoor de UGent-VPN moeten gebruiken). Eerst moet je er voor
+% zorgen dat je \mbox{(UGent-)account} actief is op dit systeem. Dit doe je via
+% (op UGentNet) te surfen naar \url{https://gaia.ugent.be/helios/account.cgi} en
+% je daar te registreren (waarna het blijkbaar tot 10 minuten kan duren eer je
+% account actief is).
+
+De volledige documentatie ga ik hier niet inplakken, die kan je vinden op \url{https://www.ugent.be/hpc/en/support/documentation.htm}. In het bijzonder zal je de \url{http://hpcugent.github.io/vsc_user_docs/pdf/intro-HPC-linux-gent.pdf} Linux introductie / howto moeten gebruiken. De hoofdstukken die voor jullie het belangrijste zijn, zijn Hoofdstuk 2 over `Getting an HPC Account', en Hoofdstuk 3 over `Connecting to the HPC infrastructure'.
+
+Om dan te connecteren naar die server, gebruik je \verb!ssh !\emph{HPC-gebruikersnaam}\verb!@login.hpc.ugent.be!. In mijn geval ziet dit er als volgt uit:
 \begin{verbatim}
-comparch@comparch-VirtualBox:~$ ssh bcoppens@helios.ugent.be
-The authenticity of host 'helios.ugent.be (157.193.40.2)' can't be established.
-RSA key fingerprint is e8:26:10:9c:07:44:e4:d4:bb:89:29:fd:3d:8c:7c:d9.
-Are you sure you want to continue connecting (yes/no)? yes
-Warning: Permanently added 'helios.ugent.be,157.193.40.2' (RSA) to the list of known hosts.
-bcoppens@helios.ugent.be's password:
-Welcome to Ubuntu 18.04.2 LTS (GNU/Linux 4.15.0-45-generic x86_64)
-....
-Last login: Sat Feb 16 13:14:35 2019 from 157.193.213.43
-~ [1]$
+$ ssh vscXXXXX@login.hpc.ugent.be
+The authenticity of host 'login.hpc.ugent.be (157.193.252.74)' can't be established.
+ECDSA key fingerprint is SHA256:C8TVx0w8UjGgCQfCmEUaOPxJGNMqv2PXLyBNODe5eOQ.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added 'login.hpc.ugent.be' (ECDSA) to the list of known hosts.
+
+ STEVIN HPC-UGent infrastructure status on Fri, 03 Mar 2023 16:45:02   
+      cluster     - full - free -  part - total - running - queued     
+                    nodes  nodes   free   nodes   jobs      jobs       
+ --------------------------------------------------------------------- 
+      slaking           0      1      5       7         6        2     
+       swalot         101      0     14     117      2195    13869     
+       skitty           5      0     53      71       369     4330     
+      victini          10      0     85      96       728    26958     
+       joltik           6      0      2      10        25        2     
+       kirlia           6      0      2       8         2     6018     
+        doduo          61      0     49     128      1940    30367     
+     accelgor           9      0      0       9        30       47     
+      donphan           0      7      1       8         1        0     
+                                                                       
+Documentation is available at:                                         
+ https://www.ugent.be/hpc/en/support/documentation.htm                 
+For a full view of the current loads and queues see:                   
+ https://hpc.ugent.be/clusterstate/                                    
+Updates on current system status and maintenance can be found on:      
+ https://www.ugent.be/hpc/en/infrastructure/status                     
+To contact the support team, send an email to hpc@ugent.be             
+                                                                       
+
+
+Last login: Fri Mar  3 16:38:01 2023 from X.X.X.X
+vscXXXXX@gligar08 ~ $
 \end{verbatim}
 
 Hier kan je de verschillende stappen zien:
@@ -1316,47 +1346,35 @@ Hier kan je de verschillende stappen zien:
     degene waarmee je de eerste keer verbond, en zal ook weigeren verder te
     gaan indien dit niet het geval is.
 
-\item Er wordt gevraagd naar je wachtwoord (\emph{in dit geval is dit je UGent-wachtwoord}).
+\item Mijn gebruikersnaam op de HPC is anders dan die op mijn lokale machine, dus die geef ik expliciet mee.
 
-\item Als je je wachtwoord intypt, \emph{wordt er niets naar het scherm
-  geprint!} Dus in tegenstelling tot wat je misschien verwacht, zal je géén
-    sterretjes of bolletjes of wat dan ook zien verschijnen. De getypte
-    karakters worden natuurlijk wel geregistreerd, en eens je op enter
-    duwt zal het (niet-geprinte) wachtwoord naar de server doorgestuurd worden.
+\item Er wordt ogenschijnlijk \emph{niet} gevraagd naar je wachtwoord!
+    Dit komt omdat er gebruik gemaakt wordt van identificatie aan de hand van
+    een private sleutel. Als je ook een HPC-account aanmaakt, is het dan ook
+    \textbf{belangrijk om (het bestand met) die private sleutel niet aan anderen
+    te geven!} Dat is alsof je iemand anders je UGent-wachtwoord zou geven!
 
-\item De prompt die je krijgt, ziet er als volgt uit: \verb!~ [1]$!, en niét,
-  zoals je wellicht had verwacht, \verb!bcoppens@helios:~$!. Dit is omdat er
-    een andere shell gebruikt wordt dan degene die we totnogtoe gebruikt
-    hebben. Er zijn immers vele verschillende shell-programma's, elk met hun
-    eigen set van features, en hun eigen manier van hoe je er als gebruiker
-    exact mee interageert (verschillende shells hebben bijvoorbeeld
-    verschillende systemen van hoe tab-completion werkt). De shell die wij
-    totnogtoe gebruikt hebben is de \verb!bash!-shell (dit is een
-    vaak-voorkomende shell die op de meeste systemen wel ge"installeerd is).
-    Andere shells zijn bijvoorbeeld de \verb!zsh!-shell, de \verb!ksh!-shell
-    (dit is de shell die standaard start op Helios), etc. Wil je in de
-    vertrouwde \verb!bash!-shell terechtkomen, kan je deze simpelweg opstarten
-    door \verb!bash! uit te voeren.
-
-    \textbf{Opgelet!} een groot deel van de uitleg in deze cursus is \emph{specifiek van toepassing op} \verb!bash!, en zal
-    niet noodzakelijk werken in andere shells. Wil je andere shells lezen, raad ik jullie aan om uit te zoeken wat de precieze
-    verschillen zijn.
+\item Achter de schermen blijk ik ingelogd te zijn op de \verb!gligar08!-server.
 \end{itemize}
 
-Kijk als voorbeeld bijvoorbeeld eens naar hoe groot de schijven zijn die in
-Helios zitten.
+Als je dit zou proberen, kan je als voorbeeld bijvoorbeeld eens kijken
+naar hoe groot de schijfruimte is beschikbaar is op de HPC.
 
-Een aantal commando's die wellicht eens leuk zijn om mee te experimenteren op
-Helios zijn: \verb!ps! om een tekstueel overzicht te geven van alle draaiende
+Een aantal commando's die wellicht eens leuk zijn om mee te experimenteren
+zijn: \verb!ps! om een tekstueel overzicht te geven van alle draaiende
 processen (waarbij \verb!ps aux! er voor zorgt dat meer informatie over meer
 processen wordt uitgeprint), \verb!free! om informatie over het beschikbare
 geheugen te printen, en \verb!htop! dat een visuele overzicht maakt van niet
 alleen de lopende processen (die je dan kan sorteren op allerhande manieren),
 maar ook visueel laat zien hoeveel geheugen beschikbaar is en gebruikt wordt, 
 en zelfs laat zien hoeveel CPU's er in een machine zitten en hoe zwaar deze bezet
-worden. Probeer eens al deze commando's uit op Helios. (Kijk eens of je ook de
-gebruikersnamen van medestudenten kan herkennen als zij toevallig op dat moment
-ook ingelogd zijn!)
+worden. Probeer eens al deze commando's uit op de HPC.
+
+Merk daarbij op dat, in tegenstelling tot wat er gebeurt op je lokale Linux-machine,
+je \emph{zeer} weinig processen zal zien. De HPC-infrastructuur is immers vrij afgeschermd:
+je kan niet zien wat andere gebruikers aan het doen zijn. (Het idee is dat mensen
+zouden kunnen proberen afleiden welk onderzoek je aan het doen bent, gebaseerd op welke
+programma's met welke argumenten je aan het draaien bent.)
 
 Om een terminal (zoals een remote terminal of een terminal-in-een-terminal) af
 te sluiten, kan je ofwel gewoon \verb!exit! typen, ofwel de invoer van de shell
@@ -1364,9 +1382,36 @@ afsluiten door \emph{Ctrl+D} te typen (wat net hetzelfde is als toen we de
 invoer afgesloten hebben toen \verb!egrep! de door jou ingetypte tekst in de
 terminal aan het filteren was).
 
-Het gebruik van ssh kan trouwens ook handig zijn als je thuis bijvoorbeeld een
-Raspberry Pi zou liggen hebben die Linux draait: deze kan je dan ook proberen
-bedienen en configureren via ssh, in plaats van via een toetsenbord en scherm.
+Nu, als je dat later in een niet-HPC context zou willen gebruiken, zijn er nog
+een aantal extra tips / aandachtspunten:
+\begin{itemize}
+\item Als je op een systeem wil inloggen waar je wachtwoord toch nodig is,
+   zal er bij het intypen van je wachtwoord \emph{niets naar het scherm
+  geprint worden!} Dus in tegenstelling tot wat je misschien verwacht, zal je géén
+    sterretjes of bolletjes of wat dan ook zien verschijnen. De getypte
+    karakters worden natuurlijk wel geregistreerd, en eens je op enter
+    duwt zal het (niet-geprinte) wachtwoord naar de server doorgestuurd worden.
+
+\item De prompt die je krijgt, kan er soms anders uitzien.  Soms
+    wordt er immers een andere shell gebruikt wordt dan degene die we totnogtoe gebruikt
+    hebben. Er zijn immers vele verschillende shell-programma's, elk met hun
+    eigen set van features, en hun eigen manier van hoe je er als gebruiker
+    exact mee interageert (verschillende shells hebben bijvoorbeeld
+    verschillende systemen van hoe tab-completion werkt). De shell die wij
+    totnogtoe gebruikt hebben is de \verb!bash!-shell (dit is een
+    vaak-voorkomende shell die op de meeste systemen wel ge"installeerd is).
+    Andere shells zijn bijvoorbeeld de \verb!zsh!-shell, de \verb!ksh!-shell, etc. Wil je in de
+    vertrouwde \verb!bash!-shell terechtkomen, kan je deze simpelweg opstarten
+    door \verb!bash! uit te voeren.
+
+    \textbf{Opgelet!} een groot deel van de uitleg in deze cursus is \emph{specifiek van toepassing op} \verb!bash!, en zal
+    niet noodzakelijk werken in andere shells. Wil je andere shells lezen, raad ik jullie aan om uit te zoeken wat de precieze
+    verschillen zijn.
+
+\item Het gebruik van ssh kan trouwens ook handig zijn als je thuis bijvoorbeeld een
+    Raspberry Pi zou liggen hebben die Linux draait: deze kan je dan ook proberen
+    bedienen en configureren via ssh, in plaats van via een toetsenbord en scherm.
+\end{itemize}
 
 \chapter{Bestanden zoeken en verwerken}
 
